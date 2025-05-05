@@ -11,6 +11,27 @@ npm install -D typescript
 ```bash
 tsc --init
 ```
-```bash
+- "rootDir": "./src/",  
+- "outDir": "./dist",
 
+# Besic File Structure
+```txt
+|.env
+|-dist
+    |-server.js  // after build
+|-src
+    |-app.ts
+    |-server.ts
+    |-app
+        |-other Things
+```
+
+# Build
+```bash
+tsc
+```
+
+# Run
+```bash
+node ./dist/server.js
 ```
