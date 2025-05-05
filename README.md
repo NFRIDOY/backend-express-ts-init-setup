@@ -7,6 +7,7 @@ npm init -y
 npm install express
 npm install -D typescript
 ```
+# Config TS
 ```bash
 tsc --init
 ```
