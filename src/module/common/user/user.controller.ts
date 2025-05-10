@@ -1,10 +1,18 @@
 import { NextFunction, Request, Response } from "express";
+import { userService } from "./user.service";
 
 const allUsers = async (req: Request, res: Response, next: NextFunction) => {
     console.log("req");
+    
+    const data = await userService.getAllUsers()
 
+    console.log(data)
+    
     res.json({
-        message: "User Route"
+        success: true,
+        statusCode: 200,
+        data: data,
+        message: "All Users retrieved successfully"
     })
 }
 
