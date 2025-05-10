@@ -7,6 +7,14 @@ const allUsers = async (req: Request, res: Response, next: NextFunction) => {
     const data = await userService.getAllUsers()
 
     console.log(data)
+
+    if (!data) {
+        res.json({
+            success: false,
+            statusCode: 400,
+            message: "Failed to retrieve all users"
+        })
+    }
     
     res.json({
         success: true,
