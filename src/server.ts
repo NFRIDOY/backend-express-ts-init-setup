@@ -1,22 +1,36 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 import { Server } from 'http'
 import app from './app'
 import config from './config';
 const PORT = config.port;
-const DALABASE_URL = config.database_url;
+const DATABASE_URL = config.database_url;
 
 let server: Server;
 async function main() {
-    await mongoose.connect(DALABASE_URL);
+    try {
+        if (!DATABASE_URL) {
+            throw new Error('Database URL is not defined');
+        }
+        await mongoose.connect(DATABASE_URL as string);
 
-    // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
+        // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled  
+        
+        app.listen(PORT, () => {
+            console.log(`Server App listening on port ${PORT}`)
+        })
+    } catch (error) {
+        console.log("Error: ", error)
+        // throw new Error('Error Occurred!');
+    }
 }
 
-async function bootstrap() {
-    // ()()
-    server = app.listen(PORT, () => {
-        console.log(`Server App listening on port ${PORT}`)
-    })
-}
+main();
 
-bootstrap();
+// async function bootstrap() {
+//     // ()()
+//     server = app.listen(PORT, () => {
+//         console.log(`Server App listening on port ${PORT}`)
+//     })
+// }
+
+// bootstrap();
