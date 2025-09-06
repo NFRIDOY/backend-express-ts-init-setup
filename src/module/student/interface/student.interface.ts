@@ -17,9 +17,15 @@ export type IParent = {
 }
 export type IGuardian = {
     id: string;
-    name: string;
+    name: IName;
     email: string;
     phone: string;
+    address?: string;
+}
+export type ILocalGuardian = {
+    name: IName;
+    occupation: string;
+    contactNo: string;
     address?: string;
 }
 
@@ -28,6 +34,7 @@ export type IStudent = {
     name: IName;
     email: string;
     phone: string;
+    dateOfBirth: string;
     address: string;
     gender: IGender;
     profileImage?: string;
@@ -37,5 +44,6 @@ export type IStudent = {
     guardian?: IGuardian;
     parent?: IParent[];
     // parent?: [IParent, IParent?]; /** This allows your student to have 0, 1, or multiple parents. */
+    localGuardian?: ILocalGuardian;
 
 }
