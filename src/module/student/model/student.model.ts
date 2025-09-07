@@ -95,13 +95,16 @@ const studentSchema = new Schema<IStudent>({
   isActive: {
     type: Boolean,
     required: true,
+    default: true
   },
   status: {
     type: String,
+    default: 'active',
   },
   isDeleted: {
     type: Boolean,
     required: true,
+    default: false
   },
 });
 
