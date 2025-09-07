@@ -5,7 +5,12 @@ const createStudentIntoDB = async (student: IStudent): Promise<IStudent> => {
     const result = await Student.create(student)
     return result;
 }
+const getAllStudentFromDB = async (): Promise<IStudent[]> => {
+    const result = await Student.find();
+    return result;
+}
 
 export const studentService = {
-    createStudentIntoDB
+    createStudentIntoDB,
+    getAllStudentFromDB,
 }

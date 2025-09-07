@@ -5,6 +5,9 @@ export const app = express()
 // Middlewares
 import logger from './middleware/logger'
 import routes from './router/routes';
+import path from 'path';
+import { userRoute } from './module/common/user/user.route';
+import { studentRoute } from './module/student/route/student.route';
 // import { userRoute } from './module/common/user/user.route';
 
 // Persers
@@ -13,12 +16,15 @@ app.use(cors())
 app.use(express.text()); // to recive text
 
 // Routes
-routes();
-// app.use("/user", userRoute)
+// routes();
+app.use("/api/user", userRoute)
+app.use("/api/student", studentRoute)
 
 
 app.get('/', logger, (req, res) => {
-    res.send('Hello World From Backend Server.')
+    // res.send('Hello World From Backend Server.')
+    res.sendFile(path.join(process.cwd(), 'index.html'));
+
 })
 
 app.post('/', logger, (req: Request, res: Response) => {
