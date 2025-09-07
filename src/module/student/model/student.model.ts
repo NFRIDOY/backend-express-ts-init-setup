@@ -5,15 +5,26 @@ import { bloodGroups, GENDER_LIST, IGuardian, ILocalGuardian, IName, IStudent } 
 export const nameSchema = new Schema<IName>({
   firstName: {
     type: String,
-    required: true,
+    required: [true, 'First Name is required'],
+    trim: true,
+    maxlength: [20, "Max Length is 20 Charecters"],
+    validate: {
+      validator: function(value: string) {
+        const validStr = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase() // Custome Capitalized Logic
+        return validStr === value;
+      },
+      message: "{VALUE} is not Capitalized.",
+    }
   },
   middleName: {
     type: String,
     required: false,
+    trim: true,
   },
   lastName: {
     type: String,
-    required: true,
+    required: [true, 'Last Name is required'],
+    trim: true,
   }
 })
 
@@ -22,6 +33,7 @@ const baseGuardianFields = {
   email: {
     type: String,
     required: true,
+    trim: true,
   },
   phone: {
     type: String,
@@ -50,15 +62,22 @@ const studentSchema = new Schema<IStudent>({
     type: String,
     required: true,
     unique: true,
+    trim: true,
   },
-  name: nameSchema,
+  name: {
+    type: nameSchema,
+    required: [true, 'Name is required'],
+    trim: true,
+  },
   email: {
     type: String,
     required: true,
+    trim: true,
   },
   phone: {
     type: String,
     required: true,
+    trim: true,
   },
   dateOfBirth: {
     type: String,
@@ -70,7 +89,10 @@ const studentSchema = new Schema<IStudent>({
   },
   gender: {
     type: String,
-    enum: GENDER_LIST,
+    enum: {
+      values: GENDER_LIST,
+      message: `{VALUE} is not valid.`
+    },
     required: true,
   },
   profileImage: {
