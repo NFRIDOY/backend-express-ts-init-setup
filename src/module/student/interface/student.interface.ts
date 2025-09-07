@@ -4,7 +4,10 @@ export type IName = {
     lastName: string;
 }
 
+export const GENDER_LIST = ["male", "female", "other"] as const;
 export type IGender = "male" | "female" | "other";
+export type IBloodGroup = "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-";
+export const bloodGroups: IBloodGroup[] = [ "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-",];
 
 export type IStatus = "active" | "inactive" | "pending" | "blocked" | "deleted";
 
@@ -38,12 +41,15 @@ export type IStudent = {
     address: string;
     gender: IGender;
     profileImage?: string;
-    isActive: boolean;
-    status?: IStatus;
-    isDeleted: boolean;
     guardian?: IGuardian;
     parent?: IParent[];
     // parent?: [IParent, IParent?]; /** This allows your student to have 0, 1, or multiple parents. */
     localGuardian?: ILocalGuardian;
+    bloodGroup?: IBloodGroup;
+    presentAddress: string;
+    permanentAddress: string;
+    isActive: boolean;
+    status?: IStatus;
+    isDeleted: boolean;
 
 }
