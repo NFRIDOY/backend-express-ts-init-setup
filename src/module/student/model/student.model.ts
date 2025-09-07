@@ -1,27 +1,57 @@
 import { Schema, model, connect } from 'mongoose';
-import { bloodGroups, GENDER_LIST, IStudent } from '../interface/student.interface';
+import { bloodGroups, GENDER_LIST, IGuardian, ILocalGuardian, IName, IStudent } from '../interface/student.interface';
 
-// 1. Create a Schema corresponding to the document interface.
+// Name Schema
+export const nameSchema = new Schema<IName>({
+  firstName: {
+    type: String,
+    required: true,
+  },
+  middleName: {
+    type: String,
+    required: false,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  }
+})
+
+const baseGuardianFields = {
+  name: nameSchema,
+  email: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: String,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: false,
+  },
+};
+
+export const guardianSchema = new Schema<IGuardian>(baseGuardianFields);
+
+export const localGuardianSchema = new Schema<ILocalGuardian>({
+  ...baseGuardianFields,
+  occupation: {
+    type: String,
+    required: true,
+  },
+});
+
+
+// This is the main schema for the student model
 const studentSchema = new Schema<IStudent>({
   id: {
     type: String,
     required: true,
     unique: true,
   },
-  name: {
-    firstName: {
-      type: String,
-      required: true,
-    },
-    middleName: {
-      type: String,
-      required: false,
-    },
-    lastName: {
-      type: String,
-      required: true,
-    },
-  },
+  name: nameSchema,
   email: {
     type: String,
     required: true,
@@ -47,66 +77,8 @@ const studentSchema = new Schema<IStudent>({
     type: String,
     required: false,
   },
-  guardian: {
-    id: {
-      type: String,
-      required: true,
-    },
-    name: {
-      firstName: {
-        type: String,
-        required: true,
-      },
-      middleName: {
-        type: String,
-        required: false,
-      },
-      lastName: {
-        type: String,
-        required: true,
-      },
-    },
-    email: {
-      type: String,
-      required: true,
-    },
-    phone: {
-      type: String,
-      required: true,
-    },
-    address: {
-      type: String,
-      required: false,
-    },
-  },
-  localGuardian: {
-    name: {
-      firstName: {
-        type: String,
-        required: true,
-      },
-      middleName: {
-        type: String,
-        required: false,
-      },
-      lastName: {
-        type: String,
-        required: true,
-      },
-    },
-    occupation: {
-      type: String,
-      required: true,
-    },
-    contactNo: {
-      type: String,
-      required: true,
-    },
-    address: {
-      type: String,
-      required: false,
-    }
-  },
+  guardian: guardianSchema,
+  localGuardian: localGuardianSchema,
   bloodGroup: {
     type: String,
     enum: bloodGroups,
@@ -133,4 +105,4 @@ const studentSchema = new Schema<IStudent>({
   },
 });
 
-export const StudentModel = model('student', studentSchema);
+export const Student = model<IStudent>('Student', studentSchema);

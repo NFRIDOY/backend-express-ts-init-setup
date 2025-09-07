@@ -18,18 +18,14 @@ export type IParent = {
     phone: string;
     address?: string;
 }
-export type IGuardian = {
-    id: string;
+export interface IGuardian {
     name: IName;
     email: string;
     phone: string;
     address?: string;
 }
-export type ILocalGuardian = {
-    name: IName;
+export interface ILocalGuardian extends IGuardian {
     occupation: string;
-    contactNo: string;
-    address?: string;
 }
 
 export type IStudent = {
