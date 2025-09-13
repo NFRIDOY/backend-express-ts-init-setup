@@ -1,5 +1,5 @@
 import { Schema, model, connect } from 'mongoose';
-import { bloodGroups, GENDER_LIST, IGuardian, ILocalGuardian, IName, IStudent } from '../interface/student.interface';
+import { bloodGroups, GENDER_LIST, IGuardian, ILocalGuardian, IName, IStudent } from './student.interface';
 
 // Name Schema
 export const nameSchema = new Schema<IName>({

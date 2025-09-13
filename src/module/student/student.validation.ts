@@ -1,5 +1,5 @@
 import z from "zod";
-import { bloodGroups, GENDER_LIST, STATUS_LIST } from "../interface/student.interface";
+import { bloodGroups, GENDER_LIST, STATUS_LIST } from "./student.interface";
 
 const nameSchema = z.object({
   firstName: z.string().trim().min(1, "First name is required"),
