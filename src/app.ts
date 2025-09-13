@@ -18,18 +18,16 @@ app.use(express.text()); // to recive text
 // Routes
 // routes();
 app.use("/api/user", userRoute)
-app.use("/api/student", studentRoute)
+app.use("/api/student", logger, studentRoute)
 
 
-app.get('/', logger, (req, res) => {
+app.get('/', (req, res) => {
     // res.send('Hello World From Backend Server.')
     res.sendFile(path.join(process.cwd(), 'index.html'));
 
 })
 
-app.post('/', logger, (req: Request, res: Response) => {
-    const reqObj = req.body;
-    console.log(reqObj);
+app.post('/', (req: Request, res: Response) => {
     res.json({
         success: true,
         code: '200',
