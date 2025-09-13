@@ -83,10 +83,6 @@ const studentSchema = new Schema<IStudent>({
     type: String,
     required: true,
   },
-  address: {
-    type: String,
-    required: true,
-  },
   gender: {
     type: String,
     enum: {

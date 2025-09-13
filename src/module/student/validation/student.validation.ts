@@ -1,63 +1,56 @@
 import z from "zod";
-import { bloodGroups, GENDER_LIST } from "../interface/student.interface";
+import { bloodGroups, GENDER_LIST, STATUS_LIST } from "../interface/student.interface";
+
+const nameSchema = z.object({
+  firstName: z.string().trim().min(1, "First name is required"),
+  middleName: z.string().trim().optional(),
+  lastName: z.string().trim().min(1, "Last name is required"),
+});
 
 const studentValidationSchema = z.object({
-  id: z.string().min(1),
-  name: z.object({
-    firstName: z.string().min(1),
-    middleName: z.string().optional(),
-    lastName: z.string().min(1),
+  id: z.string().min(1, "ID is required"),
+  name: nameSchema,
+  email: z.string().email("Invalid email format").min(1, "Email is required"),
+  phone: z.string().min(1, "Phone is required"),
+  dateOfBirth: z.string().refine(val => !isNaN(Date.parse(val)), {
+    message: "Invalid date format",
   }),
-  email: z.string().min(1),
-  phone: z.string().min(1),
-  dateOfBirth: z.string().min(1),
-  address: z.string().min(1),
   gender: z.enum(GENDER_LIST),
   profileImage: z.string().optional(),
   guardian: z
     .object({
-      name: z.object({
-        firstName: z.string().min(1),
-        middleName: z.string().optional(),
-        lastName: z.string().min(1),
-      }),
-      email: z.string().min(1),
-      phone: z.string().min(1),
+      name: nameSchema,
+      email: z.string().min(1, "Email is required"),
+      phone: z.string().min(1, "Phone is required"),
       address: z.string().optional(),
     })
     .optional(),
   parent: z
     .array(
       z.object({
-        id: z.string().min(1),
-        name: z.object({
-          firstName: z.string().min(1),
-          middleName: z.string().optional(),
-          lastName: z.string().min(1),
-        }),
-        email: z.string().min(1),
-        phone: z.string().min(1),
+        id: z.string().min(1, "ID is required"),
+        name: nameSchema,
+        email: z.string().min(1, "Email is required"),
+        phone: z.string().min(1, "Phone is required"),
         address: z.string().optional(),
       })
     )
     .optional(),
   localGuardian: z
     .object({
-      name: z.object({
-        firstName: z.string().min(1),
-        middleName: z.string().optional(),
-        lastName: z.string().min(1),
-      }),
-      email: z.string().min(1),
-      phone: z.string().min(1),
+      name: nameSchema,
+      email: z.string().min(1, "Email is required"),
+      phone: z.string().min(1, "Phone is required"),
       address: z.string().optional(),
-      occupation: z.string().min(1),
+      occupation: z.string().min(1, "Occupation is required"),
     })
     .optional(),
   bloodGroup: z.enum(bloodGroups).optional(),
-  presentAddress: z.string().min(1),
-  permanentAddress: z.string().min(1),
+  presentAddress: z.string().min(1, "Present address is required"),
+  permanentAddress: z.string().min(1, "Permanent address is required"),
   isActive: z.boolean(),
-  status: z.enum(["active", "inactive", "pending", "blocked", "deleted"]).optional(),
+  status: z.enum(STATUS_LIST).optional(),
   isDeleted: z.boolean(),
 });
+
+export default studentValidationSchema;

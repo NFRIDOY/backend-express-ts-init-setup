@@ -10,6 +10,7 @@ export type IBloodGroup = "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-
 export const bloodGroups: IBloodGroup[] = [ "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-",];
 
 export type IStatus = "active" | "inactive" | "pending" | "blocked" | "deleted";
+export const STATUS_LIST: IStatus[] = ["active", "inactive", "pending", "blocked", "deleted"];
 
 export type IParent = {
     id: string;
@@ -34,7 +35,6 @@ export type IStudent = {
     email: string;
     phone: string;
     dateOfBirth: string;
-    address: string;
     gender: IGender;
     profileImage?: string;
     guardian?: IGuardian;
