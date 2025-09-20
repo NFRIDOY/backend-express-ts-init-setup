@@ -1,11 +1,11 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 export const app = express()
+import path from 'path';
 
 // Middlewares
 import logger from './middleware/logger'
 import routes from './router/routes';
-import path from 'path';
 import { userRoute } from './module/common/user/user.route';
 import { studentRoute } from './module/student/student.route';
 // import { userRoute } from './module/common/user/user.route';
