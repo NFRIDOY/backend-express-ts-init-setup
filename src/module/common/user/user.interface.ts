@@ -6,7 +6,7 @@ export const userRoles: IRole[]= ['admin' , 'student' , 'faculty'] as const;
 // export const statusList: IStatus[] = ['active', 'in-progress', 'blocked'] as const;
 
 // DRY Version
-export const statusList = ['in-progress', 'blocked'] as const;
+export const statusList = ['in-progress', 'active', 'blocked'] as const;
 export type IStatus = typeof statusList[number];        // typeof array[number]
 
 export type IUser = {

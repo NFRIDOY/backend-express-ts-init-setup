@@ -24,7 +24,8 @@ const UserSchema = new Schema<IUser>({
     status: { 
         type: String, 
         enum: statusList,
-        required: true 
+        required: true,
+        default: "in-progress"
     },
     isDeleted: { 
         type: Boolean, 
