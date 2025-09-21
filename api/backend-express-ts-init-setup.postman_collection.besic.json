@@ -1,0 +1,149 @@
+{
+	"info": {
+		"_postman_id": "465c9201-34d6-4f52-a0fe-f049b14445ab",
+		"name": "backend-express-ts-init-setup",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30943233"
+	},
+	"item": [
+		{
+			"name": "Student",
+			"item": [
+				{
+					"name": "create-student",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"student\": {\r\n        \"id\": \"STU123456\",\r\n        \"name\": {\r\n            \"firstName\": \"Ayesha\",\r\n            \"middleName\": \"Fatima\",\r\n            \"lastName\": \"Rahman\"\r\n        },\r\n        \"email\": \"ayesha.rahman@example.com\",\r\n        \"phone\": \"+8801712345678\",\r\n        \"dateOfBirth\": \"2005-08-15\",\r\n        \"address\": \"123 Green Road, Dhaka\",\r\n        \"gender\": \"Female\",\r\n        \"profileImage\": \"https://example.com/images/ayesha.jpg\",\r\n        \"guardian\": {\r\n            \"name\": {\r\n                \"firstName\": \"Mohammad\",\r\n                \"middleName\": \"\",\r\n                \"lastName\": \"Rahman\"\r\n            },\r\n            \"email\": \"guardian.rahman@example.com\",\r\n            \"phone\": \"+8801612345678\",\r\n            \"address\": \"123 Green Road, Dhaka\"\r\n        },\r\n        \"localGuardian\": {\r\n            \"name\": {\r\n                \"firstName\": \"Shirin\",\r\n                \"middleName\": \"\",\r\n                \"lastName\": \"Akter\"\r\n            },\r\n            \"email\": \"shirin.akter@example.com\",\r\n            \"phone\": \"+8801912345678\",\r\n            \"address\": \"456 Lake View, Dhaka\",\r\n            \"occupation\": \"Lecturer\"\r\n        },\r\n        \"bloodGroup\": \"A+\",\r\n        \"presentAddress\": \"123 Green Road, Dhaka\",\r\n        \"permanentAddress\": \"456 Lake View, Dhaka\",\r\n        \"isActive\": true,\r\n        \"status\": \"enrolled\",\r\n        \"isDeleted\": false\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/student/create-student",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student",
+								"create-student"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllStudents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/student/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSingleStudent By Student ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/student/STU123456",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student",
+								"STU123456"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Root",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}",
+					"host": [
+						"{{base_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Root Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}",
+					"host": [
+						"{{base_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Root Post",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}",
+					"host": [
+						"{{base_url}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000",
+			"type": "string"
+		}
+	]
+}
