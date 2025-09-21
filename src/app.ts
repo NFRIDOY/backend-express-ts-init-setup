@@ -26,6 +26,11 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(process.cwd(), 'index.html'));
 
 })
+app.get('/api.html', (req, res) => {
+    // res.send('Hello World From Backend Server.')
+    res.sendFile(path.join(process.cwd(), 'api.html'));
+
+})
 
 app.post('/', (req: Request, res: Response) => {
     res.json({
