@@ -2,10 +2,35 @@ import { NextFunction, Request, Response } from "express";
 import { userService } from "./user.service";
 import { sendResponse } from "../../../utils/response/sendResponse";
 
-const allUsers = async (req: Request, res: Response, next: NextFunction) => {
+const createStudent = async (req: Request, res: Response, _next: NextFunction) => {
+    console.log("req")
+    const { password, student: studentData } = req.body;
+    
+    const data = await userService.createStudentIntoDB(password, studentData)
+
+    console.log(data)
+
+    if (!data) {
+        sendResponse(res, {
+            success: false,
+            statusCode: 400,
+            message: "Failed to create student",
+            data: null,
+        })
+    }
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Student created successfully",
+        data: data,
+    })
+}
+
+
+const allUsers = async (req: Request, res: Response, _next: NextFunction) => {
     console.log("req");
     
-    const data = await userService.getAllUsers()
+    const data = await userService.getAllUserFromDB()
 
     console.log(data)
 
@@ -32,6 +57,11 @@ const allUsers = async (req: Request, res: Response, next: NextFunction) => {
     })
 }
 
+
+
 export const userController = {
-    allUsers
+    createStudent,
+    allUsers,
+    
+    
 }

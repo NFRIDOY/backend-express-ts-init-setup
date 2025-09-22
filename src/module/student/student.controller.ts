@@ -1,10 +1,11 @@
 import { Request, Response } from "express"
 import { studentService } from "./student.service";
+import { userService } from "../common/user/user.service";
 
 const createStudent = async (req: Request, res: Response) => {
     try {
-        const { student: studentData } = req.body;
-        const result = await studentService.createStudentIntoDB(studentData);
+        const { password, student: studentData } = req.body;
+        const result = await userService.createStudentIntoDB(password, studentData);
         if (!result) {
             return res.status(400).json({
                 success: false,

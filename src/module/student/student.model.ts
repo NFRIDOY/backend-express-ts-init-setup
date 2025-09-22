@@ -64,6 +64,11 @@ const studentSchema = new Schema<IStudent>({
     unique: true,
     trim: true,
   },
+  user: {
+    type: Schema.Types.ObjectId,
+    required: [true, 'User id is required'],
+    unique: true,
+  },
   name: {
     type: nameSchema,
     required: [true, 'Name is required'],

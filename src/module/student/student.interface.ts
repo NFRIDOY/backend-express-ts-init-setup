@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+
 export type IName = {
     firstName: string;
     middleName?: string;
@@ -31,6 +33,7 @@ export interface ILocalGuardian extends IGuardian {
 
 export type IStudent = {
     id: string;
+    user: Types.ObjectId;
     name: IName;
     email: string;
     phone: string;
