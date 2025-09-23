@@ -5,8 +5,27 @@ import logger from "../middleware/logger";
 
 const router = Router();
 
-router.use("/user", userRoute)
-router.use("/student", logger, studentRoute)
+const moduleRoutes = [
+    {
+        path: '/user',
+        route: userRoute
+    },
+    {
+        path: '/student',
+        route: studentRoute,
+        logger: logger
+    },
+]
+
+// router.use("/user", userRoute)
+// router.use("/student", logger, studentRoute)
+
+moduleRoutes.forEach((route) => {
+    if(route?.logger){
+        return router.use(route.path, logger, route.route)
+    }
+    return router.use(route.path, route.route)
+})
 
 
 export default router;
