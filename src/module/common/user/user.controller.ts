@@ -1,17 +1,18 @@
+import  httpStutus from 'http-status';
+import { sendResponse } from './../../../utils/response/sendResponse';
 import { NextFunction, Request, Response } from "express";
 import { userService } from "./user.service";
-import { sendResponse } from "../../../utils/response/sendResponse";
 
 const createStudent = async (req: Request, res: Response, next: NextFunction) => {
     try {
         console.log("req", req.body)
         const { password, student: studentData } = req.body;
 
-        const data = await userService.createStudentIntoDB(password, studentData);
+        const result = await userService.createStudentIntoDB(password, studentData);
 
-        console.log("data", data);
+        console.log("data", result);
 
-        if (!data) {
+        if (!result) {
             return sendResponse(res, {
                 success: false,
                 statusCode: 400,
@@ -20,11 +21,17 @@ const createStudent = async (req: Request, res: Response, next: NextFunction) =>
             })
         }
         return sendResponse(res, {
-            statusCode: 200,
+            statusCode: httpStutus.OK,
             success: true,
-            message: "Student created successfully",
-            data: data,
+            message: 'Student created successfully',
+            data: result,
         })
+        // return sendResponse(res, {
+        //     statusCode: 200,
+        //     success: true,
+        //     message: "Student created successfully",
+        //     data: result,
+        // })
     } catch (err) {
         // console.log('err', err)
         // return sendResponse(res, {

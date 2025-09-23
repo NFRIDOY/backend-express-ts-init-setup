@@ -1,8 +1,8 @@
 import { Response } from 'express';
 
 interface IApiResponse<T> {
-  success: boolean;
   statusCode: number;
+  success: boolean;
   message: string;
   data: T;
   meta?: {
@@ -14,25 +14,13 @@ interface IApiResponse<T> {
 
 export const sendResponse = <T>(
   res: Response,
-  {
-    statusCode,
-    success,
-    message,
-    data,
-    meta,
-  }: {
-    statusCode: number;
-    success: boolean;
-    message: string;
-    data: T;
-    meta?: IApiResponse<T>['meta'];
-  }
+  payload: IApiResponse<T>
 ): void => {
-  res.status(statusCode).json({
-    success,
-    statusCode,
-    message,
-    data,
-    ...(meta && { meta }),
+  res.status(payload.statusCode).json({
+    statusCode: payload.statusCode,
+    success: payload.success,
+    message: payload.message,
+    data: payload.data,
+    ...(payload.meta && { meta: payload.meta }),
   });
 };
