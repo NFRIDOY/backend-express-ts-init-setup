@@ -5,12 +5,13 @@ import path from 'path';
 
 // Middlewares
 import logger from './middleware/logger'
-import routes from './router/routes';
+import routes from './routes/routes';
 import { userRoute } from './module/common/user/user.route';
 import { studentRoute } from './module/student/student.route';
 import { success } from 'zod';
 import globalErrorHandler from './middleware/globalErrorHandler';
 import notFound from './middleware/notFound';
+import router from './routes';
 // import { userRoute } from './module/common/user/user.route';
 
 // Persers
@@ -20,8 +21,9 @@ app.use(express.text()); // to recive text
 
 // Routes
 // routes();
-app.use("/api/user", userRoute)
-app.use("/api/student", logger, studentRoute)
+app.use("/api", router)
+// app.use("/api/user", userRoute)
+// app.use("/api/student", logger, studentRoute)
 
 
 app.get('/', (req, res) => {
