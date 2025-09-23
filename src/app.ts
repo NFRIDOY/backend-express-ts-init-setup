@@ -10,6 +10,7 @@ import { userRoute } from './module/common/user/user.route';
 import { studentRoute } from './module/student/student.route';
 import { success } from 'zod';
 import globalErrorHandler from './middleware/globalErrorHandler';
+import notFound from './middleware/notFound';
 // import { userRoute } from './module/common/user/user.route';
 
 // Persers
@@ -43,6 +44,10 @@ app.post('/', (req: Request, res: Response) => {
     })
 })
 
+// Global Error Handler
 app.use(globalErrorHandler)
+
+// Not Found
+app.use(notFound)
 
 export default app
