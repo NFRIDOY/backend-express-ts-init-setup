@@ -58,5 +58,6 @@ UserSchema.post('save', function (doc, next) {
     next();
 })
 
+
 // User Model
 export const UserModel = mongoose.model('User', UserSchema);

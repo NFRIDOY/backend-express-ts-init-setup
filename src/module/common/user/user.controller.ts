@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { userService } from "./user.service";
 import { sendResponse } from "../../../utils/response/sendResponse";
 
-const createStudent = async (req: Request, res: Response, _next: NextFunction) => {
+const createStudent = async (req: Request, res: Response, next: NextFunction) => {
     try {
         console.log("req", req.body)
         const { password, student: studentData } = req.body;
@@ -25,48 +25,52 @@ const createStudent = async (req: Request, res: Response, _next: NextFunction) =
             message: "Student created successfully",
             data: data,
         })
-    } catch (error) {
-        console.log('error', error)
-        return sendResponse(res, {
-            success: false,
-            statusCode: 400,
-            message: "Failed to create student",
-            data: null,
-        })
+    } catch (err) {
+        // console.log('err', err)
+        // return sendResponse(res, {
+        //     success: false,
+        //     statusCode: 500,
+        //     message: "Failed to create student",
+        //     data: null,
+        // })
+        next(err)
     }
 }
 
 
-const allUsers = async (req: Request, res: Response, _next: NextFunction) => {
-    console.log("req");
-
-    const data = await userService.getAllUserFromDB()
-
-    console.log(data)
-
-    if (!data) {
+const allUsers = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        console.log("req");
+    
+        const data = await userService.getAllUserFromDB()
+    
+        console.log(data)
+    
+        if (!data) {
+            return sendResponse(res, {
+                success: false,
+                statusCode: 400,
+                message: "Failed to retrieve all users",
+                data: null,
+            })
+        }
+        // old response
+        // res.json({
+        //     success: true,
+        //     statusCode: 200,
+        //     data: data,
+        //     message: "All Users retrieved successfully"
+        // })
         return sendResponse(res, {
-            success: false,
-            statusCode: 400,
-            message: "Failed to retrieve all users",
-            data: null,
+            statusCode: 200,
+            success: true,
+            message: "All Users retrieved successfully",
+            data: data,
         })
+    } catch (err) {
+        next(err)
     }
-    // old response
-    // res.json({
-    //     success: true,
-    //     statusCode: 200,
-    //     data: data,
-    //     message: "All Users retrieved successfully"
-    // })
-    return sendResponse(res, {
-        statusCode: 200,
-        success: true,
-        message: "All Users retrieved successfully",
-        data: data,
-    })
 }
-
 
 
 export const userController = {

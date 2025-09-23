@@ -20,8 +20,8 @@ const createStudentIntoDB = async (password: string, studentData: IStudent) => {
     userData.role = "student";
 
     //set manually generated it
-    userData.id = '2030100002';
-    // userData.id = String(Math.random()).slice(2, 11);
+    // userData.id = '2030100002';
+    userData.id = String('2025' + Math.random()).slice(3, 9);
 
     //set status
     userData.status = "in-progress";

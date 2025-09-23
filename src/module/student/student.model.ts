@@ -132,4 +132,13 @@ const studentSchema = new Schema<IStudent>({
   },
 });
 
+// dont show user _id
+// studentSchema.post('save', function (doc, next) {
+//   // Remove sensitive/internal fields
+//   doc = doc.toObject(); // convert to plain object
+//   doc.user = "";
+//   doc.__v = "";
+//   next();
+// })
+
 export const Student = model('Student', studentSchema);

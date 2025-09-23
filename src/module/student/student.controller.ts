@@ -1,8 +1,8 @@
-import { Request, Response } from "express"
+import { NextFunction, Request, Response } from "express"
 import { studentService } from "./student.service";
 import { userService } from "../common/user/user.service";
 
-const createStudent = async (req: Request, res: Response) => {
+const createStudent = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { password, student: studentData } = req.body;
         const result = await userService.createStudentIntoDB(password, studentData);
@@ -18,16 +18,11 @@ const createStudent = async (req: Request, res: Response) => {
             message: "Student created successfully",
             data: result,
         })
-    } catch (error) {
-        console.log("Error", error)
-        return res.status(500).json({
-            success: false,
-            message: "Something Went Wrong!",
-            error: error,
-        })
+    } catch (err) {
+        next(err)
     }
 }
-const getAllStudents = async (req: Request, res: Response) => {
+const getAllStudents = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const result = await studentService.getAllStudentFromDB();
         if (!result) {
@@ -42,16 +37,11 @@ const getAllStudents = async (req: Request, res: Response) => {
             message: "Students are retrived successfully",
             data: result,
         })
-    } catch (error) {
-        console.log("Error", error)
-        return res.status(500).json({
-            success: false,
-            message: "Something Went Wrong!",
-            error: error,
-        })
+    } catch (err) {
+        next(err)
     }
 }
-const getSingleStudent = async (req: Request, res: Response) => {
+const getSingleStudent = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const result = await studentService.getSingleStudentByStudentIdFromDB(req.params?.id);
         if (!result) {
@@ -66,13 +56,8 @@ const getSingleStudent = async (req: Request, res: Response) => {
             message: "Students are retrived successfully",
             data: result,
         })
-    } catch (error) {
-        console.log("Error", error)
-        return res.status(500).json({
-            success: false,
-            message: "Something Went Wrong!",
-            error: error,
-        })
+    } catch (err) {
+        next(err)
     }
 }
 

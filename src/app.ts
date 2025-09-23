@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 export const app = express()
 import path from 'path';
@@ -8,6 +8,8 @@ import logger from './middleware/logger'
 import routes from './router/routes';
 import { userRoute } from './module/common/user/user.route';
 import { studentRoute } from './module/student/student.route';
+import { success } from 'zod';
+import globalErrorHandler from './middleware/globalErrorHandler';
 // import { userRoute } from './module/common/user/user.route';
 
 // Persers
@@ -40,5 +42,7 @@ app.post('/', (req: Request, res: Response) => {
         message: "Successfully Recived Data",
     })
 })
+
+app.use(globalErrorHandler)
 
 export default app
