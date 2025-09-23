@@ -10,6 +10,7 @@ npm i -D nodemon
 npm i dotenv
 npm i ts-node-dev
 npm install zod
+npm i bcrypt
 ```
 # Config TS
 Run
