@@ -3,39 +3,49 @@ import { userService } from "./user.service";
 import { sendResponse } from "../../../utils/response/sendResponse";
 
 const createStudent = async (req: Request, res: Response, _next: NextFunction) => {
-    console.log("req")
-    const { password, student: studentData } = req.body;
-    
-    const data = await userService.createStudentIntoDB(password, studentData)
+    try {
+        console.log("req", req.body)
+        const { password, student: studentData } = req.body;
 
-    console.log(data)
+        const data = await userService.createStudentIntoDB(password, studentData);
 
-    if (!data) {
-        sendResponse(res, {
+        console.log("data", data);
+
+        if (!data) {
+            return sendResponse(res, {
+                success: false,
+                statusCode: 400,
+                message: "Failed to create student",
+                data: null,
+            })
+        }
+        return sendResponse(res, {
+            statusCode: 200,
+            success: true,
+            message: "Student created successfully",
+            data: data,
+        })
+    } catch (error) {
+        console.log('error', error)
+        return sendResponse(res, {
             success: false,
             statusCode: 400,
             message: "Failed to create student",
             data: null,
         })
     }
-    sendResponse(res, {
-        statusCode: 200,
-        success: true,
-        message: "Student created successfully",
-        data: data,
-    })
 }
 
 
 const allUsers = async (req: Request, res: Response, _next: NextFunction) => {
     console.log("req");
-    
+
     const data = await userService.getAllUserFromDB()
 
     console.log(data)
 
     if (!data) {
-        sendResponse(res, {
+        return sendResponse(res, {
             success: false,
             statusCode: 400,
             message: "Failed to retrieve all users",
@@ -49,7 +59,7 @@ const allUsers = async (req: Request, res: Response, _next: NextFunction) => {
     //     data: data,
     //     message: "All Users retrieved successfully"
     // })
-    sendResponse(res, {
+    return sendResponse(res, {
         statusCode: 200,
         success: true,
         message: "All Users retrieved successfully",
@@ -62,6 +72,6 @@ const allUsers = async (req: Request, res: Response, _next: NextFunction) => {
 export const userController = {
     createStudent,
     allUsers,
-    
-    
+
+
 }

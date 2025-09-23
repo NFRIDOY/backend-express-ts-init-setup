@@ -68,6 +68,7 @@ const studentSchema = new Schema<IStudent>({
     type: Schema.Types.ObjectId,
     required: [true, 'User id is required'],
     unique: true,
+    ref: 'User',
   },
   name: {
     type: nameSchema,
@@ -131,4 +132,4 @@ const studentSchema = new Schema<IStudent>({
   },
 });
 
-export const Student = model<IStudent>('Student', studentSchema);
+export const Student = model('Student', studentSchema);

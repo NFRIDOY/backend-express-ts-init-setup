@@ -12,7 +12,7 @@ const createUserIntoDB = async (user: IUser): Promise<IUser> => {
 const createStudentIntoDB = async (password: string, studentData: IStudent) => {
     const userData: Partial<IUser> = {};
 
-    userData.password = password || config.default_pass;
+    userData.password = password || config.default_pass as string;
 
     //set student role
     userData.role = "student";
@@ -21,11 +21,15 @@ const createStudentIntoDB = async (password: string, studentData: IStudent) => {
     userData.id = '2030100001';
     // userData.id = String(Math.random()).slice(2, 11);
 
+    //set status
+    userData.status = "in-progress";
+
     const newUser = await UserModel.create(userData)
 
     //create a student
-    if (newUser) {
-        // set id , _id as user
+    // if (Object.keys(newUser).length) {
+    if (newUser && studentData) {
+        // set id as student id, _id as user
         studentData.id = newUser.id;
         studentData.user = newUser._id; //reference _id
 
