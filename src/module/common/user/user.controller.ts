@@ -1,88 +1,62 @@
-import  httpStutus from 'http-status';
+import httpStutus from 'http-status';
 import { sendResponse } from './../../../utils/response/sendResponse';
-import { NextFunction, Request, Response } from "express";
+import { RequestHandler } from "express";
 import { userService } from "./user.service";
+import { catchAsync } from '../../../utils/catchAsync';
 
-const createStudent = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        console.log("req", req.body)
-        const { password, student: studentData } = req.body;
 
-        const result = await userService.createStudentIntoDB(password, studentData);
 
-        console.log("data", result);
+const createStudent: RequestHandler = catchAsync(async (req, res, _next) => {
+    console.log("req", req.body)
+    const { password, student: studentData } = req.body;
 
-        if (!result) {
-            return sendResponse(res, {
-                success: false,
-                statusCode: 400,
-                message: "Failed to create student",
-                data: null,
-            })
-        }
+    const result = await userService.createStudentIntoDB(password, studentData);
+
+    console.log("data", result);
+
+    if (!result) {
         return sendResponse(res, {
-            statusCode: httpStutus.OK,
-            success: true,
-            message: 'Student created successfully',
-            data: result,
+            success: false,
+            statusCode: 400,
+            message: "Failed to create student",
+            data: null,
         })
-        // return sendResponse(res, {
-        //     statusCode: 200,
-        //     success: true,
-        //     message: "Student created successfully",
-        //     data: result,
-        // })
-    } catch (err) {
-        // console.log('err', err)
-        // return sendResponse(res, {
-        //     success: false,
-        //     statusCode: 500,
-        //     message: "Failed to create student",
-        //     data: null,
-        // })
-        next(err)
     }
-}
+    return sendResponse(res, {
+        statusCode: httpStutus.OK,
+        success: true,
+        message: 'Student created successfully',
+        data: result,
+    })
+})
 
 
-const allUsers = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        console.log("req");
-    
-        const data = await userService.getAllUserFromDB()
-    
-        console.log(data)
-    
-        if (!data) {
-            return sendResponse(res, {
-                success: false,
-                statusCode: 400,
-                message: "Failed to retrieve all users",
-                data: null,
-            })
-        }
-        // old response
-        // res.json({
-        //     success: true,
-        //     statusCode: 200,
-        //     data: data,
-        //     message: "All Users retrieved successfully"
-        // })
+const allUsers: RequestHandler = catchAsync(async (req, res, next) => {
+    console.log("req");
+
+    const data = await userService.getAllUserFromDB()
+
+    console.log(data)
+
+    if (!data) {
         return sendResponse(res, {
-            statusCode: 200,
-            success: true,
-            message: "All Users retrieved successfully",
-            data: data,
+            success: false,
+            statusCode: 400,
+            message: "Failed to retrieve all users",
+            data: null,
         })
-    } catch (err) {
-        next(err)
     }
-}
+    return sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "All Users retrieved successfully",
+        data: data,
+    })
+
+})
 
 
 export const userController = {
     createStudent,
     allUsers,
-
-
 }
