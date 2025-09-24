@@ -16,7 +16,6 @@ const createStudent: RequestHandler = catchAsync(async (req, res) => {
         });
     }
 
-
     return sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -46,7 +45,7 @@ const getSingleStudent: RequestHandler = catchAsync(async (req, res) => {
 
     if (!result) {
         return sendErrorResponse(res, {
-            message: "sigle Student retrivale failed",
+            message: "Student Not Found",
             data: {},
         });
     }
