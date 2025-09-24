@@ -24,3 +24,16 @@ export const sendResponse = <T>(
     ...(payload.meta && { meta: payload.meta }),
   });
 };
+
+export const sendErrorResponse = <T>(
+  res: Response,
+  payload: Partial<IApiResponse<T>>
+): void => {
+  res.status(payload.statusCode || 500).json({
+    statusCode: payload.statusCode || 500,
+    success: payload.success || false,
+    message: payload.message || "Failed",
+    data: payload.data,
+    ...(payload.meta && { meta: payload.meta }),
+  });
+};

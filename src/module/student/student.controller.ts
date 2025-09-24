@@ -3,11 +3,19 @@ import { studentService } from "./student.service";
 import { userService } from "../common/user/user.service";
 import httpStatus from "http-status";
 import { catchAsync } from "../../utils/catchAsync";
-import { sendResponse } from "../../utils/response/sendResponse";
+import { sendErrorResponse, sendResponse } from "../../utils/response/sendResponse";
 
 const createStudent: RequestHandler = catchAsync(async (req, res) => {
     const { password, student: studentData } = req.body;
     const result = await userService.createStudentIntoDB(password, studentData);
+
+    if (!result) {
+        return sendErrorResponse(res, {
+            message: "Student creation failed",
+            data: {},
+        });
+    }
+
 
     return sendResponse(res, {
         statusCode: httpStatus.OK,
@@ -18,6 +26,13 @@ const createStudent: RequestHandler = catchAsync(async (req, res) => {
 })
 const getAllStudents: RequestHandler = catchAsync(async (req, res) => {
     const result = await studentService.getAllStudentFromDB();
+    
+    if (!result) {
+        return sendErrorResponse(res, {
+            message: "Student retrivale failed",
+            data: [],
+        });
+    }
 
     return sendResponse(res, {
         statusCode: httpStatus.OK,
@@ -28,6 +43,13 @@ const getAllStudents: RequestHandler = catchAsync(async (req, res) => {
 })
 const getSingleStudent: RequestHandler = catchAsync(async (req, res) => {
     const result = await studentService.getSingleStudentByStudentIdFromDB(req.params?.id);
+
+    if (!result) {
+        return sendErrorResponse(res, {
+            message: "sigle Student retrivale failed",
+            data: {},
+        });
+    }
 
     return sendResponse(res, {
         statusCode: httpStatus.OK,
