@@ -1,8 +1,9 @@
 import { RequestHandler } from "express";
 import { AcademicSemesterServices } from "./academicSemester.service";
 import { sendErrorResponse, sendResponse } from "../../utils/response/sendResponse";
+import { catchAsync } from "../../utils/catchAsync";
 
-const createAcademicSemester: RequestHandler = async (req, res, _next) => {
+const createAcademicSemester: RequestHandler = catchAsync(async (req, res, _next) => {
     const academicSemesterData = req.body;
 
     const result = await AcademicSemesterServices.createAcademicSemesterIntoDB(academicSemesterData)
@@ -17,8 +18,8 @@ const createAcademicSemester: RequestHandler = async (req, res, _next) => {
         data: result,
     })
 
-}
-const getAllAcademicSemester: RequestHandler = async (req, res, _next) => {
+})
+const getAllAcademicSemester: RequestHandler = catchAsync(async (req, res, _next) => {
 
     const result = await AcademicSemesterServices.getAllAcademicSemesterFromDB()
 
@@ -32,8 +33,8 @@ const getAllAcademicSemester: RequestHandler = async (req, res, _next) => {
         data: result,
     })
 
-}
-const getSingleAcademicSemester: RequestHandler = async (req, res, _next) => {
+})
+const getSingleAcademicSemester: RequestHandler = catchAsync(async (req, res, _next) => {
     const academicSemesterData = req.body;
 
     const result = await AcademicSemesterServices.getSingleAcademicSemesterFromDB(academicSemesterData)
@@ -48,7 +49,7 @@ const getSingleAcademicSemester: RequestHandler = async (req, res, _next) => {
         data: result,
     })
 
-}
+})
 
 export const AcademicSemesterControllers = {
     createAcademicSemester,
