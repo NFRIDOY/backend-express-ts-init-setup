@@ -36,7 +36,7 @@ export const Months: IMonth[] = [
 export type IAcademicSemester = {
     name: IAcademicSemesterName;
     code: IAcademicSemesterCode;
-    year: Date;
+    year: string;
     startMonth: IMonth;
     endMonth: IMonth;
 }
