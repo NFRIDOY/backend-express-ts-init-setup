@@ -37,7 +37,7 @@ export type IStudent = {
     name: IName;
     email: string;
     phone: string;
-    dateOfBirth: string;
+    dateOfBirth?: Date;
     gender: IGender;
     profileImage?: string;
     guardian?: IGuardian;
