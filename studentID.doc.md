@@ -16,4 +16,9 @@ Year: 2025
 Semister: 01
 Serial:   0001
 
+Semister codes:
+01 Autumn
+02 Summer
+03 Fall
+
 
