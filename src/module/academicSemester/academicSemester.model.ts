@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { AcademicSemesterCodes, AcademicSemesterNames, IAcademicSemester, months } from "./academicSemester.interface";
+import { AcademicSemesterCodes, AcademicSemesterNames, IAcademicSemester, Months } from "./academicSemester.interface";
 
 // User Schema
 const AcademicSemesterSchema = new Schema<IAcademicSemester>({
@@ -26,7 +26,7 @@ const AcademicSemesterSchema = new Schema<IAcademicSemester>({
   startMonth: {
     type: String,
     enum: {
-      values: months,
+      values: Months,
       message: "Start Month are not valid",
     },
     required: true
@@ -34,7 +34,7 @@ const AcademicSemesterSchema = new Schema<IAcademicSemester>({
   endMonth: {
     type: String,
     enum: {
-      values: months,
+      values: Months,
       message: "End Month are not valid",
     },
     required: true

@@ -17,7 +17,7 @@ export type IMonth =
     | "November"
     | "December";
 
-export const months: IMonth[] = [
+export const Months: IMonth[] = [
     "January",
     "February",
     "March",
