@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
-import { IAcademicSemester } from "./academicSemester.interface";
+import { IAcademicSemester, months } from "./academicSemester.interface";
 import config from "../../config";
 
 // User Schema
@@ -19,10 +19,18 @@ const AcademicSemesterSchema = new Schema<IAcademicSemester>({
   },
   startMonth: {
     type: String,
+    enum: {
+      values: months,
+      message: "Start Month are not valid",
+    },
     required: true
   },
   endMonth: {
     type: String,
+    enum: {
+      values: months,
+      message: "End Month are not valid",
+    },
     required: true
   },
 },
@@ -51,4 +59,4 @@ const AcademicSemesterSchema = new Schema<IAcademicSemester>({
 
 
 // User Model
-export const AcademicSemesterModel = mongoose.model('AcademicSemester', AcademicSemesterSchema);
+export const AcademicSemesterModel = mongoose.model<IAcademicSemester>('AcademicSemester', AcademicSemesterSchema);
