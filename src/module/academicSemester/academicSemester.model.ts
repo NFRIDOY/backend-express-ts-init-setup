@@ -1,16 +1,22 @@
 import mongoose, { Schema } from "mongoose";
-import bcrypt from "bcrypt";
-import { IAcademicSemester, months } from "./academicSemester.interface";
-import config from "../../config";
+import { AcademicSemesterCodes, AcademicSemesterNames, IAcademicSemester, months } from "./academicSemester.interface";
 
 // User Schema
 const AcademicSemesterSchema = new Schema<IAcademicSemester>({
   name: {
     type: String,
+    enum: {
+      values: AcademicSemesterNames,
+      message: "AcademicSemesterNames is Needed"
+    },
     required: true
   },
   code: {
     type: String,
+    enum: {
+      values: AcademicSemesterCodes,
+      message: "AcademicSemesterCodes is Needed"
+    },
     required: true
   },
   year: {
@@ -38,25 +44,5 @@ const AcademicSemesterSchema = new Schema<IAcademicSemester>({
     timestamps: true
   });
 
-// before saving on the db
-// AcademicSemesterSchema.pre('save', async function (next) {
-//   const user = this;
-//   console.log('user', user)
-
-//   user.password = await bcrypt.hash(
-//     user.password,
-//     Number(config.bcrypt_salt)
-//   );
-
-//   next();
-// })
-
-// pass is not on the IStudent fix it
-// AcademicSemesterSchema.post('save', function (doc, next) {
-//   doc.password = "";
-//   next();
-// })
-
-
-// User Model
+// AcademicSemester Model
 export const AcademicSemesterModel = mongoose.model<IAcademicSemester>('AcademicSemester', AcademicSemesterSchema);

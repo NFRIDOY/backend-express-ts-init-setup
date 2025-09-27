@@ -1,5 +1,7 @@
-export type IAcademicSemesterName = "Autumn" | "Summer" | "Fall"
-export type IAcademicSemesterCode = "01" | "02" | "03"
+export type IAcademicSemesterName = "Autumn" | "Summer" | "Fall";
+export const AcademicSemesterNames: IAcademicSemesterName[] = [ "Autumn" , "Summer" , "Fall" ];
+export type IAcademicSemesterCode = "01" | "02" | "03";
+export const AcademicSemesterCodes: IAcademicSemesterCode[] = [ "01" , "02" , "03" ];
 
 export type IMonth =
     | "January"
