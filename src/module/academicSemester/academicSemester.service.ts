@@ -1,9 +1,9 @@
 import { AcademicSemesterModel } from "./academicSemester.model";
 import { IAcademicSemester } from "./academicSemester.interface";
 
-const createAcademicSemesterIntoDB = async (academicSemesterData: IAcademicSemester) => {
+const createAcademicSemesterIntoDB = async (payload: IAcademicSemester) => {
 
-    const result = await AcademicSemesterModel.create(academicSemesterData)
+    const result = await AcademicSemesterModel.create(payload)
     return result;
 }
 const getAllAcademicSemesterFromDB = async () => {
