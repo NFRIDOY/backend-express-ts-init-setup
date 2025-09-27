@@ -121,6 +121,10 @@ const studentSchema = new Schema<IStudent>({
     required: true,
     default: true
   },
+  admissionSemester: {
+    type: Schema.Types.ObjectId,
+    ref: 'AcademicSemester',
+  },
   status: {
     type: String,
     default: 'active',

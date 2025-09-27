@@ -47,6 +47,7 @@ export type IStudent = {
     bloodGroup?: IBloodGroup;
     presentAddress: string;
     permanentAddress: string;
+    admissionSemester: Types.ObjectId;
     isActive: boolean;
     status?: IStatus;
     isDeleted: boolean;

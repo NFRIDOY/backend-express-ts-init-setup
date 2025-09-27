@@ -23,7 +23,7 @@ export const createStudentValidationSchema = z.object({
       guardian: z
         .object({
           name: nameSchema,
-          email: z.string().min(1, "Email is required"),
+          email: z.string().email("Invalid email format").min(1, "Email is required"),
           phone: z.string().min(1, "Phone is required"),
           address: z.string().optional(),
         })
@@ -33,7 +33,7 @@ export const createStudentValidationSchema = z.object({
           z.object({
             id: z.string().min(1, "ID is required"),
             name: nameSchema,
-            email: z.string().min(1, "Email is required"),
+            email: z.string().email("Invalid email format").min(1, "Email is required"),
             phone: z.string().min(1, "Phone is required"),
             address: z.string().optional(),
           })
@@ -42,7 +42,7 @@ export const createStudentValidationSchema = z.object({
       localGuardian: z
         .object({
           name: nameSchema,
-          email: z.string().min(1, "Email is required"),
+          email: z.string().email("Invalid email format").min(1, "Email is required"),
           phone: z.string().min(1, "Phone is required"),
           address: z.string().optional(),
           occupation: z.string().min(1, "Occupation is required"),
@@ -51,6 +51,7 @@ export const createStudentValidationSchema = z.object({
       bloodGroup: z.enum(bloodGroups).optional(),
       presentAddress: z.string().min(1, "Present address is required"),
       permanentAddress: z.string().min(1, "Permanent address is required"),
+      admissionSemester: z.string(),
     })
   })
 });
