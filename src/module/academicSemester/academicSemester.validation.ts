@@ -7,8 +7,10 @@ export const createAcademicSemesterValidationSchema = z.object({
     code: z.enum(AcademicSemesterCodes),
     year: z.string(), // Changed from Date to string
     startMonth: z.enum(Months),
-    endMonth: z.enum(Months), 
+    endMonth: z.enum(Months),
   })
 });
 
-export default createAcademicSemesterValidationSchema;
+export const AcademicSemesterValidationSchema = {
+  createAcademicSemester: createAcademicSemesterValidationSchema
+};

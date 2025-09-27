@@ -56,4 +56,6 @@ export const createStudentValidationSchema = z.object({
   })
 });
 
-export default createStudentValidationSchema;
+export const StudentValidationSchema = {
+  createStudent: createStudentValidationSchema
+};
