@@ -4,7 +4,7 @@ const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFun
     const statusCode = 500;
     const message = err.message || "Something Went Wrong!";
 
-    console.log("Error :>", err)
+    console.log("❌ Error :>", err)
 
     return res.status(statusCode).json({
         success: false,
