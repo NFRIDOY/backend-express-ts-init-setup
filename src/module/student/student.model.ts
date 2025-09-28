@@ -86,7 +86,7 @@ const studentSchema = new Schema<IStudent>({
     trim: true,
   },
   dateOfBirth: {
-    type: Date,
+    type: String,
     required: false,
   },
   gender: {

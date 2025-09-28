@@ -1,9 +1,11 @@
 import config from "../../../config";
 import { IAcademicSemester } from "../../academicSemester/academicSemester.interface";
+import { AcademicSemesterModel } from "../../academicSemester/academicSemester.model";
 import { IStudent } from "../../student/student.interface";
 import { Student } from "../../student/student.model";
 import { IUser } from "./user.interface";
 import { UserModel } from "./user.model";
+import { generateStudentId } from "./user.utils";
 
 
 const createUserIntoDB = async (user: IUser): Promise<IUser> => {
@@ -20,14 +22,21 @@ const createStudentIntoDB = async (password: string, studentData: IStudent) => {
     //set student role
     userData.role = "student";
 
-    // Genarate Student ID
-    const getStudentId = (payload: IAcademicSemester) => {
-        
+    // get academicSemester
+    const academicSemester = await AcademicSemesterModel.findOne({
+        _id: studentData?.admissionSemester
+    })
+
+    if (!academicSemester) {
+        throw new Error('Academic semester not found');
     }
 
     //set manually generated it
     // userData.id = '2030100002';
-    userData.id = String('2025' + Math.floor(100000 + Math.random()* 900000));
+    // userData.id = String('2025' + Math.floor(100000 + Math.random()* 900000));
+    
+    // Genareted ID
+    userData.id = await generateStudentId(academicSemester);
 
     //set status
     userData.status = "in-progress";
