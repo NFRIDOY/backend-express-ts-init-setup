@@ -9,6 +9,7 @@ export const validateRequest = (schema: ZodObject): RequestHandler => {
             })
             next();
         } catch (err) {
+            console.error("❌ Validation failed:", err);
             next(err)
         }
     }
