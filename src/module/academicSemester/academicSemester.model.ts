@@ -46,8 +46,8 @@ const AcademicSemesterSchema = new Schema<IAcademicSemester>({
 // ✨ check a year one semeter type (e.g. 2025 has one Autumn and one Summer and one Fall)
 AcademicSemesterSchema.pre("save", async function(next) {
   const isSemeterExists = await AcademicSemesterModel.find({
+    year: this.year,
     name: this.name,
-    year: this.year
   })
 
   if(isSemeterExists) {
