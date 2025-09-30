@@ -14,6 +14,7 @@ export const createStudentValidationSchema = z.object({
       name: nameSchema,
       email: z.string().email("Invalid email format").min(1, "Email is required"),
       phone: z.string().min(1, "Phone is required"),
+      emergencyPhone: z.string().optional(),
       dateOfBirth: z.string().optional(),
       // dateOfBirth: z.string().refine(val => !isNaN(Date.parse(val)), {
       //   message: "Invalid date format",

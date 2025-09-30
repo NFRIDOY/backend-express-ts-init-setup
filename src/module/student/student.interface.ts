@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import { IPersonalInfo } from "../common/user/user.interface";
 
 export type IName = {
     firstName: string;
@@ -31,22 +32,14 @@ export interface ILocalGuardian extends IGuardian {
     occupation: string;
 }
 
-export type IStudent = {
+export interface IStudent extends IPersonalInfo {
     id: string;
     user: Types.ObjectId;
-    name: IName;
-    email: string;
-    phone: string;
-    dateOfBirth?: string;
-    gender: IGender;
-    profileImage?: string;
+    
     guardian?: IGuardian;
     parent?: IParent[];
     // parent?: [IParent, IParent?]; /** This allows your student to have 0, 1, or multiple parents. */
     localGuardian?: ILocalGuardian;
-    bloodGroup?: IBloodGroup;
-    presentAddress: string;
-    permanentAddress: string;
     admissionSemester: Types.ObjectId;
     isActive: boolean;
     status?: IStatus;

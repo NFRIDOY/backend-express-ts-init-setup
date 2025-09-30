@@ -85,6 +85,11 @@ const studentSchema = new Schema<IStudent>({
     required: true,
     trim: true,
   },
+  emergencyPhone: {
+    type: String,
+    required: false,
+    trim: true,
+  },
   dateOfBirth: {
     type: String,
     required: false,
