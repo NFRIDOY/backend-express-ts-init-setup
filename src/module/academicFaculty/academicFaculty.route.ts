@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { AcademicFacultyControllers } from "./academicSemester.controller";
+import { AcademicFacultyControllers } from "./academicFaculty.controller";
 import { validateRequest } from "../../middleware/validateRequest";
 import { createAcademicFacultyValidationSchema, updateAcademicFacultyValidationSchema } from "./academicFaculty.validation";
 

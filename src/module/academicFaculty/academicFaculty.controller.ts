@@ -29,7 +29,7 @@ const getAllAcademicFaculty: RequestHandler = catchAsync(async (req, res, _next)
     return sendResponse(res, {
         success: true,
         statusCode: 200,
-        message: "Academic Faculty Retrived",
+        message: "Academic Faculties Retrived",
         data: result,
     })
 
@@ -45,7 +45,7 @@ const getSingleAcademicFaculty: RequestHandler = catchAsync(async (req, res, _ne
     return sendResponse(res, {
         success: true,
         statusCode: 200,
-        message: "Academic Faculty Retrived",
+        message: "One Academic Faculty Retrived",
         data: result,
     })
 
@@ -63,7 +63,7 @@ const updateSingleAcademicFaculty: RequestHandler = catchAsync(async (req, res, 
     return sendResponse(res, {
         success: true,
         statusCode: 200,
-        message: "Academic Faculty Retrived",
+        message: "Academic Faculty Updated",
         data: result,
     })
 
