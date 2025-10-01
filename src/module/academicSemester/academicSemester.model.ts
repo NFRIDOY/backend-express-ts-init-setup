@@ -52,6 +52,7 @@ AcademicSemesterSchema.pre("save", async function(next) {
 
   // console.log({isSemeterExists})
   if(isSemeterExists) {
+    // TODO: throw new AppError instead of Error
     throw new Error("Semeter is already Exists");
   }
 
