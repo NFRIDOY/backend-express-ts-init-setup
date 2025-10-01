@@ -21,7 +21,7 @@ app.use(express.text()); // to recive text
 
 // Routes
 // routes();
-app.use("/api", router)
+app.use("/api/v1", router)
 // app.use("/api/user", userRoute)
 // app.use("/api/student", logger, studentRoute)
 

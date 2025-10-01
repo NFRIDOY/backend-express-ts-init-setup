@@ -10,7 +10,9 @@ export const createAcademicFacultyValidationSchema = z.object({
 
 export const updateAcademicFacultyValidationSchema = z.object({
   body: z.object({
-    name: z.string().optional(),
+    name: z.string({
+      error: "Academic Faculty Must Be String" // zod error
+    }),
   })
 });
 
