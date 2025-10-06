@@ -5,7 +5,6 @@ import path from 'path';
 
 // Middlewares
 import logger from './middleware/logger'
-import routes from './routes/routes';
 import { userRoute } from './module/common/user/user.route';
 import { studentRoute } from './module/student/student.route';
 import { success } from 'zod';
