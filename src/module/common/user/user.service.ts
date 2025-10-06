@@ -6,6 +6,7 @@ import { Student } from "../../student/student.model";
 import { IUser } from "./user.interface";
 import { UserModel } from "./user.model";
 import { generateStudentId } from "./user.utils";
+import AppError from "../../../errors/AppError";
 
 
 const createUserIntoDB = async (user: IUser): Promise<IUser> => {
@@ -28,7 +29,7 @@ const createStudentIntoDB = async (password: string, studentData: IStudent) => {
     })
 
     if (!academicSemester) {
-        throw new Error('Academic semester not found');
+        throw new AppError(404, 'Academic semester not found');
     }
 
     //set manually generated it

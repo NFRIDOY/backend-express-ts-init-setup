@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { Server } from 'http'
 import app from './app'
 import config from './config';
+import AppError from './errors/AppError';
 const PORT = config.port;
 const DATABASE_URL = config.database_url;
 
@@ -9,7 +10,7 @@ let server: Server;
 async function main() {
     try {
         if (!DATABASE_URL) {
-            throw new Error('Database URL is not defined');
+            throw new AppError(400, 'Database URL is not defined');
         }
         await mongoose.connect(DATABASE_URL as string);
 
@@ -20,7 +21,7 @@ async function main() {
         })
     } catch (error) {
         console.log("Error: ", error)
-        // throw new Error('Error Occurred!');
+        throw new AppError(500, 'Error Occurred on main!');
     }
 }
 
