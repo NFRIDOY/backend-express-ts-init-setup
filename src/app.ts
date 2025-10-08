@@ -4,14 +4,9 @@ export const app = express()
 import path from 'path';
 
 // Middlewares
-import logger from './middleware/logger'
-import { userRoute } from './module/common/user/user.route';
-import { studentRoute } from './module/student/student.route';
-import { success } from 'zod';
 import globalErrorHandler from './middleware/globalErrorHandler';
 import notFound from './middleware/notFound';
 import router from './routes';
-// import { userRoute } from './module/common/user/user.route';
 
 // Persers
 app.use(express.json()); // to recive json object
