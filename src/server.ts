@@ -15,8 +15,8 @@ async function main() {
         await mongoose.connect(DATABASE_URL as string);
 
         // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled  
-        
-        app.listen(PORT, () => {
+
+        server = app.listen(PORT, () => {
             console.log(`🚀 Server is online and ready — listening on 🛰️  port ${PORT}`)
         })
     } catch (error) {
@@ -26,6 +26,22 @@ async function main() {
 }
 
 main();
+
+process.on('unhandledRejection', () => {
+    console.log(`😈 unahandledRejection is detected , Shutting Down ...`);
+    if (server) {
+        server.close(() => {
+            process.exit(1);
+        });
+    }
+    process.exit(1);
+});
+
+process.on('uncaughtException', () => {
+    console.log(`😈 uncaughtException is detected , Shutting Down ...`);
+    process.exit(1);
+});
+
 
 // async function bootstrap() {
 //     // ()()
