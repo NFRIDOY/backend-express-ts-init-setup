@@ -15,9 +15,9 @@ const createUserIntoDB = async (user: IUser): Promise<IUser> => {
     return result;
 }
 const createStudentIntoDB = async (password: string, studentData: IStudent) => {
-    const session = await mongoose.startSession();
+    const session = await mongoose.startSession(); // Isolation
     try {
-        session.startTransaction();
+        session.startTransaction(); // Start the Transaction
         console.log({ password })
         console.log({ studentData })
         const userData: Partial<IUser> = {};
@@ -46,7 +46,7 @@ const createStudentIntoDB = async (password: string, studentData: IStudent) => {
         //set status
         userData.status = "in-progress";
     
-        const newUser = await UserModel.create([userData], {session})
+        const newUser = await UserModel.create([userData], {session}) // add on the session
         console.log('newUser', newUser);
         
         if(!newUser.length) throw new AppError(500, "User Creation Failed")
@@ -58,15 +58,15 @@ const createStudentIntoDB = async (password: string, studentData: IStudent) => {
             studentData.id = newUser[0].id;
             studentData.user = newUser[0]._id; //reference _id
     
-            const newStudent = await Student.create([studentData], {session});
+            const newStudent = await Student.create([studentData], {session}); // add on the session
 
-            await session.commitTransaction()
-            await session.endSession()
+            await session.commitTransaction() // sucessfull Transition
+            await session.endSession() // End Isolation
             return newStudent;
         }
     } catch (err) {
-        await session.abortTransaction()
-        await session.endSession();
+        await session.abortTransaction() // Unsucessfull Transition
+        await session.endSession(); // End Isolation
         throw new AppError(500, "Student Creation Into DB Faild", err);
     }
 }
