@@ -1,10 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
+import config, { CONST } from '../config';
 
 const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
     const statusCode = err.statusCode || 500;
     const message = err.message || "Something Went Wrong!";
 
-    console.log("❌ Error :>", err)
+    if(config.NODE_ENV===CONST.DEVELOPMENT) {
+        console.log("❌ Error :>", err)
+    }
 
     return res.status(statusCode).json({
         success: false,
