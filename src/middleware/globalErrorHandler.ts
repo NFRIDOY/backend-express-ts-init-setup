@@ -76,7 +76,7 @@ const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFun
         success: false,
         message,
         errorSources,
-        err,
+        err: config.NODE_ENV === CONST.DEVELOPMENT ? err : '🚨Error🚩',
         stack: config.NODE_ENV === CONST.DEVELOPMENT ? err?.stack : err,
     })
 
