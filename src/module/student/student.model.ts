@@ -143,6 +143,16 @@ const studentSchema = new Schema<IStudent>({
     required: true,
     default: false
   },
+},
+{
+  toJSON: {
+    virtuals: true // [MUST] virtual turned on as option 
+  }
+});
+
+// virtual
+studentSchema.virtual('fullName').get(function () {
+  return `${this.name.firstName} ${this.name.middleName || ''} ${this.name.lastName}`;
 });
 
 // isDeleted checking
