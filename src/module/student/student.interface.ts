@@ -35,12 +35,12 @@ export interface ILocalGuardian extends IGuardian {
 export interface IStudent extends IPersonalInfo {
     id: string;
     user: Types.ObjectId;
-    
     guardian?: IGuardian;
     parent?: IParent[];
     // parent?: [IParent, IParent?]; /** This allows your student to have 0, 1, or multiple parents. */
     localGuardian?: ILocalGuardian;
     admissionSemester: Types.ObjectId;
+    academicDepartment: Types.ObjectId;
     isActive: boolean;
     status?: IStatus;
     isDeleted: boolean;

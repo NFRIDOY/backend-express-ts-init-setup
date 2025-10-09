@@ -130,6 +130,10 @@ const studentSchema = new Schema<IStudent>({
     type: Schema.Types.ObjectId,
     ref: 'AcademicSemester',
   },
+  academicDepartment: {
+    type: Schema.Types.ObjectId,
+    ref: 'AcademicDepartment',
+  },
   status: {
     type: String,
     default: 'active',
