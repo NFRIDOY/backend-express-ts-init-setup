@@ -54,7 +54,27 @@ const getSingleStudent: RequestHandler = catchAsync(async (req, res) => {
     return sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
-        message: "Students are retrived successfully",
+        message: "The student is retrived successfully",
+        data: result,
+    })
+})
+const updateStudent: RequestHandler = catchAsync(async (req, res) => {
+    const isExist = await studentService.getSingleStudentByStudentIdFromDB(req.params?.id);
+
+    if (!isExist) {
+        return sendErrorResponse(res, {
+            statusCode: 404,
+            message: "Student Not Found",
+            data: {},
+        });
+    }
+    
+    const result = await studentService.updateStudentByStudentIdOnDB(req.params?.id, req.body);
+
+    return sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Student is update successfully",
         data: result,
     })
 })
@@ -63,4 +83,5 @@ export const studentController = {
     createStudent,
     getAllStudents,
     getSingleStudent,
+    updateStudent
 }

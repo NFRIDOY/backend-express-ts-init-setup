@@ -86,7 +86,7 @@ const deleteStudentByStudentIdFromDB = async (studentID: string): Promise<IUser 
         const studentDeleted = await Student.findOneAndUpdate(
             { id: studentID },
             { isDeleted: true },
-            { new: true, session } // Use session here
+            { new: true, session } // Use `session` here // `new` is useing for returning the updated value
         );
         console.log("studentDeleted", studentDeleted)
         if(!studentDeleted) 
@@ -95,7 +95,7 @@ const deleteStudentByStudentIdFromDB = async (studentID: string): Promise<IUser 
         const userDeleted = await UserModel.findOneAndUpdate(
             { _id: studentDeleted?.user },
             { isDeleted: true },
-            { new: true, session } // Use session here
+            { new: true, session } // Use `session` here // `new` is useing for returning the updated value
         );
         
         console.log("userDeleted", userDeleted)
