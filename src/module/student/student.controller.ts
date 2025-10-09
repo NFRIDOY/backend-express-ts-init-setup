@@ -45,6 +45,7 @@ const getSingleStudent: RequestHandler = catchAsync(async (req, res) => {
 
     if (!result) {
         return sendErrorResponse(res, {
+            statusCode: 404,
             message: "Student Not Found",
             data: {},
         });
