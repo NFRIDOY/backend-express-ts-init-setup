@@ -9,7 +9,7 @@ export const nameSchema = new Schema<IName>({
     trim: true,
     maxlength: [20, "Max Length is 20 Charecters"],
     validate: {
-      validator: function(value: string) {
+      validator: function (value: string) {
         const validStr = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase() // Custome Capitalized Logic
         return validStr === value;
       },
@@ -144,6 +144,17 @@ const studentSchema = new Schema<IStudent>({
     default: false
   },
 });
+
+// isDeleted checking
+studentSchema.pre('find', async function (next) {
+  this.find({ isDeleted: { $ne: true } })
+  next();
+})
+
+studentSchema.pre('findOne', async function (next) {
+  this.find({ isDeleted: { $ne: true } })
+  next();
+})
 
 // dont show user _id
 // studentSchema.post('save', function (doc, next) {
