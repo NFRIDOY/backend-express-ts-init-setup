@@ -1,5 +1,5 @@
 import httpStutus from 'http-status';
-import { sendResponse } from './../../../utils/response/sendResponse';
+import { sendErrorResponse, sendResponse } from './../../../utils/response/sendResponse';
 import { RequestHandler } from "express";
 import { userService } from "./user.service";
 import { catchAsync } from '../../../utils/catchAsync';
@@ -55,8 +55,47 @@ const allUsers: RequestHandler = catchAsync(async (req, res, next) => {
 
 })
 
+const deleteStudent: RequestHandler = catchAsync(async (req, res) => {
+    const result = await userService.deleteStudentByStudentIdFromDB(req.params?.id);
+
+    if (!result) {
+        return sendErrorResponse(res, {
+            message: "Student Not Found",
+            data: {},
+        });
+    }
+
+    return sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Students is Deleted Successfully",
+        data: result,
+    })
+})
+
+const undeleteStudent: RequestHandler = catchAsync(async (req, res) => {
+    const result = await userService.undeletedStudentByStudentIdFromDB(req.params?.id);
+
+    if (!result) {
+        return sendErrorResponse(res, {
+            message: "Student Not Found",
+            data: {},
+        });
+    }
+
+    return sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Students is Deleted Successfully",
+        data: result,
+    })
+})
 
 export const userController = {
     createStudent,
     allUsers,
+
+    deleteStudent,
+    undeleteStudent,
+    
 }
