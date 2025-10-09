@@ -58,6 +58,17 @@ UserSchema.post('save', function (doc, next) {
     next();
 })
 
+// TODO: return all data with isDeleted : false
+
+// // Hide password in all outputs
+// UserSchema.set('toJSON', {
+//     transform: function (doc, ret) {
+//       delete ret.password;
+//       return ret;
+//     }
+//   });
+  
+
 
 // User Model
 export const UserModel = mongoose.model('User', UserSchema);

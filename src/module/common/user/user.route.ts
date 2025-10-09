@@ -7,5 +7,7 @@ import { validateRequest } from '../../../middleware/validateRequest';
 
 // router.get('/', userController.allUsers) 
 router.post('/create-student', validateRequest(createStudentValidationSchema), userController.createStudent);
+router.delete('/undelete/:id', userController.undeleteStudent);
+router.delete('/:id', userController.deleteStudent);
 
 export const userRoute = router

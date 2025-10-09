@@ -6,13 +6,17 @@ const createStudentIntoDB = async (student: IStudent): Promise<IStudent> => {
     return result;
 }
 const getAllStudentFromDB = async (): Promise<IStudent[]> => {
-    // TODO: use populate to get the full details of the student
-    const result = await Student.find().populate('admissionSemester');
+    const result = await Student.find().populate('admissionSemester').populate({
+      path: 'user',
+      select: '-_id -password -__v', // Exclude the password field
+    });
     return result;
 }
 const getSingleStudentByStudentIdFromDB = async (studentID: string): Promise<IStudent | null> => {
-    // TODO: use populate to get the full details of the student
-    const result = await Student.findOne({ id: studentID }).populate('admissionSemester');
+    const result = await Student.findOne({ id: studentID }).populate('admissionSemester').populate({
+      path: 'user',
+      select: '-_id -password -__v', // Exclude the password field
+    });
     return result;
 }
 
