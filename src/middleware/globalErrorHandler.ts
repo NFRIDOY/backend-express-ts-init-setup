@@ -19,7 +19,7 @@ const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFun
         }
     ]
 
-    if (config.NODE_ENV === CONST.DEVELOPMENT) {
+    if (config.NODE_ENV === CONST.development) {
         console.log("❌ Error :>", err)
     }
 
@@ -76,8 +76,8 @@ const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFun
         success: false,
         message,
         errorSources,
-        err: config.NODE_ENV === CONST.DEVELOPMENT ? err : '🚨Error🚩',
-        stack: config.NODE_ENV === CONST.DEVELOPMENT ? err?.stack : err,
+        err: config.NODE_ENV === CONST.development ? err : '🚨Error🚩',
+        stack: config.NODE_ENV === CONST.development ? err?.stack : '🚨Error🚩',
     })
 
     // return sendResponse(res, {

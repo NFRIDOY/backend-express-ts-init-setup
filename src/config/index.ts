@@ -13,6 +13,7 @@ export default{
 }
 
 export const CONST = {
-    DEVELOPMENT: "development",
-    PROUDUCTION: "production",
+    development: "development",
+    production: "production",
+    defaultClassifiedFields: '-_id -password -__v',
 } as const

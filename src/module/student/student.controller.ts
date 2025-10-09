@@ -60,6 +60,7 @@ const getSingleStudent: RequestHandler = catchAsync(async (req, res) => {
 })
 const updateStudent: RequestHandler = catchAsync(async (req, res) => {
     const isExist = await studentService.getSingleStudentByStudentIdFromDB(req.params?.id);
+    const { student: studentData } = req.body;
 
     if (!isExist) {
         return sendErrorResponse(res, {
@@ -69,7 +70,7 @@ const updateStudent: RequestHandler = catchAsync(async (req, res) => {
         });
     }
     
-    const result = await studentService.updateStudentByStudentIdOnDB(req.params?.id, req.body);
+    const result = await studentService.updateStudentByStudentIdOnDB(req.params?.id, studentData);
 
     return sendResponse(res, {
         statusCode: httpStatus.OK,
