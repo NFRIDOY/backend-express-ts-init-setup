@@ -155,12 +155,13 @@ studentSchema.virtual('fullName').get(function () {
   return `${this.name.firstName} ${this.name.middleName || ''} ${this.name.lastName}`;
 });
 
-// isDeleted checking
+// isDeleted checking // unavilable to get for for every find operation
 studentSchema.pre('find', async function (next) {
   this.find({ isDeleted: { $ne: true } })
   next();
 })
 
+// isDeleted checking // unavilable to get for for every find operation
 studentSchema.pre('findOne', async function (next) {
   this.find({ isDeleted: { $ne: true } })
   next();

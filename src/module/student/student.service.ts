@@ -25,7 +25,6 @@ const getSingleStudentByStudentIdFromDB = async (studentID: string): Promise<ISt
 
 const updateStudentByStudentIdOnDB = async (studentID: string, payload: Partial<IStudent>): Promise<IStudent | null> => {
   try {
-    // TODO: handle update non-primitive date 
     const { name, guardian, parent, localGuardian, ...remainingStudentData } = payload;
 
 const modifiedUpdatedData: Record<string, unknown> = {
