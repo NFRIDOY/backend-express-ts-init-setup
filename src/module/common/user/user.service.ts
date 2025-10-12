@@ -10,6 +10,7 @@ import mongoose from "mongoose";
 import { IFaculty } from "../../faculty/faculty.interface";
 import { AcademicDepartmentModel } from "../../academicDepartment/academicDepartment.model";
 import { FacultyModel } from "../../faculty/faculty.model";
+import generateCode from "../../faculty/faculty.generateCode";
 
 
 const createUserIntoDB = async (user: IUser): Promise<IUser> => {
@@ -94,7 +95,7 @@ const createFacultyIntoDB = async (password: string, payload: IFaculty) => {
         if (!academicDepartment) {
             throw new AppError(404, 'Academic Department not found');
         }
-
+        console.log("academicDepartment", academicDepartment)
         // TODO: Genareted Faculty ID 
         userData.id = await generateFacultyId(academicDepartment);
 
@@ -106,12 +107,23 @@ const createFacultyIntoDB = async (password: string, payload: IFaculty) => {
 
         if (!newUser.length) throw new AppError(500, "User Creation Failed")
 
+        // TODO: getall facultyCodes
+        const existingCodes = await FacultyModel.find({}, 'facultyCode').lean();
+        const existingCodeSet = new Set(existingCodes.map(doc => doc.facultyCode));
+
+        console.log("existingCodes", existingCodes)
+        console.log("codeSet", existingCodeSet)
+
+        // await session.abortTransaction()
+        // throw new AppError(500, "existingCodes")
+
         //create a student
         // if (Object.keys(newUser).length) {
         if (newUser.length && payload) {
             // set id as student id, _id as user
             payload.id = newUser[0].id;
             payload.user = newUser[0]._id; //reference _id
+            payload.facultyCode = await generateCode(payload?.name, existingCodeSet)
 
             const newFaculty = await FacultyModel.create([payload], { session }); // add on the session
 

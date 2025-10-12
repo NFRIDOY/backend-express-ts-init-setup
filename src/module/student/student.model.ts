@@ -1,6 +1,7 @@
 import { Schema, model, connect } from 'mongoose';
-import { bloodGroups, GENDER_LIST, IGuardian, ILocalGuardian, IName, IStudent } from './student.interface';
+import { IGuardian, ILocalGuardian, IStudent } from './student.interface';
 import { nameSchema } from '../common/user/user.model';
+import { bloodGroups, GENDER_LIST } from '../common/user/user.interface';
 
 
 

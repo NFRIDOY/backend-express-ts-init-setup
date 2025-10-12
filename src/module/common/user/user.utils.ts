@@ -65,12 +65,12 @@ export const generateFacultyId = async (payload: IAcademicDepartment) => {
 
   if (lastFacultyId && lastFacultyCode === newFacultyDepartmentCode) {
     currentId = lastFacultyId?.substring(6)
+    console.log("currentId-=", currentId)
   }
   incrementId = (Number(currentId) + 1).toString().padStart(4, '0');
   // 0001+ 1 = 2
 
   incrementId = `F${thisYear}${payload.code}${incrementId}`;
   console.log("id = ", incrementId)
-
   return incrementId;
 };
