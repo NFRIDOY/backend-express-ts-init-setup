@@ -1,3 +1,4 @@
+
 import { IBloodGroup, IGender, IName } from "../../student/student.interface";
 
 export type IRole = 'admin' | 'student' | 'faculty';
