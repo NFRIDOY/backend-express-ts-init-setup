@@ -5,26 +5,26 @@ import httpStatus from "http-status";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendErrorResponse, sendResponse } from "../../utils/response/sendResponse";
 
-const createStudent: RequestHandler = catchAsync(async (req, res) => {
-    const { password, student: studentData } = req.body;
-    const result = await userService.createStudentIntoDB(password, studentData);
+// const createStudent: RequestHandler = catchAsync(async (req, res) => {
+//     const { password, student: studentData } = req.body;
+//     const result = await userService.createStudentIntoDB(password, studentData);
 
-    if (!result) {
-        return sendErrorResponse(res, {
-            message: "Student creation failed",
-            data: {},
-        });
-    }
+//     if (!result) {
+//         return sendErrorResponse(res, {
+//             message: "Student creation failed",
+//             data: {},
+//         });
+//     }
 
-    return sendResponse(res, {
-        statusCode: httpStatus.OK,
-        success: true,
-        message: "Student created successfully",
-        data: result,
-    })
-})
+//     return sendResponse(res, {
+//         statusCode: httpStatus.OK,
+//         success: true,
+//         message: "Student created successfully",
+//         data: result,
+//     })
+// })
 const getAllStudents: RequestHandler = catchAsync(async (req, res) => {
-    const result = await studentService.getAllStudentFromDB();
+    const result = await studentService.getAllStudentFromDB(req?.query);
     
     if (!result) {
         return sendErrorResponse(res, {
@@ -81,7 +81,6 @@ const updateStudent: RequestHandler = catchAsync(async (req, res) => {
 })
 
 export const studentController = {
-    createStudent,
     getAllStudents,
     getSingleStudent,
     updateStudent

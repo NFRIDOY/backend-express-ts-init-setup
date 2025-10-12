@@ -7,7 +7,7 @@ import { StudentValidationSchema } from './student.validation';
 
 const router = express.Router();
 
-router.post('/create-student', validateRequest(StudentValidationSchema.createStudent), studentController.createStudent);
+router.post('/create-student', validateRequest(StudentValidationSchema.createStudent), userController.createStudent);
 router.get('/', studentController.getAllStudents);
 router.get('/:id', studentController.getSingleStudent);
 router.patch('/:id', validateRequest(StudentValidationSchema.updateStudent), studentController.updateStudent);
