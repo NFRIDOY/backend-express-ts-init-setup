@@ -1,17 +1,6 @@
 import z from "zod";
-import { bloodGroups, GENDER_LIST, STATUS_LIST } from "./student.interface";
-
-export const nameSchema = z.object({
-  firstName: z.string().trim().min(1, "First name is required"),
-  middleName: z.string().trim().optional(),
-  lastName: z.string().trim().min(1, "Last name is required"),
-});
-
-export const nameSchemaOptional = z.object({
-  firstName: z.string().trim().optional(),
-  middleName: z.string().trim().optional(),
-  lastName: z.string().trim().optional(),
-});
+import { bloodGroups, GENDER_LIST } from "../common/user/user.interface";
+import { nameSchema } from "../common/user/user.validation";
 
 export const createStudentValidationSchema = z.object({
   body: z.object({

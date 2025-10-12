@@ -1,16 +1,5 @@
 import { Types } from "mongoose";
-import { IPersonalInfo } from "../common/user/user.interface";
-
-export type IName = {
-    firstName: string;
-    middleName?: string;
-    lastName: string;
-}
-
-export const GENDER_LIST = ["male", "female", "other"] as const;
-export type IGender = "male" | "female" | "other";
-export type IBloodGroup = "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-";
-export const bloodGroups: IBloodGroup[] = [ "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-",];
+import { IName, IPersonalInfo } from "../common/user/user.interface";
 
 export type IStatus = "active" | "inactive" | "pending" | "blocked" | "deleted";
 export const STATUS_LIST: IStatus[] = ["active", "inactive", "pending", "blocked", "deleted"];

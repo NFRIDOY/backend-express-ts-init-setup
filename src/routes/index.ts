@@ -5,6 +5,8 @@ import logger from "../middleware/logger";
 import { AcademicSemesterRoute } from "../module/academicSemester/academicSemester.route";
 import { AcademicFacultyRoute } from "../module/academicFaculty/academicFaculty.route";
 import { AcademicDepartmentRoute } from "../module/academicDepartment/academicFaculty.route";
+import { adminRoute } from "../module/admin/admin.route";
+import { facultyRoute } from "../module/faculty/faculty.route";
 
 const router = Router();
 
@@ -29,6 +31,14 @@ const moduleRoutes = [
     {
         path: '/academic-department',
         route: AcademicDepartmentRoute,
+    },
+    {
+        path: '/faculty',
+        route: facultyRoute,
+    },
+    {
+        path: '/admin',
+        route: adminRoute,
     },
 ]
 

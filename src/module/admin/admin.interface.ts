@@ -7,9 +7,7 @@ import { IPersonalInfo, IStatus } from "../common/user/user.interface";
 export interface IAdmin extends IPersonalInfo {
     id: string;
     user: Types.ObjectId;
-    designation: string;
     adminCode?: string;
-    academicDepartment: Types.ObjectId;
     isActive: boolean;
     status?: IStatus;
     isDeleted: boolean;

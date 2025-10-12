@@ -1,6 +1,6 @@
 import z from "zod";
-import { nameSchema } from "../student/student.validation";
-import { bloodGroups, GENDER_LIST } from "../student/student.interface";
+import { nameSchema } from "../common/user/user.validation";
+import { bloodGroups, GENDER_LIST } from "../common/user/user.interface";
 
 export const createAdminValidationSchema = z.object({
   body: z.object({

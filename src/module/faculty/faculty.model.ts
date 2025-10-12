@@ -1,9 +1,10 @@
 import { Schema, model, connect } from 'mongoose';
 import { IFaculty } from './faculty.interface';
-import { nameSchema } from '../student/student.model';
-import { bloodGroups, GENDER_LIST } from '../student/student.interface';
+import { bloodGroups, GENDER_LIST } from '../common/user/user.interface';
+import { nameSchema } from '../common/user/user.model';
 
-// This is the main schema for the student model
+
+// This is the main schema for the faculty model
 const FacultySchema = new Schema<IFaculty>({
   id: {
     type: String,

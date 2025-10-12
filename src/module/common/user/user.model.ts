@@ -1,7 +1,34 @@
 import mongoose, { Schema } from "mongoose";
-import { IUser, statusList, userRoles } from "./user.interface";
+import { IName, IUser, statusList, userRoles } from "./user.interface";
 import config from "../../../config";
 import bcrypt from "bcrypt";
+
+// Name Schema
+export const nameSchema = new Schema<IName>({
+    firstName: {
+      type: String,
+      required: [true, 'First Name is required'],
+      trim: true,
+      maxlength: [20, "Max Length is 20 Charecters"],
+      validate: {
+        validator: function (value: string) {
+          const validStr = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase() // Custome Capitalized Logic
+          return validStr === value;
+        },
+        message: "{VALUE} is not Capitalized.",
+      }
+    },
+    middleName: {
+      type: String,
+      required: false,
+      trim: true,
+    },
+    lastName: {
+      type: String,
+      required: [true, 'Last Name is required'],
+      trim: true,
+    }
+  })
 
 // User Schema
 const UserSchema = new Schema<IUser>({

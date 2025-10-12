@@ -1,32 +1,8 @@
 import { Schema, model, connect } from 'mongoose';
 import { bloodGroups, GENDER_LIST, IGuardian, ILocalGuardian, IName, IStudent } from './student.interface';
+import { nameSchema } from '../common/user/user.model';
 
-// Name Schema
-export const nameSchema = new Schema<IName>({
-  firstName: {
-    type: String,
-    required: [true, 'First Name is required'],
-    trim: true,
-    maxlength: [20, "Max Length is 20 Charecters"],
-    validate: {
-      validator: function (value: string) {
-        const validStr = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase() // Custome Capitalized Logic
-        return validStr === value;
-      },
-      message: "{VALUE} is not Capitalized.",
-    }
-  },
-  middleName: {
-    type: String,
-    required: false,
-    trim: true,
-  },
-  lastName: {
-    type: String,
-    required: [true, 'Last Name is required'],
-    trim: true,
-  }
-})
+
 
 const baseGuardianFields = {
   name: nameSchema,

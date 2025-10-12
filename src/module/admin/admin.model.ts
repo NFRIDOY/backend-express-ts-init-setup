@@ -1,8 +1,7 @@
 import { Schema, model, connect } from 'mongoose';
 import { IAdmin } from './admin.interface';
-import { nameSchema } from '../student/student.model';
-import { bloodGroups, GENDER_LIST } from '../student/student.interface';
-
+import { nameSchema } from '../common/user/user.model';
+import { bloodGroups, GENDER_LIST } from '../common/user/user.interface';
 
 // This is the main schema for the admin model
 const AdminSchema = new Schema<IAdmin>({
@@ -67,10 +66,6 @@ const AdminSchema = new Schema<IAdmin>({
     type: String,
     required: true,
   },
-  designation: {
-    type: String,
-    required: true,
-  },
   adminCode: {
     type: String,
     required: false,
@@ -79,10 +74,6 @@ const AdminSchema = new Schema<IAdmin>({
     type: Boolean,
     required: true,
     default: true
-  },
-  academicDepartment: {
-    type: Schema.Types.ObjectId,
-    ref: 'AcademicDepartment',
   },
   status: {
     type: String,

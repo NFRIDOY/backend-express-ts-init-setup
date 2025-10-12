@@ -1,11 +1,9 @@
 import z from "zod";
-import { bloodGroups, GENDER_LIST } from "../student/student.interface";
-import { nameSchema } from "../student/student.validation";
 
-export const createStudentValidationSchema = z.object({
+export const createFacultyValidationSchema = z.object({
   body: z.object({
     password: z.string(),
-    student: z.object({
+    faculty: z.object({
       name: nameSchema,
       email: z.string().email("Invalid email format").min(1, "Email is required"),
       phone: z.string().min(1, "Phone is required"),
@@ -53,9 +51,9 @@ export const createStudentValidationSchema = z.object({
   })
 });
 
-export const updateStudentValidationSchema = z.object({
+export const updateFacultyValidationSchema = z.object({
   body: z.object({
-    student: z.object({
+    faculty: z.object({
       name: nameSchema.partial().optional(),
       email: z.string().email("Invalid email format").min(1, "Email is required").optional(),
       phone: z.string().min(1, "Phone is required").optional(),
@@ -100,22 +98,22 @@ export const updateStudentValidationSchema = z.object({
   }).optional()
 });
 
-export const StudentValidationSchema = {
-  createStudent: createStudentValidationSchema,
-  updateStudent: updateStudentValidationSchema
+export const FacultyValidationSchema = {
+  createFaculty: createFacultyValidationSchema,
+  updateFaculty: updateFacultyValidationSchema
 };
 
 /**
- * Student REQUEST obj
+ * Faculty REQUEST obj
 {
   "password": "123456",
-  "student": {
+  "faculty": {
     "name": {
       "firstName": "Muhammad",
       "middleName": "Salahuddin",
       "lastName": "Ali"
     },
-    "email": "muhammad.ali@student.edu.bd",
+    "email": "muhammad.ali@faculty.edu.bd",
     "phone": "01711223344",
     "emergencyPhone": "01899887766",
     "dateOfBirth": "2006-03-21",

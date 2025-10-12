@@ -1,17 +1,17 @@
 import { RequestHandler } from "express"
-import { studentService } from "./student.service";
+import { facultyService } from "./faculty.service";
 import { userService } from "../common/user/user.service";
 import httpStatus from "http-status";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendErrorResponse, sendResponse } from "../../utils/response/sendResponse";
 
-// const createStudent: RequestHandler = catchAsync(async (req, res) => {
-//     const { password, student: studentData } = req.body;
-//     const result = await userService.createStudentIntoDB(password, studentData);
+// const createFaculty: RequestHandler = catchAsync(async (req, res) => {
+//     const { password, faculty: facultyData } = req.body;
+//     const result = await userService.createFacultyIntoDB(password, facultyData);
 
 //     if (!result) {
 //         return sendErrorResponse(res, {
-//             message: "Student creation failed",
+//             message: "Faculty creation failed",
 //             data: {},
 //         });
 //     }
@@ -19,16 +19,16 @@ import { sendErrorResponse, sendResponse } from "../../utils/response/sendRespon
 //     return sendResponse(res, {
 //         statusCode: httpStatus.OK,
 //         success: true,
-//         message: "Student created successfully",
+//         message: "Faculty created successfully",
 //         data: result,
 //     })
 // })
-const getAllStudents: RequestHandler = catchAsync(async (req, res) => {
-    const result = await studentService.getAllStudentFromDB(req?.query);
+const getAllFacultys: RequestHandler = catchAsync(async (req, res) => {
+    const result = await facultyService.getAllFacultyFromDB(req?.query);
     
     if (!result) {
         return sendErrorResponse(res, {
-            message: "Student retrivale failed",
+            message: "Faculty retrivale failed",
             data: [],
         });
     }
@@ -36,17 +36,17 @@ const getAllStudents: RequestHandler = catchAsync(async (req, res) => {
     return sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
-        message: "Students are retrived successfully",
+        message: "Facultys are retrived successfully",
         data: result,
     })
 })
-const getSingleStudent: RequestHandler = catchAsync(async (req, res) => {
-    const result = await studentService.getSingleStudentByStudentIdFromDB(req.params?.id);
+const getSingleFaculty: RequestHandler = catchAsync(async (req, res) => {
+    const result = await facultyService.getSingleFacultyByFacultyIdFromDB(req.params?.id);
 
     if (!result) {
         return sendErrorResponse(res, {
             statusCode: 404,
-            message: "Student Not Found",
+            message: "Faculty Not Found",
             data: {},
         });
     }
@@ -54,34 +54,34 @@ const getSingleStudent: RequestHandler = catchAsync(async (req, res) => {
     return sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
-        message: "The student is retrived successfully",
+        message: "The faculty is retrived successfully",
         data: result,
     })
 })
-const updateStudent: RequestHandler = catchAsync(async (req, res) => {
-    const isExist = await studentService.getSingleStudentByStudentIdFromDB(req.params?.id);
-    const { student: studentData } = req.body;
+const updateFaculty: RequestHandler = catchAsync(async (req, res) => {
+    const isExist = await facultyService.getSingleFacultyByFacultyIdFromDB(req.params?.id);
+    const { faculty: facultyData } = req.body;
 
     if (!isExist) {
         return sendErrorResponse(res, {
             statusCode: 404,
-            message: "Student Not Found",
+            message: "Faculty Not Found",
             data: {},
         });
     }
     
-    const result = await studentService.updateStudentByStudentIdOnDB(req.params?.id, studentData);
+    const result = await facultyService.updateFacultyByFacultyIdOnDB(req.params?.id, facultyData);
 
     return sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
-        message: "Student is update successfully",
+        message: "Faculty is update successfully",
         data: result,
     })
 })
 
-export const studentController = {
-    getAllStudents,
-    getSingleStudent,
-    updateStudent
+export const facultyController = {
+    getAllFacultys,
+    getSingleFaculty,
+    updateFaculty
 }

@@ -1,5 +1,16 @@
 import z from "zod";
-import { statusList, userRoles } from "./user.interface";
+
+export const nameSchema = z.object({
+  firstName: z.string().trim().min(1, "First name is required"),
+  middleName: z.string().trim().optional(),
+  lastName: z.string().trim().min(1, "Last name is required"),
+});
+
+export const nameSchemaOptional = z.object({
+  firstName: z.string().trim().optional(),
+  middleName: z.string().trim().optional(),
+  lastName: z.string().trim().optional(),
+});
 
 export const UserValidationSchema = z.object({
     // id: z.string(), // genareted by backend

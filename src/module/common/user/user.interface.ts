@@ -1,5 +1,5 @@
-
-import { IBloodGroup, IGender, IName } from "../../student/student.interface";
+export type IBloodGroup = "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-";
+export const bloodGroups: IBloodGroup[] = [ "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-",];
 
 export type IRole = 'admin' | 'student' | 'faculty';
 export const userRoles: IRole[]= ['admin' , 'student' , 'faculty'] as const;
@@ -11,6 +11,14 @@ export const userRoles: IRole[]= ['admin' , 'student' , 'faculty'] as const;
 export const statusList = ['in-progress', 'active', 'blocked'] as const;
 export type IStatus = typeof statusList[number];        // typeof array[number]
 
+export const GENDER_LIST = ["male", "female", "other"] as const;
+export type IGender = "male" | "female" | "other";
+
+export type IName = {
+    firstName: string;
+    middleName?: string;
+    lastName: string;
+}
 export interface IPersonalInfo {
     name: IName;
     email: string;
