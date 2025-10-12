@@ -1,12 +1,14 @@
 // year semesterCode 4digit number
 
+import { IAcademicDepartment } from "../../academicDepartment/academicDepartment.interface";
 import { IAcademicSemester } from "../../academicSemester/academicSemester.interface";
+import { IRole } from "./user.interface";
 import { UserModel } from "./user.model";
 
-const findLastStudentId = async () => {
+const findLastIdOfThisRole = async (role: IRole) => {
   const lastStudent = await UserModel.findOne(
     {
-      role: 'student',
+      role: role,
     },
     {
       id: 1,
@@ -25,7 +27,7 @@ export const generateStudentId = async (payload: IAcademicSemester) => {
   // first time 0000
   //0001  => 1
   let currentId = (0).toString();
-  const lastStudentId = await findLastStudentId()
+  const lastStudentId = await findLastIdOfThisRole("student")
   const lastStudentCode = lastStudentId?.substring(4, 6) // 01
   const lastStudentYear = lastStudentId?.substring(0, 4) // 2025
   const newStudentSemesterCode = payload.code;
@@ -41,6 +43,33 @@ export const generateStudentId = async (payload: IAcademicSemester) => {
 
 
   incrementId = `${payload.year}${payload.code}${incrementId}`;
+  console.log("id = ", incrementId)
+
+  return incrementId;
+};
+
+export const generateFacultyId = async (payload: IAcademicDepartment) => {
+  /** 
+   * example: 2025010001
+   * year + department + 0000
+   * */ 
+  // first time 0000
+  //0001  => 1
+  let currentId = (0).toString();
+  const lastFacultyId = await findLastIdOfThisRole("faculty")
+  const lastFacultyCode = lastFacultyId?.substring(4, 6) // 01
+  // const lastStudentYear = lastStudentId?.substring(0, 4) // 2025
+  const thisYear = new Date().getFullYear();
+  const newFacultyDepartmentCode = payload.code;
+  let incrementId = '';
+
+  if (lastFacultyId && lastFacultyCode === newFacultyDepartmentCode) {
+    currentId = lastFacultyId?.substring(6)
+  }
+  incrementId = (Number(currentId) + 1).toString().padStart(4, '0');
+  // 0001+ 1 = 2
+
+  incrementId = `F${thisYear}${payload.code}${incrementId}`;
   console.log("id = ", incrementId)
 
   return incrementId;

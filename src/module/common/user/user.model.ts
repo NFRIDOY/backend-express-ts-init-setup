@@ -85,7 +85,7 @@ UserSchema.post('save', function (doc, next) {
     next();
 })
 
-// TODO: return all data with isDeleted : false
+// return all data with isDeleted : false
 
 // // Hide password in all outputs
 // UserSchema.set('toJSON', {

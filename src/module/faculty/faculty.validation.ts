@@ -11,43 +11,13 @@ export const createFacultyValidationSchema = z.object({
       phone: z.string().min(1, "Phone is required"),
       emergencyPhone: z.string().optional(),
       dateOfBirth: z.string().optional(),
-      // dateOfBirth: z.string().refine(val => !isNaN(Date.parse(val)), {
-      //   message: "Invalid date format",
-      // }),
       gender: z.enum(GENDER_LIST),
       profileImage: z.string().optional(),
-      guardian: z
-        .object({
-          name: nameSchema,
-          email: z.string().email("Invalid email format").min(1, "Email is required"),
-          phone: z.string().min(1, "Phone is required"),
-          address: z.string().optional(),
-        })
-        .optional(),
-      parent: z
-        .array(
-          z.object({
-            id: z.string().min(1, "ID is required"),
-            name: nameSchema,
-            email: z.string().email("Invalid email format").min(1, "Email is required"),
-            phone: z.string().min(1, "Phone is required"),
-            address: z.string().optional(),
-          })
-        )
-        .optional(),
-      localGuardian: z
-        .object({
-          name: nameSchema,
-          email: z.string().email("Invalid email format").min(1, "Email is required"),
-          phone: z.string().min(1, "Phone is required"),
-          address: z.string().optional(),
-          occupation: z.string().min(1, "Occupation is required"),
-        })
-        .optional(),
       bloodGroup: z.enum(bloodGroups).optional(),
       presentAddress: z.string().min(1, "Present address is required"),
       permanentAddress: z.string().min(1, "Permanent address is required"),
-      admissionSemester: z.string(),
+      designation: z.string(),
+      facultyCode: z.string().optional(),
       academicDepartment: z.string(),
     })
   })
@@ -55,49 +25,23 @@ export const createFacultyValidationSchema = z.object({
 
 export const updateFacultyValidationSchema = z.object({
   body: z.object({
+    password: z.string(),
     faculty: z.object({
-      name: nameSchema.partial().optional(),
+      name: nameSchema.optional(),
       email: z.string().email("Invalid email format").min(1, "Email is required").optional(),
       phone: z.string().min(1, "Phone is required").optional(),
-      emergencyPhone: z.string().optional(),
-      dateOfBirth: z.string().optional(),
+      emergencyPhone: z.string().optional().optional(),
+      dateOfBirth: z.string().optional().optional(),
       gender: z.enum(GENDER_LIST).optional(),
-      profileImage: z.string().optional(),
-      guardian: z
-        .object({
-          name: nameSchema.optional(),
-          email: z.string().email("Invalid email format").min(1, "Email is required").optional(),
-          phone: z.string().min(1, "Phone is required").optional(),
-          address: z.string().optional(),
-        })
-        .optional(),
-      parent: z
-        .array(
-          z.object({
-            id: z.string().min(1, "ID is required").optional(),
-            name: nameSchema.optional(),
-            email: z.string().email("Invalid email format").min(1, "Email is required").optional(),
-            phone: z.string().min(1, "Phone is required").optional(),
-            address: z.string().optional(),
-          })
-        )
-        .optional(),
-      localGuardian: z
-        .object({
-          name: nameSchema.optional(),
-          email: z.string().email("Invalid email format").min(1, "Email is required").optional(),
-          phone: z.string().min(1, "Phone is required").optional(),
-          address: z.string().optional(),
-          occupation: z.string().min(1, "Occupation is required").optional(),
-        })
-        .optional(),
-      bloodGroup: z.enum(bloodGroups).optional(),
+      profileImage: z.string().optional().optional(),
+      bloodGroup: z.enum(bloodGroups).optional().optional(),
       presentAddress: z.string().min(1, "Present address is required").optional(),
       permanentAddress: z.string().min(1, "Permanent address is required").optional(),
-      admissionSemester: z.string().optional(),
+      designation: z.string().optional(),
+      facultyCode: z.string().optional(),
       academicDepartment: z.string().optional(),
-    }).optional()
-  }).optional()
+    })
+  })
 });
 
 export const FacultyValidationSchema = {

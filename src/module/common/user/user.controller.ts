@@ -29,6 +29,29 @@ const createStudent: RequestHandler = catchAsync(async (req, res, _next) => {
         data: result,
     })
 })
+const createFaculty: RequestHandler = catchAsync(async (req, res, _next) => {
+    console.log("req", req.body)
+    const { password, faculty: facultyData } = req.body;
+
+    const result = await userService.createFacultyIntoDB(password, facultyData);
+
+    console.log("data", result);
+
+    if (!result) {
+        return sendResponse(res, {
+            success: false,
+            statusCode: 400,
+            message: "Failed to create Faculty",
+            data: null,
+        })
+    }
+    return sendResponse(res, {
+        statusCode: httpStutus.OK,
+        success: true,
+        message: 'Faculty created successfully',
+        data: result,
+    })
+})
 
 
 const allUsers: RequestHandler = catchAsync(async (req, res, next) => {
@@ -93,11 +116,53 @@ const undeleteStudent: RequestHandler = catchAsync(async (req, res) => {
     })
 })
 
+// Faculty delete
+const deleteFaculty: RequestHandler = catchAsync(async (req, res) => {
+    const result = await userService.deleteFacultyByFacultyIdFromDB(req.params?.id);
+
+    if (!result) {
+        return sendErrorResponse(res, {
+            statusCode: 404,
+            message: "Faculty Not Found",
+            data: {},
+        });
+    }
+
+    return sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Faculty is Deleted Successfully",
+        data: result,
+    })
+})
+
+const undeleteFaculty: RequestHandler = catchAsync(async (req, res) => {
+    const result = await userService.undeletedFacultyByFacultyIdFromDB(req.params?.id);
+
+    if (!result) {
+        return sendErrorResponse(res, {
+            statusCode: 404,
+            message: "Faculty Not Found",
+            data: {},
+        });
+    }
+
+    return sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Faculty is Deleted Successfully",
+        data: result,
+    })
+})
+
 export const userController = {
     createStudent,
     allUsers,
 
     deleteStudent,
     undeleteStudent,
-    
+
+    createFaculty,
+    deleteFaculty,
+    undeleteFaculty,
 }
