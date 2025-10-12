@@ -1,0 +1,371 @@
+{
+    "student": [
+      {
+        "_id": "68e4a72f8328406f5b2c7d3a",
+        "id": "2025010001",
+        "user": "68e4a72e8328406f5b2c7d38",
+        "name": {
+          "firstName": "Ayesha",
+          "middleName": "Fatima",
+          "lastName": "Rahman"
+        },
+        "email": "ayesha.rahman@example.com",
+        "phone": "+8801712345678",
+        "gender": "female",
+        "profileImage": "https://example.com/images/ayesha.jpg",
+        "guardian": {
+          "name": {
+            "firstName": "Mohammad",
+            "middleName": "",
+            "lastName": "Rahman"
+          },
+          "email": "guardian.rahman@example.com",
+          "phone": "+8801612345678",
+          "address": "123 Green Road, Dhaka"
+        },
+        "localGuardian": {
+          "name": {
+            "firstName": "Shirin",
+            "middleName": "",
+            "lastName": "Akter"
+          },
+          "email": "shirin.akter@example.com",
+          "phone": "+8801912345678",
+          "address": "456 Lake View, Dhaka",
+          "occupation": "Lecturer"
+        },
+        "bloodGroup": "A+",
+        "presentAddress": "123 Green Road, Dhaka",
+        "permanentAddress": "456 Lake View, Dhaka",
+        "isActive": true,
+        "admissionSemester": "68db5ec01831ffc34ff8f0d9",
+        "status": "in-progress",
+        "isDeleted": true
+      },
+      {
+        "_id": "68e4a7398328406f5b2c7d45",
+        "id": "2025010002",
+        "user": "68e4a7398328406f5b2c7d43",
+        "name": {
+          "middleName": "Karim",
+          "firstName": "Abdul",
+          "lastName": "Ali123"
+        },
+        "email": "ayesha.rahman@example.com",
+        "phone": "+8801712345678",
+        "gender": "female",
+        "profileImage": "https://example.com/images/ayesha.jpg",
+        "guardian": {
+          "name": {
+            "firstName": "Mohammad",
+            "middleName": "",
+            "lastName": "Rahman"
+          },
+          "email": "guardian.rahman@example.com",
+          "phone": "+8801612345678",
+          "address": "123 Green Road, Dhaka"
+        },
+        "localGuardian": {
+          "name": {
+            "firstName": "Shirin",
+            "middleName": "",
+            "lastName": "Akter"
+          },
+          "email": "shirin.akter@example.com",
+          "phone": "+8801912345678",
+          "address": "456 Lake View, Dhaka",
+          "occupation": "Lecturer"
+        },
+        "bloodGroup": "A+",
+        "presentAddress": "123 Green Road, Dhaka",
+        "permanentAddress": "456 Lake View, Dhaka",
+        "isActive": true,
+        "admissionSemester": "68db5ec01831ffc34ff8f0d9",
+        "status": "in-progress",
+        "isDeleted": false
+      },
+      {
+        "_id": "68e4a7408328406f5b2c7d50",
+        "id": "2025010003",
+        "user": "68e4a7408328406f5b2c7d4e",
+        "name": {
+          "firstName": "Ayesha",
+          "middleName": "Fatima",
+          "lastName": "Rahman"
+        },
+        "email": "ayesha.rahman@example.com",
+        "phone": "+8801712345678",
+        "gender": "female",
+        "profileImage": "https://example.com/images/ayesha.jpg",
+        "guardian": {
+          "name": {
+            "firstName": "Mohammad",
+            "middleName": "",
+            "lastName": "Rahman"
+          },
+          "email": "guardian.rahman@example.com",
+          "phone": "+8801612345678",
+          "address": "123 Green Road, Dhaka"
+        },
+        "localGuardian": {
+          "name": {
+            "firstName": "Shirin",
+            "middleName": "",
+            "lastName": "Akter"
+          },
+          "email": "shirin.akter@example.com",
+          "phone": "+8801912345678",
+          "address": "456 Lake View, Dhaka",
+          "occupation": "Lecturer"
+        },
+        "bloodGroup": "A+",
+        "presentAddress": "123 Green Road, Dhaka",
+        "permanentAddress": "456 Lake View, Dhaka",
+        "isActive": true,
+        "admissionSemester": "68db5ec01831ffc34ff8f0d9",
+        "status": "in-progress",
+        "isDeleted": false
+      },
+      {
+        "_id": "68e5f90a3b94a0a6ca5d1b7a",
+        "id": "2025010004",
+        "user": "68e5f9093b94a0a6ca5d1b78",
+        "name": {
+          "firstName": "Ayesha",
+          "middleName": "Fatima",
+          "lastName": "Rahman"
+        },
+        "email": "ayesha.rahman@example.com",
+        "phone": "+8801712345678",
+        "gender": "female",
+        "profileImage": "https://example.com/images/ayesha.jpg",
+        "guardian": {
+          "name": {
+            "firstName": "Mohammad",
+            "middleName": "",
+            "lastName": "Rahman"
+          },
+          "email": "guardian.rahman@example.com",
+          "phone": "+8801612345678",
+          "address": "123 Green Road, Dhaka"
+        },
+        "localGuardian": {
+          "name": {
+            "firstName": "Shirin",
+            "middleName": "",
+            "lastName": "Akter"
+          },
+          "email": "shirin.akter@example.com",
+          "phone": "+8801912345678",
+          "address": "456 Lake View, Dhaka",
+          "occupation": "Lecturer"
+        },
+        "bloodGroup": "A+",
+        "presentAddress": "123 Green Road, Dhaka",
+        "permanentAddress": "456 Lake View, Dhaka",
+        "isActive": true,
+        "admissionSemester": "68db5ec01831ffc34ff8f0d9",
+        "status": "in-progress",
+        "isDeleted": false
+      },
+      {
+        "_id": "68e5f9620870bacb32460518",
+        "id": "2025010005",
+        "user": "68e5f9620870bacb32460516",
+        "name": {
+          "firstName": "Ayesha",
+          "middleName": "Fatima",
+          "lastName": "Rahman"
+        },
+        "email": "ayesha.rahman@example.com",
+        "phone": "+8801712345678",
+        "gender": "female",
+        "profileImage": "https://example.com/images/ayesha.jpg",
+        "guardian": {
+          "name": {
+            "firstName": "Mohammad",
+            "middleName": "",
+            "lastName": "Rahman"
+          },
+          "email": "guardian.rahman@example.com",
+          "phone": "+8801612345678",
+          "address": "123 Green Road, Dhaka"
+        },
+        "localGuardian": {
+          "name": {
+            "firstName": "Shirin",
+            "middleName": "",
+            "lastName": "Akter"
+          },
+          "email": "shirin.akter@example.com",
+          "phone": "+8801912345678",
+          "address": "456 Lake View, Dhaka",
+          "occupation": "Lecturer"
+        },
+        "bloodGroup": "A+",
+        "presentAddress": "123 Green Road, Dhaka",
+        "permanentAddress": "456 Lake View, Dhaka",
+        "isActive": true,
+        "admissionSemester": "68db5ec01831ffc34ff8f0d9",
+        "status": "in-progress",
+        "isDeleted": false
+      },
+      {
+        "_id": "68e5f9775f9dd74f51e936d8",
+        "id": "2025010006",
+        "user": "68e5f9775f9dd74f51e936d6",
+        "name": {
+          "firstName": "123",
+          "middleName": "Fatima",
+          "lastName": "Rahman"
+        },
+        "email": "ayesha.rahman@example.com",
+        "phone": "+8801712345678",
+        "gender": "female",
+        "profileImage": "https://example.com/images/ayesha.jpg",
+        "guardian": {
+          "name": {
+            "firstName": "Mohammad",
+            "middleName": "",
+            "lastName": "Rahman"
+          },
+          "email": "guardian.rahman@example.com",
+          "phone": "+8801612345678",
+          "address": "123 Green Road, Dhaka"
+        },
+        "localGuardian": {
+          "name": {
+            "firstName": "Shirin",
+            "middleName": "",
+            "lastName": "Akter"
+          },
+          "email": "shirin.akter@example.com",
+          "phone": "+8801912345678",
+          "address": "456 Lake View, Dhaka",
+          "occupation": "Lecturer"
+        },
+        "bloodGroup": "A+",
+        "presentAddress": "123 Green Road, Dhaka",
+        "permanentAddress": "456 Lake View, Dhaka",
+        "isActive": true,
+        "admissionSemester": "68db5ec01831ffc34ff8f0d9",
+        "status": "in-progress",
+        "isDeleted": false
+      },
+      {
+        "_id": "68e819da83c2a4b3d2394dd0",
+        "id": "2025010007",
+        "user": "68e819d983c2a4b3d2394dce",
+        "name": {
+          "firstName": "Muhammad",
+          "middleName": "Salahuddin",
+          "lastName": "Ali"
+        },
+        "email": "muhammad.ali@student.edu.bd",
+        "phone": "01711223344",
+        "emergencyPhone": "01899887766",
+        "dateOfBirth": "2006-03-21",
+        "gender": "male",
+        "profileImage": "https://example.com/images/muhammad-ali.jpg",
+        "guardian": {
+          "name": {
+            "firstName": "Abdul",
+            "middleName": "Karim",
+            "lastName": "Ali"
+          },
+          "email": "abdul.karim@example.com",
+          "phone": "01922334455",
+          "address": "House 45, Road 10, Uttara, Dhaka"
+        },
+        "localGuardian": {
+          "name": {
+            "firstName": "Shamsul",
+            "middleName": "Haque",
+            "lastName": "Khan"
+          },
+          "email": "shamsul.khan@example.com",
+          "phone": "01633445566",
+          "address": "Flat 3A, Block D, Mirpur DOHS, Dhaka",
+          "occupation": "Engineer"
+        },
+        "bloodGroup": "B+",
+        "presentAddress": "Flat 3A, Block D, Mirpur DOHS, Dhaka",
+        "permanentAddress": "Village: Bhuapur, Upazila: Tangail Sadar, District: Tangail",
+        "isActive": true,
+        "admissionSemester": "68db5ec01831ffc34ff8f0d9",
+        "academicDepartment": "68dd65b68781ea1c6e70f5f3",
+        "status": "active",
+        "isDeleted": false
+      }
+    ],
+    "academicSemester": [
+      {
+        "_id": "68db5ec01831ffc34ff8f0d9",
+        "name": "Autumn",
+        "code": "01",
+        "year": "2025",
+        "startMonth": "January",
+        "endMonth": "April"
+      },
+      {
+        "_id": "68db5ece1831ffc34ff8f0dc",
+        "name": "Autumn",
+        "code": "01",
+        "year": "2026",
+        "startMonth": "January",
+        "endMonth": "April"
+      },
+      {
+        "_id": "68db5f001831ffc34ff8f0df",
+        "name": "Summer",
+        "code": "02",
+        "year": "2025",
+        "startMonth": "May",
+        "endMonth": "August"
+      },
+      {
+        "_id": "68db5f2d1831ffc34ff8f0e2",
+        "name": "Fall",
+        "code": "03",
+        "year": "2025",
+        "startMonth": "September",
+        "endMonth": "December"
+      },
+      {
+        "_id": "68dd75db9497838e54db925c",
+        "name": "Fall",
+        "code": "03",
+        "year": "2020",
+        "startMonth": "September",
+        "endMonth": "December"
+      }
+    ],
+    "academicFacultie": [
+      {
+        "_id": "68dbb6d249035e8f9e37e826",
+        "name": "Faculty of Engineering"
+      },
+      {
+        "_id": "68dbc40f508c16fb01571dde",
+        "name": "Faculty of Science"
+      },
+      {
+        "_id": "68dd4e3fa921fc0771561196",
+        "name": "Faculty of Arts"
+      }
+    ],
+    "academicDepartment": [
+      {
+        "_id": "68dd65b68781ea1c6e70f5f3",
+        "name": "Computer Science and Engineering",
+        "code": "01",
+        "AlfaCode": "CSE",
+        "shortName": "CSE",
+        "description": "Computer Science and Engineering deals with computation and systems.",
+        "initiatedYear": "2025",
+        "isActive": true,
+        "isDeleted": false,
+        "academicFaculty": "68dbb6d249035e8f9e37e826"
+      }
+    ]
+  }
