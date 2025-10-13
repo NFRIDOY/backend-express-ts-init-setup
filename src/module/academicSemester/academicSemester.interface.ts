@@ -1,5 +1,6 @@
-export type IAcademicSemesterName = "Autumn" | "Summer" | "Fall";
-export const AcademicSemesterNames: IAcademicSemesterName[] = ["Autumn", "Summer", "Fall"] as const;
+import { AcademicSemesterNameMap, AcademicSemesterNames } from "./academicSemester.constant";
+
+export type IAcademicSemesterName = typeof AcademicSemesterNameMap[keyof typeof AcademicSemesterNameMap];
 export type IAcademicSemesterCode = "01" | "02" | "03";
 export const AcademicSemesterCodes: IAcademicSemesterCode[] = ["01", "02", "03"] as const;
 
@@ -16,21 +17,6 @@ export type IMonth =
     | "October"
     | "November"
     | "December";
-
-export const Months: IMonth[] = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-] as const;
 
 
 export type IAcademicSemester = {
