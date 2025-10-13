@@ -12,6 +12,7 @@ import { AcademicDepartmentModel } from "../../academicDepartment/academicDepart
 import { FacultyModel } from "../../faculty/faculty.model";
 import generateCode from "../../faculty/faculty.generateCode";
 import { AdminModel } from "../../admin/admin.model";
+import { UserRole } from "./user.constant";
 
 
 const createUserIntoDB = async (user: IUser): Promise<IUser> => {
@@ -29,7 +30,8 @@ const createStudentIntoDB = async (password: string, payload: IStudent) => {
         userData.password = password || config.default_pass as string;
 
         //set student role
-        userData.role = "student";
+        // userData.role = "student";
+        userData.role = UserRole.STUDENT;
 
         // get academicSemester
         const academicSemester = await AcademicSemesterModel.findOne({
@@ -86,7 +88,8 @@ const createFacultyIntoDB = async (password: string, payload: IFaculty) => {
         userData.password = password || config.default_pass as string;
 
         //set faculty role
-        userData.role = 'faculty';
+        // userData.role = 'faculty';
+        userData.role = UserRole.FACULTY;
 
         // get academicSemester
         const academicDepartment = await AcademicDepartmentModel.findOne({
@@ -151,7 +154,8 @@ const createAdminIntoDB = async (password: string, payload: IFaculty) => {
         userData.password = password || config.default_pass as string;
 
         //set admin role
-        userData.role = 'admin';
+        // userData.role = 'admin';
+        userData.role = UserRole.ADMIN;
 
         // get academicSemester
         const academicDepartment = await AcademicDepartmentModel.findOne({
