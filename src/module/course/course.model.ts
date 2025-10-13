@@ -1,5 +1,6 @@
 import { Schema, model, connect } from 'mongoose';
 import { ICourse, IPreRequisiteCourses } from './course.interface';
+import { statusList } from '../common/user/user.interface';
 
 // pre
 const PreRequisiteCourseSchema = new Schema<IPreRequisiteCourses>({
@@ -36,16 +37,16 @@ const CourseSchema = new Schema<ICourse>({
     required: true,
     default: 1,
   },
-  isActive: {
-    type: Boolean,
-    required: true,
-    default: true,
-  },
   preRequisiteCourses: [{
     type: PreRequisiteCourseSchema,
   }],
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
   status: {
     type: String,
+    enum: statusList,
     default: 'active',
   },
   isDeleted: {
