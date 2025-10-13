@@ -11,7 +11,6 @@ router.post('/create-student', validateRequest(StudentValidationSchema.createStu
 router.get('/', studentController.getAllStudents);
 router.get('/:id', studentController.getSingleStudent);
 router.patch('/:id', validateRequest(StudentValidationSchema.updateStudent), studentController.updateStudent);
-// router.delete('/:id', studentController.deleteStudent);
 router.delete('/:id', userController.deleteStudent);
 
 export const studentRoute = router;

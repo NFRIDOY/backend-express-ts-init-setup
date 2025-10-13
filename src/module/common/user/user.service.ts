@@ -11,6 +11,7 @@ import { IFaculty } from "../../faculty/faculty.interface";
 import { AcademicDepartmentModel } from "../../academicDepartment/academicDepartment.model";
 import { FacultyModel } from "../../faculty/faculty.model";
 import generateCode from "../../faculty/faculty.generateCode";
+import { AdminModel } from "../../admin/admin.model";
 
 
 const createUserIntoDB = async (user: IUser): Promise<IUser> => {
@@ -137,22 +138,88 @@ const createFacultyIntoDB = async (password: string, payload: IFaculty) => {
         throw new AppError(500, "Faculty Creation Into DB Faild", (config.NODE_ENV === CONST.development && err));
     }
 }
+
+// admin
+const createAdminIntoDB = async (password: string, payload: IFaculty) => {
+    const session = await mongoose.startSession(); // Isolation
+    try {
+        session.startTransaction(); // Start the Transaction
+        console.log({ password })
+        console.log({ payload })
+        const userData: Partial<IUser> = {};
+
+        userData.password = password || config.default_pass as string;
+
+        //set admin role
+        userData.role = 'admin';
+
+        // get academicSemester
+        const academicDepartment = await AcademicDepartmentModel.findOne({
+            _id: payload?.academicDepartment
+        })
+
+        if (!academicDepartment) {
+            throw new AppError(404, 'Academic Department not found');
+        }
+        console.log("academicDepartment", academicDepartment)
+        // TODO: Genareted Faculty ID 
+        // userData.id = await generateFacultyId(academicDepartment);
+
+        //set status
+        userData.status = "in-progress";
+
+        const newUser = await UserModel.create([userData], { session }) // add on the session
+        console.log('newUser', newUser);
+
+        if (!newUser.length) throw new AppError(500, "User Creation Failed")
+
+        // TODO: getall facultyCodes
+        // const existingCodes = await FacultyModel.find({}, 'facultyCode').lean();
+        // const existingCodeSet = new Set(existingCodes.map(doc => doc.facultyCode));
+
+        // console.log("existingCodes", existingCodes)
+        // console.log("codeSet", existingCodeSet)
+
+        // await session.abortTransaction()
+        // throw new AppError(500, "existingCodes")
+
+        //create a student
+        // if (Object.keys(newUser).length) {
+        if (newUser.length && payload) {
+            // set id as student id, _id as user
+            payload.id = newUser[0].id;
+            payload.user = newUser[0]._id; //reference _id
+            // payload.facultyCode = await generateCode(payload?.name, existingCodeSet)
+
+            const newAdmin = await AdminModel.create([payload], { session }); // add on the session
+
+            await session.commitTransaction() // sucessfull Transition
+            await session.endSession() // End Isolation
+            return newAdmin;
+        }
+    } catch (err) {
+        await session.abortTransaction() // Unsucessfull Transition
+        await session.endSession(); // End Isolation
+        throw new AppError(500, "Admin Creation Into DB Faild", (config.NODE_ENV === CONST.development && err));
+    }
+}
+
 const getAllUserFromDB = async (): Promise<IUser[]> => {
     const result = await UserModel.find();
     return result;
 }
-const getSingleUserByUserIdFromDB = async (userID: string): Promise<IUser | null> => {
-    const result = await UserModel.findOne({ id: userID });
+const getSingleUserByUserIdFromDB = async (id: string): Promise<IUser | null> => {
+    const result = await UserModel.findOne({ _id: id });
     return result;
 }
 
-const deleteStudentByStudentIdFromDB = async (studentID: string): Promise<IUser | null> => {
+const deleteStudentByIdFromDB = async (id: string): Promise<IUser | null> => {
     const session = await mongoose.startSession(); // Isolation
     try {
         session.startTransaction();
 
         const studentDeleted = await Student.findOneAndUpdate(
-            { id: studentID },
+            { _id: id },
             { isDeleted: true },
             { new: true, session } // Use `session` here // `new` is useing for returning the updated value
         );
@@ -182,13 +249,13 @@ const deleteStudentByStudentIdFromDB = async (studentID: string): Promise<IUser 
         session.endSession(); // Ensure session is always ended
     }
 };
-const undeletedStudentByStudentIdFromDB = async (studentID: string): Promise<IUser | null> => {
+const undeletedStudentByIdFromDB = async (studentID: string): Promise<IUser | null> => {
     const session = await mongoose.startSession(); // Isolation
     try {
         session.startTransaction();
 
         const studentDeleted = await Student.findOneAndUpdate(
-            { id: studentID },
+            { _id: studentID },
             { isDeleted: false },
             { new: true, session } // Use session here
         );
@@ -217,13 +284,13 @@ const undeletedStudentByStudentIdFromDB = async (studentID: string): Promise<IUs
         session.endSession(); // Ensure session is always ended
     }
 };
-const deleteFacultyByFacultyIdFromDB = async (id: string): Promise<IUser | null> => {
+const deleteFacultyByIdFromDB = async (id: string): Promise<IUser | null> => {
     const session = await mongoose.startSession(); // Isolation
     try {
         session.startTransaction();
 
         const studentDeleted = await FacultyModel.findOneAndUpdate(
-            { id: id },
+            { _id: id },
             { isDeleted: true },
             { new: true, session } // Use `session` here // `new` is useing for returning the updated value
         );
@@ -253,13 +320,84 @@ const deleteFacultyByFacultyIdFromDB = async (id: string): Promise<IUser | null>
         session.endSession(); // Ensure session is always ended
     }
 };
-const undeletedFacultyByFacultyIdFromDB = async (id: string): Promise<IUser | null> => {
+const undeletedFacultyByIdFromDB = async (id: string): Promise<IUser | null> => {
     const session = await mongoose.startSession(); // Isolation
     try {
         session.startTransaction();
 
         const studentDeleted = await FacultyModel.findOneAndUpdate(
-            { id: id },
+            { _id: id },
+            { isDeleted: false },
+            { new: true, session } // Use session here
+        );
+        console.log("studentDeleted", studentDeleted)
+        if (!studentDeleted)
+            throw new AppError(400, 'Faculty Deleting Process Failed')
+
+        const userDeleted = await UserModel.findOneAndUpdate(
+            { _id: studentDeleted?.user },
+            { isDeleted: false },
+            { new: true, session } // Use session here
+        );
+
+        console.log("userDeleted", userDeleted)
+        if (!userDeleted)
+            throw new AppError(400, 'User Deleting Process Failed')
+        // await session.abortTransaction(); // testing
+        await session.commitTransaction();
+
+        const result = { ...userDeleted };
+        return result;
+    } catch (err) {
+        await session.abortTransaction();
+        throw new AppError(400, 'Faculty is not Deleted', (config.NODE_ENV === CONST.development && err));
+    } finally {
+        session.endSession(); // Ensure session is always ended
+    }
+};
+const deleteAdminByIdFromDB = async (id: string): Promise<IUser | null> => {
+    const session = await mongoose.startSession(); // Isolation
+    try {
+        session.startTransaction();
+
+        const studentDeleted = await FacultyModel.findOneAndUpdate(
+            { _id: id },
+            { isDeleted: true },
+            { new: true, session } // Use `session` here // `new` is useing for returning the updated value
+        );
+        console.log("studentDeleted", studentDeleted)
+        if (!studentDeleted)
+            throw new AppError(400, 'Faculty Deleting Process Failed')
+
+        const userDeleted = await UserModel.findOneAndUpdate(
+            { _id: studentDeleted?.user },
+            { isDeleted: true },
+            { new: true, session } // Use `session` here // `new` is useing for returning the updated value
+        );
+
+        console.log("userDeleted", userDeleted)
+        if (!userDeleted)
+            throw new AppError(400, 'User Deleting Process Failed')
+
+        // await session.abortTransaction(); // testing
+        await session.commitTransaction();
+
+        // const result = {...userDeleted};
+        return userDeleted;
+    } catch (err) {
+        await session.abortTransaction();
+        throw new AppError(400, 'Faculty is not Deleted', (config.NODE_ENV === CONST.development && err));
+    } finally {
+        session.endSession(); // Ensure session is always ended
+    }
+};
+const undeletedAdminByIdFromDB = async (id: string): Promise<IUser | null> => {
+    const session = await mongoose.startSession(); // Isolation
+    try {
+        session.startTransaction();
+
+        const studentDeleted = await FacultyModel.findOneAndUpdate(
+            { _id: id },
             { isDeleted: false },
             { new: true, session } // Use session here
         );
@@ -291,14 +429,18 @@ const undeletedFacultyByFacultyIdFromDB = async (id: string): Promise<IUser | nu
 
 export const userService = {
     createUserIntoDB,
-    createStudentIntoDB,
     getAllUserFromDB,
     getSingleUserByUserIdFromDB,
-
-    deleteStudentByStudentIdFromDB,
-    undeletedStudentByStudentIdFromDB,
+    
+    createStudentIntoDB,
+    deleteStudentByIdFromDB,
+    undeletedStudentByIdFromDB,
 
     createFacultyIntoDB,
-    deleteFacultyByFacultyIdFromDB,
-    undeletedFacultyByFacultyIdFromDB
+    deleteFacultyByIdFromDB,
+    undeletedFacultyByIdFromDB,
+
+    createAdminIntoDB,
+    deleteAdminByIdFromDB,
+    undeletedAdminByIdFromDB
 }

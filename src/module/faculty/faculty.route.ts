@@ -7,11 +7,10 @@ import { userController } from '../common/user/user.controller';
 
 const router = express.Router();
 
-router.post('/create-faculty', validateRequest(FacultyValidationSchema.createFaculty), userController.createFaculty); // TODO
+router.post('/create-faculty', validateRequest(FacultyValidationSchema.createFaculty), userController.createFaculty);
 router.get('/', facultyController.getAllFacultys);
 router.get('/:id', facultyController.getSingleFaculty);
 router.patch('/:id', validateRequest(FacultyValidationSchema.updateFaculty), facultyController.updateFaculty);
-// router.delete('/:id', facultyController.deleteFaculty);
-// router.delete('/:id', userController.deleteFaculty); // TODO
+router.delete('/:id', userController.deleteFaculty); 
 
 export const facultyRoute = router;

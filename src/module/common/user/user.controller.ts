@@ -53,6 +53,30 @@ const createFaculty: RequestHandler = catchAsync(async (req, res, _next) => {
     })
 })
 
+const createAdmin: RequestHandler = catchAsync(async (req, res, _next) => {
+    console.log("req", req.body)
+    const { password, admin: adminData } = req.body;
+
+    const result = await userService.createAdminIntoDB(password, adminData);
+
+    console.log("data", result);
+
+    if (!result) {
+        return sendResponse(res, {
+            success: false,
+            statusCode: 400,
+            message: "Failed to create Admin",
+            data: null,
+        })
+    }
+    return sendResponse(res, {
+        statusCode: httpStutus.OK,
+        success: true,
+        message: 'Admin created successfully',
+        data: result,
+    })
+})
+
 
 const allUsers: RequestHandler = catchAsync(async (req, res, next) => {
     console.log("req");
@@ -79,7 +103,7 @@ const allUsers: RequestHandler = catchAsync(async (req, res, next) => {
 })
 
 const deleteStudent: RequestHandler = catchAsync(async (req, res) => {
-    const result = await userService.deleteStudentByStudentIdFromDB(req.params?.id);
+    const result = await userService.deleteStudentByIdFromDB(req.params?.id);
 
     if (!result) {
         return sendErrorResponse(res, {
@@ -98,7 +122,7 @@ const deleteStudent: RequestHandler = catchAsync(async (req, res) => {
 })
 
 const undeleteStudent: RequestHandler = catchAsync(async (req, res) => {
-    const result = await userService.undeletedStudentByStudentIdFromDB(req.params?.id);
+    const result = await userService.undeletedStudentByIdFromDB(req.params?.id);
 
     if (!result) {
         return sendErrorResponse(res, {
@@ -111,14 +135,14 @@ const undeleteStudent: RequestHandler = catchAsync(async (req, res) => {
     return sendResponse(res, {
         statusCode: 200,
         success: true,
-        message: "Students is Deleted Successfully",
+        message: "Student is Deleted Successfully",
         data: result,
     })
 })
 
 // Faculty delete
 const deleteFaculty: RequestHandler = catchAsync(async (req, res) => {
-    const result = await userService.deleteFacultyByFacultyIdFromDB(req.params?.id);
+    const result = await userService.deleteFacultyByIdFromDB(req.params?.id);
 
     if (!result) {
         return sendErrorResponse(res, {
@@ -137,7 +161,7 @@ const deleteFaculty: RequestHandler = catchAsync(async (req, res) => {
 })
 
 const undeleteFaculty: RequestHandler = catchAsync(async (req, res) => {
-    const result = await userService.undeletedFacultyByFacultyIdFromDB(req.params?.id);
+    const result = await userService.undeletedFacultyByIdFromDB(req.params?.id);
 
     if (!result) {
         return sendErrorResponse(res, {
@@ -155,6 +179,45 @@ const undeleteFaculty: RequestHandler = catchAsync(async (req, res) => {
     })
 })
 
+
+// Admin delete
+const deleteAdmin: RequestHandler = catchAsync(async (req, res) => {
+    const result = await userService.deleteAdminByIdFromDB(req.params?.id);
+
+    if (!result) {
+        return sendErrorResponse(res, {
+            statusCode: 404,
+            message: "Faculty Not Found",
+            data: {},
+        });
+    }
+
+    return sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Faculty is Deleted Successfully",
+        data: result,
+    })
+})
+
+const undeleteAdmin: RequestHandler = catchAsync(async (req, res) => {
+    const result = await userService.undeletedAdminByIdFromDB(req.params?.id);
+
+    if (!result) {
+        return sendErrorResponse(res, {
+            statusCode: 404,
+            message: "Faculty Not Found",
+            data: {},
+        });
+    }
+
+    return sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Faculty is Deleted Successfully",
+        data: result,
+    })
+})
 export const userController = {
     createStudent,
     allUsers,
@@ -165,4 +228,8 @@ export const userController = {
     createFaculty,
     deleteFaculty,
     undeleteFaculty,
+
+    createAdmin,
+    deleteAdmin,
+    undeleteAdmin,
 }

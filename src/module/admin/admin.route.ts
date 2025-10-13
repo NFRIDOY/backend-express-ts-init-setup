@@ -7,11 +7,10 @@ import { AdminValidationSchema } from './admin.validation';
 
 const router = express.Router();
 
-// router.post('/create-admin', validateRequest(AdminValidationSchema.createAdmin), userController.createAdmin); // TODO
+router.post('/create-admin', validateRequest(AdminValidationSchema.createAdmin), userController.createAdmin);
 router.get('/', adminController.getAllAdmins);
 router.get('/:id', adminController.getSingleAdmin);
 router.patch('/:id', validateRequest(AdminValidationSchema.updateAdmin), adminController.updateAdmin);
-// router.delete('/:id', adminController.deleteAdmin);
-// router.delete('/:id', userController.deleteAdmin); // TODO
+router.delete('/:id', userController.deleteAdmin);
 
 export const adminRoute = router;
