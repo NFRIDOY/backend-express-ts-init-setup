@@ -12,8 +12,8 @@ export default{
     bcrypt_salt: process.env.BCRYPT_SALT,
 }
 
-export const CONST = {
+export const constants = {
     development: "development",
     production: "production",
-    defaultClassifiedFields: '-_id -password -__v',
+    defaultClassifiedFields: '-password -__v',
 } as const

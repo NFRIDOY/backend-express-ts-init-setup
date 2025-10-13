@@ -1,5 +1,5 @@
 import QueryBuilder from "../../builder/QueryBuilder";
-import { CONST } from "../../config";
+import { constants } from "../../config";
 import AppError from "../../errors/AppError";
 import flattenNestedDeepKey from "../../utils/flattenNestedDeepKey";
 import { adminSearchableFields } from "./admin.constant";
@@ -13,13 +13,13 @@ import { AdminModel } from "./admin.model";
 const getAllAdminFromDB = async (query: Record<string, unknown>): Promise<IAdmin[]> => {
   // const result = await AdminModel.find().populate('admissionSemester').populate({
   //   path: 'user',
-  //   select: '-_id -password -__v', // Exclude the password field
+  //   select: ' -password -__v', // Exclude the password field
   // });
   const adminQuery = new QueryBuilder(AdminModel.find()
     .populate('admissionSemester')
     .populate({
       path: 'user',
-      select: '-_id -password -__v',
+      select: ' -password -__v',
     }), query)
     .search(adminSearchableFields)
     .filter()
@@ -32,7 +32,7 @@ const getAllAdminFromDB = async (query: Record<string, unknown>): Promise<IAdmin
 const getSingleAdminByAdminIdFromDB = async (adminID: string): Promise<IAdmin | null> => {
   const result = await AdminModel.findOne({ id: adminID }).populate('admissionSemester').populate({
     path: 'user',
-    select: '-_id -password -__v', // Exclude the password field
+    select: ' -password -__v', // Exclude the password field
   });
   return result;
 }
@@ -58,8 +58,8 @@ const updateAdminByAdminIdOnDB = async (adminID: string, payload: Partial<IAdmin
       .populate('admissionSemester')
       .populate({
         path: 'user',
-        // select: '-_id -password -__v', // Exclude the password field
-        select: CONST.defaultClassifiedFields, // Exclude the password field
+        // select: ' -password -__v', // Exclude the password field
+        select: constants.defaultClassifiedFields, // Exclude the password field
       });
     return result;
   } catch (err) {

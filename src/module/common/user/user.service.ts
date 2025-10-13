@@ -1,4 +1,4 @@
-import config, { CONST } from "../../../config";
+import config, { constants } from "../../../config";
 import { AcademicSemesterModel } from "../../academicSemester/academicSemester.model";
 import { IStudent } from "../../student/student.interface";
 import { Student } from "../../student/student.model";
@@ -73,7 +73,7 @@ const createStudentIntoDB = async (password: string, payload: IStudent) => {
     } catch (err) {
         await session.abortTransaction() // Unsucessfull Transition
         await session.endSession(); // End Isolation
-        throw new AppError(500, "Student Creation Into DB Faild", (config.NODE_ENV === CONST.development && err));
+        throw new AppError(500, "Student Creation Into DB Faild", (config.NODE_ENV === constants.development && err));
     }
 }
 
@@ -138,7 +138,7 @@ const createFacultyIntoDB = async (password: string, payload: IFaculty) => {
     } catch (err) {
         await session.abortTransaction() // Unsucessfull Transition
         await session.endSession(); // End Isolation
-        throw new AppError(500, "Faculty Creation Into DB Faild", (config.NODE_ENV === CONST.development && err));
+        throw new AppError(500, "Faculty Creation Into DB Faild", (config.NODE_ENV === constants.development && err));
     }
 }
 
@@ -204,7 +204,7 @@ const createAdminIntoDB = async (password: string, payload: IFaculty) => {
     } catch (err) {
         await session.abortTransaction() // Unsucessfull Transition
         await session.endSession(); // End Isolation
-        throw new AppError(500, "Admin Creation Into DB Faild", (config.NODE_ENV === CONST.development && err));
+        throw new AppError(500, "Admin Creation Into DB Faild", (config.NODE_ENV === constants.development && err));
     }
 }
 
@@ -248,7 +248,7 @@ const deleteStudentByIdFromDB = async (id: string): Promise<IUser | null> => {
         return userDeleted;
     } catch (err) {
         await session.abortTransaction();
-        throw new AppError(400, 'Student is not Deleted', (config.NODE_ENV === CONST.development && err));
+        throw new AppError(400, 'Student is not Deleted', (config.NODE_ENV === constants.development && err));
     } finally {
         session.endSession(); // Ensure session is always ended
     }
@@ -283,7 +283,7 @@ const undeletedStudentByIdFromDB = async (studentID: string): Promise<IUser | nu
         return result;
     } catch (err) {
         await session.abortTransaction();
-        throw new AppError(400, 'Student is not Deleted', (config.NODE_ENV === CONST.development && err));
+        throw new AppError(400, 'Student is not Deleted', (config.NODE_ENV === constants.development && err));
     } finally {
         session.endSession(); // Ensure session is always ended
     }
@@ -319,7 +319,7 @@ const deleteFacultyByIdFromDB = async (id: string): Promise<IUser | null> => {
         return userDeleted;
     } catch (err) {
         await session.abortTransaction();
-        throw new AppError(400, 'Faculty is not Deleted', (config.NODE_ENV === CONST.development && err));
+        throw new AppError(400, 'Faculty is not Deleted', (config.NODE_ENV === constants.development && err));
     } finally {
         session.endSession(); // Ensure session is always ended
     }
@@ -354,7 +354,7 @@ const undeletedFacultyByIdFromDB = async (id: string): Promise<IUser | null> => 
         return result;
     } catch (err) {
         await session.abortTransaction();
-        throw new AppError(400, 'Faculty is not Deleted', (config.NODE_ENV === CONST.development && err));
+        throw new AppError(400, 'Faculty is not Deleted', (config.NODE_ENV === constants.development && err));
     } finally {
         session.endSession(); // Ensure session is always ended
     }
@@ -390,7 +390,7 @@ const deleteAdminByIdFromDB = async (id: string): Promise<IUser | null> => {
         return userDeleted;
     } catch (err) {
         await session.abortTransaction();
-        throw new AppError(400, 'Faculty is not Deleted', (config.NODE_ENV === CONST.development && err));
+        throw new AppError(400, 'Faculty is not Deleted', (config.NODE_ENV === constants.development && err));
     } finally {
         session.endSession(); // Ensure session is always ended
     }
@@ -425,7 +425,7 @@ const undeletedAdminByIdFromDB = async (id: string): Promise<IUser | null> => {
         return result;
     } catch (err) {
         await session.abortTransaction();
-        throw new AppError(400, 'Faculty is not Deleted', (config.NODE_ENV === CONST.development && err));
+        throw new AppError(400, 'Faculty is not Deleted', (config.NODE_ENV === constants.development && err));
     } finally {
         session.endSession(); // Ensure session is always ended
     }

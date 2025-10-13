@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import config, { CONST } from '../config';
+import config, { constants } from '../config';
 import { IErrorSources } from '../interface/error.interface';
 import { ZodError } from 'zod';
 import handleZodError from '../errors/handleZodError';
@@ -19,7 +19,7 @@ const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFun
         }
     ]
 
-    if (config.NODE_ENV === CONST.development) {
+    if (config.NODE_ENV === constants.development) {
         console.log("❌ Error :>", err)
     }
 
@@ -76,8 +76,8 @@ const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFun
         success: false,
         message,
         errorSources,
-        err: config.NODE_ENV === CONST.development ? err : '🚨Error🚩',
-        stack: config.NODE_ENV === CONST.development ? err?.stack : '🚨Error🚩',
+        err: config.NODE_ENV === constants.development ? err : '🚨Error🚩',
+        stack: config.NODE_ENV === constants.development ? err?.stack : '🚨Error🚩',
     })
 
     // return sendResponse(res, {

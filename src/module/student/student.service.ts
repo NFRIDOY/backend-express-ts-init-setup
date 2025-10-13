@@ -1,5 +1,5 @@
 import QueryBuilder from "../../builder/QueryBuilder";
-import { CONST } from "../../config";
+import { constants } from "../../config";
 import AppError from "../../errors/AppError";
 import flattenNestedDeepKey from "../../utils/flattenNestedDeepKey";
 import { studentSearchableFields } from "./student.constant";
@@ -13,13 +13,13 @@ import { Student } from "./student.model";
 const getAllStudentFromDB = async (query: Record<string, unknown>): Promise<IStudent[]> => {
   // const result = await Student.find().populate('admissionSemester').populate({
   //   path: 'user',
-  //   select: '-_id -password -__v', // Exclude the password field
+  //   select: ' -password -__v', // Exclude the password field
   // });
   const studentQuery = new QueryBuilder(Student.find()
     .populate('admissionSemester')
     .populate({
       path: 'user',
-      select: '-_id -password -__v',
+      select: ' -password -__v',
     }), query)
     .search(studentSearchableFields)
     .filter()
@@ -32,7 +32,7 @@ const getAllStudentFromDB = async (query: Record<string, unknown>): Promise<IStu
 const getSingleStudentByStudentIdFromDB = async (studentID: string): Promise<IStudent | null> => {
   const result = await Student.findOne({ id: studentID }).populate('admissionSemester').populate({
     path: 'user',
-    select: '-_id -password -__v', // Exclude the password field
+    select: ' -password -__v', // Exclude the password field
   });
   return result;
 }
@@ -61,8 +61,8 @@ const updateStudentByStudentIdOnDB = async (studentID: string, payload: Partial<
       .populate('admissionSemester')
       .populate({
         path: 'user',
-        // select: '-_id -password -__v', // Exclude the password field
-        select: CONST.defaultClassifiedFields, // Exclude the password field
+        // select: ' -password -__v', // Exclude the password field
+        select: constants.defaultClassifiedFields, // Exclude the password field
       });
     return result;
   } catch (err) {

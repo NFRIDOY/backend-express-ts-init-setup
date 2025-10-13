@@ -1,25 +1,17 @@
 import QueryBuilder from "../../builder/QueryBuilder";
-import { CONST } from "../../config";
+import { constants } from "../../config";
 import AppError from "../../errors/AppError";
 import flattenNestedDeepKey from "../../utils/flattenNestedDeepKey";
 import { facultySearchableFields } from "./faculty.constant";
 import { IFaculty } from "./faculty.interface";
 import { FacultyModel } from "./faculty.model";
 
-// const createFacultyIntoDB = async (faculty: IFaculty): Promise<IFaculty> => {
-//   const result = await FacultyModel.create(faculty)
-//   return result;
-// }
 const getAllFacultyFromDB = async (query: Record<string, unknown>): Promise<IFaculty[]> => {
-  // const result = await FacultyModel.find().populate('admissionSemester').populate({
-  //   path: 'user',
-  //   select: '-_id -password -__v', // Exclude the password field
-  // });
   const facultyQuery = new QueryBuilder(FacultyModel.find()
     .populate('admissionSemester')
     .populate({
       path: 'user',
-      select: '-_id -password -__v',
+      select: '-password -__v',
     }), query)
     .search(facultySearchableFields)
     .filter()
@@ -32,7 +24,7 @@ const getAllFacultyFromDB = async (query: Record<string, unknown>): Promise<IFac
 const getSingleFacultyByFacultyIdFromDB = async (facultyID: string): Promise<IFaculty | null> => {
   const result = await FacultyModel.findOne({ id: facultyID }).populate('admissionSemester').populate({
     path: 'user',
-    select: '-_id -password -__v', // Exclude the password field
+    select: '-password -__v', // Exclude the password field
   });
   return result;
 }
@@ -58,8 +50,8 @@ const updateFacultyByFacultyIdOnDB = async (facultyID: string, payload: Partial<
       .populate('admissionSemester')
       .populate({
         path: 'user',
-        // select: '-_id -password -__v', // Exclude the password field
-        select: CONST.defaultClassifiedFields, // Exclude the password field
+        // select: ' -password -__v', // Exclude the password field
+        select: constants.defaultClassifiedFields, // Exclude the password field
       });
     return result;
   } catch (err) {
