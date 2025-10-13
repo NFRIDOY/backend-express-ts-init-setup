@@ -29,7 +29,7 @@ const CourseSchema = new Schema<ICourse>({
   },
   courseCode: {
     type: String,
-    required: [true, 'Prifix is required'],
+    required: [true, 'Course Code is required'],
     trim: true,
   },
   credit: {

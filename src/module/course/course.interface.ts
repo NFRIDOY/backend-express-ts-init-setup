@@ -14,7 +14,7 @@ export interface ICourse {
     prifix: string;
     courseCode: string;
     credit: number;
-    preRequisiteCourses: IPreRequisiteCourses[];
+    preRequisiteCourses?: IPreRequisiteCourses[];
     // preRequisite: [IPreRequisiteCourses]; // 🚨 wrong
     isActive: boolean;
     status?: IStatus;
