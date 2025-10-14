@@ -6,7 +6,7 @@ import logger from '../../middleware/logger';
 
 const router = express.Router();
 
-router.post('/', 
+router.post('/',
     logger,
     validateRequest(CourseValidationSchema.createCourse), //TODO: fix the validation error
     courseController.createCourse);

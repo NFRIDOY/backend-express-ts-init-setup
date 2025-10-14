@@ -47,8 +47,13 @@ const updateCourseByCourseIdOnDB = async (id: string, payload: Partial<ICourse>)
     // }
 
     // const result = await CourseModel.updateOne({ id: courseID }, payload) // for optimized bendwith // minimul data response
-    const result = await CourseModel.findOneAndUpdate({ _id: id }, payload, { new: true }).populate('preRequisiteCourses.course');
-    return result;
+    const besicCourseData = await CourseModel.findOneAndUpdate(
+      { _id: id }, 
+      remainingCourseData, 
+      { new: true, runValidators: true })
+      .populate('preRequisiteCourses.course');
+
+    return besicCourseData;
   } catch (err) {
     throw new AppError(400, "Failed To Update The Course");
   }
