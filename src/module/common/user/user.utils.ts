@@ -5,7 +5,7 @@ import { IAcademicSemester } from "../../academicSemester/academicSemester.inter
 import { IRole } from "./user.interface";
 import { UserModel } from "./user.model";
 
-const findLastIdOfThisRole = async (role: IRole) => {
+export const findLastIdOfThisRole = async (role: IRole) => {
   const lastStudent = await UserModel.findOne(
     {
       role: role,
@@ -49,28 +49,28 @@ export const generateStudentId = async (payload: IAcademicSemester) => {
 };
 
 export const generateFacultyId = async (payload: IAcademicDepartment) => {
+  const totalDigitsBeforeSequence = 7; // F202501 0003
   /** 
    * example: 2025010001
-   * year + department + 0000
+   * getFullYear + department + 0000
    * */ 
   // first time 0000
   //0001  => 1
-  let currentId = (0).toString();
+  let currentId = (0).toString(); // 0
   const lastFacultyId = await findLastIdOfThisRole("faculty")
-  const lastFacultyCode = lastFacultyId?.substring(4, 6) // 01
-  // const lastStudentYear = lastStudentId?.substring(0, 4) // 2025
+  const lastFacultyCode = lastFacultyId?.substring(5, 7) // 01 // lastFacultyCode= 01 
+
   const thisYear = new Date().getFullYear();
-  const newFacultyDepartmentCode = payload.code;
+  const newFacultyDepartmentCode = payload.code; // '01'
   let incrementId = '';
 
   if (lastFacultyId && lastFacultyCode === newFacultyDepartmentCode) {
-    currentId = lastFacultyId?.substring(6)
-    console.log("currentId-=", currentId)
+    currentId = lastFacultyId?.substring(totalDigitsBeforeSequence) // 0001
   }
   incrementId = (Number(currentId) + 1).toString().padStart(4, '0');
   // 0001+ 1 = 2
 
   incrementId = `F${thisYear}${payload.code}${incrementId}`;
-  console.log("id = ", incrementId)
+
   return incrementId;
 };
