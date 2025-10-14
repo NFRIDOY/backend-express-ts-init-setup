@@ -6,7 +6,7 @@ import { statusList } from '../common/user/user.interface';
 const PreRequisiteCourseSchema = new Schema<IPreRequisiteCourses>({
   course: {
     type: Schema.Types.ObjectId,
-    ref: 'course', // TODO: course model name from the mongobd table name
+    ref: 'course', // TODO: course model name from the mongoDB table name
   },
   isDeleted: {
     type: Boolean,

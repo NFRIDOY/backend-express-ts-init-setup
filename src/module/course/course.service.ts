@@ -13,7 +13,7 @@ const createCourseIntoDB = async (payload: ICourse): Promise<ICourse> => {
 
 const getAllCourseFromDB = async (query: Record<string, unknown>): Promise<ICourse[]> => {
   const courseQuery = new QueryBuilder(CourseModel.find()
-    .populate('preRequisiteCourses'), 
+    .populate('preRequisiteCourses.course'), 
     query
   )
     .search(courseSearchableFields)
@@ -24,15 +24,15 @@ const getAllCourseFromDB = async (query: Record<string, unknown>): Promise<ICour
   const result = await courseQuery.modelQuery;
   return result;
 }
-const getSingleCourseByCourseIdFromDB = async (courseID: string): Promise<ICourse | null> => {
-  const result = await CourseModel.findOne({ id: courseID }).populate('preRequisiteCourses');
+const getSingleCourseByCourseIdFromDB = async (id: string): Promise<ICourse | null> => {
+  const result = await CourseModel.findOne({ _id: id }).populate('preRequisiteCourses.course');
   return result;
 }
 
 // TODO: Update it with preRequisiteCourses
 const updateCourseByCourseIdOnDB = async (id: string, payload: Partial<ICourse>): Promise<ICourse | null> => {
   try {
-    // const { name, ...remainingCourseData } = payload;
+    const { preRequisiteCourses, ...remainingCourseData } = payload;
 
     // const modifiedUpdatedData: Record<string, unknown> = {
     //   ...remainingCourseData,
@@ -47,7 +47,7 @@ const updateCourseByCourseIdOnDB = async (id: string, payload: Partial<ICourse>)
     // }
 
     // const result = await CourseModel.updateOne({ id: courseID }, payload) // for optimized bendwith // minimul data response
-    const result = await CourseModel.findOneAndUpdate({ _id: id }, payload, { new: true }).populate('admissionSemester');
+    const result = await CourseModel.findOneAndUpdate({ _id: id }, payload, { new: true }).populate('preRequisiteCourses.course');
     return result;
   } catch (err) {
     throw new AppError(400, "Failed To Update The Course");
