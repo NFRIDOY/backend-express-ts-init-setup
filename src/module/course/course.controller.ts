@@ -122,6 +122,29 @@ const assignFacultiesWithCourse: RequestHandler = catchAsync(async (req, res) =>
         data: result,
     })
 })
+const removeFacultiesWithCourse: RequestHandler = catchAsync(async (req, res) => {
+    // Pass the request body directly to the service function which now handles both formats
+    const courseId = req.params?.id;
+    const { faculties } = req.body;
+    // console.log("req.body", req.body)
+    // console.log("faculties", faculties)
+    const result = await courseService.removeFacultiesWithCourseFromDB(courseId, faculties);
+
+    if (!result) {
+        return sendErrorResponse(res, {
+            statusCode: 404,
+            message: "Faculty Removed Failed",
+            data: {},
+        });
+    }
+
+    return sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Faculty Removed from this Course Successfully",
+        data: result,
+    })
+})
 
 export const courseController = {
     createCourse,
@@ -130,5 +153,5 @@ export const courseController = {
     updateCourse,
     deleteCourse,
     assignFacultiesWithCourse,
-    // removeFacultiesWithcourse,
+    removeFacultiesWithCourse,
 }
