@@ -8,10 +8,9 @@ import { FacultyModel } from "./faculty.model";
 
 const getAllFacultyFromDB = async (query: Record<string, unknown>): Promise<IFaculty[]> => {
   const facultyQuery = new QueryBuilder(FacultyModel.find()
-    .populate('admissionSemester')
     .populate({
       path: 'user',
-      select: '-password -__v',
+      select: '-_id -id -isDeleted -createdAt -updatedAt -password -__v',
     }), query)
     .search(facultySearchableFields)
     .filter()
@@ -22,7 +21,7 @@ const getAllFacultyFromDB = async (query: Record<string, unknown>): Promise<IFac
   return result;
 }
 const getSingleFacultyByFacultyIdFromDB = async (facultyID: string): Promise<IFaculty | null> => {
-  const result = await FacultyModel.findOne({ id: facultyID }).populate('admissionSemester').populate({
+  const result = await FacultyModel.findOne({ id: facultyID }).populate({
     path: 'user',
     select: '-password -__v', // Exclude the password field
   });
@@ -47,7 +46,7 @@ const updateFacultyByFacultyIdOnDB = async (facultyID: string, payload: Partial<
 
     // const result = await FacultyModel.updateOne({ id: facultyID }, payload) // for optimized bendwith // minimul data response
     const result = await FacultyModel.findOneAndUpdate({ id: facultyID }, modifiedUpdatedData, { new: true })
-      .populate('admissionSemester')
+
       .populate({
         path: 'user',
         // select: '-password -__v', // Exclude the password field
