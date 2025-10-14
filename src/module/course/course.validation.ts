@@ -2,7 +2,7 @@ import z from "zod";
 import { statusList } from "../common/user/user.interface";
 
 const PreRequisiteCourseValidationSchema = z.object({
-  course: z.string().optional(),
+  course: z.string(),
   isDeleted: z.boolean().optional(),
 });
 
@@ -33,28 +33,32 @@ const PreRequisiteCourseValidationSchema = z.object({
 
 
 export const createCourseValidationSchema = z.object({
-  // body: z.object({
-  title: z.string(),
-  prifix: z.string(),
-  courseCode: z.string(),
-  credit: z.number(),
-  preRequisiteCourses: z.array(PreRequisiteCourseValidationSchema).optional(),
-  isActive: z.boolean().optional(),
-  status: z.enum(statusList).optional(),
-  isDeleted: z.boolean(),
-  // })
+  body: z.object({
+    course: z.object({
+      title: z.string(),
+      prifix: z.string(),
+      courseCode: z.string(),
+      credit: z.number(),
+      preRequisiteCourses: z.array(PreRequisiteCourseValidationSchema).optional(),
+      isActive: z.boolean().optional(),
+      status: z.enum(statusList).optional(),
+      isDeleted: z.boolean(),
+    })
+  })
 });
 
 export const updateCourseValidationSchema = z.object({
   body: z.object({
-    title: z.string().optional(),
-    prifix: z.string().optional(),
-    courseCode: z.string().optional(),
-    credit: z.number().optional(),
-    preRequisiteCourses: z.array(PreRequisiteCourseValidationSchema).optional(),
-    isActive: z.boolean().optional(),
-    status: z.enum(statusList).optional(),
-    isDeleted: z.boolean().optional(),
+    course: z.object({
+      title: z.string().optional(),
+      prifix: z.string().optional(),
+      courseCode: z.string().optional(),
+      credit: z.number().optional(),
+      preRequisiteCourses: z.array(PreRequisiteCourseValidationSchema).optional(),
+      isActive: z.boolean().optional(),
+      status: z.enum(statusList).optional(),
+      isDeleted: z.boolean().optional(),
+    })
   })
 });
 

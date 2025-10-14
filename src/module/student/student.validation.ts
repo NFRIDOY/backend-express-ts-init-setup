@@ -4,7 +4,7 @@ import { nameSchema } from "../common/user/user.validation";
 
 export const createStudentValidationSchema = z.object({
   body: z.object({
-    password: z.string(),
+    password: z.string().optional(),
     student: z.object({
       name: nameSchema,
       email: z.string().email("Invalid email format").min(1, "Email is required"),

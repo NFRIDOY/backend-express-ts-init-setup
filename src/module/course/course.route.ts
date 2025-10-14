@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post('/', 
     logger,
-    // validateRequest(CourseValidationSchema.createCourse), //TODO: fix the validation error
+    validateRequest(CourseValidationSchema.createCourse), //TODO: fix the validation error
     courseController.createCourse);
 router.get('/', courseController.getAllCourses);
 router.get('/:id', courseController.getSingleCourse);
