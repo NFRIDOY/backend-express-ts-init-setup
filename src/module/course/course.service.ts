@@ -94,7 +94,7 @@ const deleteCourseByIdFromDB = async (id: string): Promise<ICourse | null> => {
 //     // const facultyIds = payload.map(id => new Types.ObjectId(id));
 
 //     // console.log("facultyIds", facultyIds)
-    
+
 //     const assignedData = await CourseFacultyAssignmentModel.findByIdAndUpdate(
 //       id,
 //       {
@@ -123,9 +123,28 @@ const assignFacultiesWithCourseIntoDB = async (
 ) => {
   try {
     // Normalize payload to array of ObjectIds
-    const facultyIds: Types.ObjectId[] = Array.isArray(payload)
-      ? payload.map(facultyId => new Types.ObjectId(facultyId))
-      : payload.flatMap(item => item.faculties?.map(facultyId => new Types.ObjectId(facultyId)) || []);
+    // - Initialize an empty array to hold normalized ObjectIds
+    let facultyIds: Types.ObjectId[] = [];
+
+    // - Check if payload is a non-empty array of strings (e.g. ["id1", "id2"])
+    if (Array.isArray(payload) && payload.length > 0 && typeof payload[0] === 'string') {
+      // - Cast payload to string[] and convert each ID to a MongoDB ObjectId
+      const stringArray = payload as string[];
+      facultyIds = stringArray.map((facultyId) => new Types.ObjectId(facultyId));
+    } else {
+      // - Otherwise, assume payload is an array of objects with a `faculties` field
+      const objectArray = payload as Partial<ICourseFacultyAssignment>[];
+
+      // - Flatten all `faculties` arrays and convert each ID to ObjectId
+      facultyIds = objectArray.flatMap((item) =>
+        item.faculties?.map((facultyId) => new Types.ObjectId(facultyId)) || []
+      );
+    }
+
+    /**
+     * This block of code is designed to normalize a flexible `payload` into a consistent array of MongoDB `ObjectId`s, which is essential for safely performing database operations. It begins by initializing an empty array called `facultyIds`. Then, it checks whether the `payload` is a non-empty array of strings—typically representing raw faculty IDs. If so, it casts the array to `string[]` and maps each string into a `Types.ObjectId`, ensuring proper MongoDB typing. If the payload is not a string array, it assumes the input is an array of objects that follow the `ICourseFacultyAssignment` structure. It then uses `flatMap` to extract the `faculties` array from each object, maps each faculty ID to an `ObjectId`, and flattens the result into a single array. This approach ensures that regardless of whether the input is a simple list of IDs or a structured object, the resulting `facultyIds` array is clean, type-safe, and ready for use in MongoDB queries or updates.
+
+     */
 
     const assignedData = await CourseFacultyAssignmentModel.findByIdAndUpdate(
       id,
