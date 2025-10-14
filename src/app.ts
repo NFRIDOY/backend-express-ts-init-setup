@@ -11,7 +11,7 @@ import router from './routes';
 // Persers
 app.use(express.json()); // to recive json object
 app.use(cors())
-app.use(express.text()); // to recive text
+// app.use(express.text()); // to recive text
 
 // Routes
 // routes();

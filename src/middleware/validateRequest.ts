@@ -9,7 +9,7 @@ export const validateRequest = (schema: ZodObject): RequestHandler => {
             })
             next();
         } catch (err) {
-            console.error("❌ Validation Failed: Please check the 'Request Format' from the client");
+            console.error("❌ Validation Failed: Please check the 'Request Format' and it must be in 'JSON' from the client");
             next(err)
         }
     }

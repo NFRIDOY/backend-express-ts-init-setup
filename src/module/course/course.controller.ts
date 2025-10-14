@@ -99,10 +99,36 @@ const deleteCourse: RequestHandler = catchAsync(async (req, res) => {
     })
 })
 
+const assignFacultiesWithCourse: RequestHandler = catchAsync(async (req, res) => {
+    // Pass the request body directly to the service function which now handles both formats
+    const courseId = req.params?.id;
+    const { faculties } = req.body;
+    // console.log("req.body", req.body)
+    // console.log("faculties", faculties)
+    const result = await courseService.assignFacultiesWithCourseIntoDB(courseId, faculties);
+
+    if (!result) {
+        return sendErrorResponse(res, {
+            statusCode: 404,
+            message: "Faculty Assigned on this Course Failed",
+            data: {},
+        });
+    }
+
+    return sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Faculty Assigned on this Course Successfully",
+        data: result,
+    })
+})
+
 export const courseController = {
     createCourse,
     getAllCourses,
     getSingleCourse,
     updateCourse,
-    deleteCourse
+    deleteCourse,
+    assignFacultiesWithCourse,
+    // removeFacultiesWithcourse,
 }

@@ -20,3 +20,13 @@ export interface ICourse {
     status?: IStatus;
     isDeleted: boolean;
 }
+
+export interface ICourseFacultyAssignment {
+    course: Types.ObjectId;
+    faculties: Types.ObjectId[];
+    // optional
+    assignedBy?: Types.ObjectId; // who assigned the faculty
+    assignedAt?: Date;
+    roleMap?: Record<string, Types.ObjectId>; // e.g., { lead: id1, assistant: id2 }
+
+}

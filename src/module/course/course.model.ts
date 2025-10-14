@@ -1,6 +1,7 @@
 import { Schema, model, connect } from 'mongoose';
-import { ICourse, IPreRequisiteCourses } from './course.interface';
+import { ICourse, ICourseFacultyAssignment, IPreRequisiteCourses } from './course.interface';
 import { statusList } from '../common/user/user.interface';
+import { types } from 'util';
 
 // pre
 const PreRequisiteCourseSchema = new Schema<IPreRequisiteCourses>({
@@ -73,4 +74,25 @@ CourseSchema.pre('findOne', async function (next) {
   next();
 })
 
-export const CourseModel = model('course', CourseSchema);
+export const CourseModel = model<ICourse>('course', CourseSchema);
+
+// ICourseFacultyAssignment
+
+const CourseFacultyAssignmentSchema = new Schema<ICourseFacultyAssignment>({
+  course: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    unique: true,
+    trim: true,
+  },
+  faculties: [{
+    type: Schema.Types.ObjectId
+  }]
+},
+  {
+    toJSON: {
+      virtuals: true // [MUST] virtual turned on as option 
+    }
+  });
+
+  export const CourseFacultyAssignmentModel = model<ICourseFacultyAssignment>('CourseFacultyAssignment', CourseFacultyAssignmentSchema)

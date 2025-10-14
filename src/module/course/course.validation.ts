@@ -1,5 +1,6 @@
 import z from "zod";
 import { statusList } from "../common/user/user.interface";
+import { ICourseFacultyAssignment } from "./course.interface";
 
 const PreRequisiteCourseValidationSchema = z.object({
   course: z.string(),
@@ -36,43 +37,15 @@ export const updateCourseValidationSchema = z.object({
   })
 });
 
+const facultiesWithCourseValidationSchema = z.object({
+  body: z.object({
+    faculties: z.array(z.string()),
+  })
+});
+
+
 export const CourseValidationSchema = {
   createCourse: createCourseValidationSchema,
-  updateCourse: updateCourseValidationSchema
-};
-
-/**
- * Course REQUEST obj without preRequisiteCourses
-{
-  "course": {
-    "title": "Introduction to Computer Science",
-    "prifix": "CSE",
-    "courseCode": "101",
-    "credit": 3,
-    "isActive": true,
-    "status": "active",
-    "isDeleted": false
-  }
+  updateCourse: updateCourseValidationSchema,
+  facultiesWithCourseValidationSchema,
 }
-  * 
-{
-  "course": {
-    "title": "Introduction to Computer Science",
-    "prifix": "CSE",
-    "courseCode": "101",
-    "credit": 3,
-    "preRequisiteCourses": [
-      {
-        "course": "652f1a9c3b2e4a0012d9c8a1",
-        "isDeleted": false
-      },
-      {
-        "course": "652f1a9c3b2e4a0012d9c8a2"
-      }
-    ],
-    "isActive": true,
-    "status": "active",
-    "isDeleted": false
-  }
-}
- */
