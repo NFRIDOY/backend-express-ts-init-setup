@@ -55,6 +55,8 @@ const updateCourseByCourseIdOnDB = async (id: string, payload: Partial<ICourse>)
       { new: true, runValidators: true })
       .populate('preRequisiteCourses.course');
 
+      // TODO: preRequisiteCourses UPDATE
+
     return besicCourseData;
   } catch (err) {
     throw new AppError(400, "Failed To Update The Course");
