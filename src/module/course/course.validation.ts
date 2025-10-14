@@ -6,32 +6,6 @@ const PreRequisiteCourseValidationSchema = z.object({
   isDeleted: z.boolean().optional(),
 });
 
-// export const createCourseValidationSchema = z.object({
-//   body: z.object({
-//     title: z.string().trim().min(1, 'Title is required'),
-//     prifix: z.string().trim().min(1, 'Prifix is required'),
-//     courseCode: z.string().trim().min(1, 'Course Code is required'),
-//     credit: z.number().min(0.5).default(1),
-//     preRequisiteCourses: z.array(PreRequisiteCourseValidationSchema).optional(),
-//     isActive: z.boolean().optional().default(true),
-//     status: z.enum(statusList).optional().default('active'),
-//     isDeleted: z.boolean().optional().default(false),
-//   })
-// });
-
-// Main course creation schema
-// export const createCourseValidationSchema = z.object({
-//   title: z.string().trim().min(1, 'Title is required'),
-//   prifix: z.string().trim().min(1, 'Prifix is required'),
-//   courseCode: z.string().trim().min(1, 'Course Code is required'),
-//   credit: z.number().min(0.5).default(1),
-//   preRequisiteCourses: z.array(PreRequisiteCourseValidationSchema).optional(),
-//   isActive: z.boolean().optional().default(true),
-//   status: z.enum(statusList).optional().default('active'),
-//   isDeleted: z.boolean().optional().default(false),
-// });
-
-
 export const createCourseValidationSchema = z.object({
   body: z.object({
     course: z.object({
