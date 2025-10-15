@@ -4,9 +4,9 @@ import { catchAsync } from "../../utils/catchAsync";
 import { semesterRegistrationServices } from "./semesterRegistration.service";
 
 const createSemesterRegistration: RequestHandler = catchAsync(async (req, res, _next) => {
-    const academicSemesterData = req.body;
+    const { semesterRegistration } = req.body;
 
-    const result = await semesterRegistrationServices.createSemesterRegistrationIntoDB(academicSemesterData)
+    const result = await semesterRegistrationServices.createSemesterRegistrationIntoDB(semesterRegistration)
 
     if (!result) {
         return sendErrorResponse(res, { data: result })
@@ -53,9 +53,9 @@ const getSingleSemesterRegistration: RequestHandler = catchAsync(async (req, res
 
 const updateSingleSemesterRegistration: RequestHandler = catchAsync(async (req, res, _next) => {
     const { id } = req.params;
-    const academicSemesterData = req.body;
+    const { semesterRegistration } = req.body;
 
-    const result = await semesterRegistrationServices.updateSingleSemesterRegistrationInDB(id, academicSemesterData)
+    const result = await semesterRegistrationServices.updateSingleSemesterRegistrationInDB(id, semesterRegistration)
 
     if (!result) {
         return sendErrorResponse(res, { data: result })

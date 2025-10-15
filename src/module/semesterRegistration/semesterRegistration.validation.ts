@@ -9,8 +9,8 @@ export const createSemesterRegistrationValidationSchema = z.object({
     semesterRegistration: z.object({
       academicSemester: z.string(),
       status: z.enum(SemisterRegistrationStatusList).default(SemesterRegistrationStatus.UPCOMING),
-      startDate: z.date(),
-      endDate: z.date(),
+      startDate: z.coerce.date(),
+      endDate: z.coerce.date(),
       minCredit: z.number().default(3),
       maxCredit: z.number().default(3),
       isDeleted: z.boolean().default(false),
@@ -24,8 +24,8 @@ export const updateSemesterRegistrationValidationSchema = z.object({
     semesterRegistration: z.object({
       academicSemester: z.string().optional(),
       status: z.enum(SemisterRegistrationStatusList).default(SemesterRegistrationStatus.UPCOMING).optional(),
-      startDate: z.date().optional(),
-      endDate: z.date().optional(),
+      startDate: z.coerce.date().optional(),
+      endDate: z.coerce.date().optional(),
       minCredit: z.number().default(3).optional(),
       maxCredit: z.number().default(3).optional(),
       isDeleted: z.boolean().default(false).optional(),
