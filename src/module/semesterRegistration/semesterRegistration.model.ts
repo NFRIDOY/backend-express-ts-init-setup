@@ -1,62 +1,43 @@
 import mongoose, { Schema } from "mongoose";
 import { ISemesterRegistration } from "./semesterRegistration.interface";
+import { SemesterRegistrationStatus } from "./semesterRegistration.constant";
 
-// User Schema
+// SemesterRegistration Schema
 const SemesterRegistrationSchema = new Schema<ISemesterRegistration>({
-  name: {
-    type: String,
+  academicSemester: {
+    type: Schema.Types.ObjectId,
+    ref: 'AcademicSemester',
     required: true,
     unique: true,
-    trim: true,
-    index: true,
   },
-  code: {
+  status: {
     type: String,
-    required: false,
-    unique: true,
+    required: true,
     trim: true,
-    index: true,
+    default: SemesterRegistrationStatus.UPCOMING,
   },
-  alfaCode: {
-    type: String,
-    required: false,
-    unique: true,
-    trim: true,
-    index: true,
+  startDate: {
+    type: Date,
+    required: true,
   },
-  shortName: {
-    type: String,
-    required: false,
-    unique: true,
-    trim: true,
-    index: true,
+  endDate: {
+    type: Date,
+    required: true,
   },
-  description: {
-    type: String,
-    required: false,
-    index: true,
+  minCredit: {
+    type: Number,
+    required: true,
   },
-  initiatedYear: {
-    type: String,
-    required: false,
-    trim: true,
-    index: true,
-  },
-  isActive: {
-    type: Boolean,
-    required: false,
-    default: true,
+  maxCredit: {
+    type: Number,
+    required: true,
   },
   isDeleted: {
     type: Boolean,
     required: false,
     default: false,
   },
-  academicFaculty: {
-    type: Schema.Types.ObjectId,
-    ref: 'AcademicFaculty',
-    required: true,
-  },
+  
 },
   {
     timestamps: true,

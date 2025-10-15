@@ -14,14 +14,14 @@ const createSemesterRegistration: RequestHandler = catchAsync(async (req, res, _
     return sendResponse(res, {
         success: true,
         statusCode: 200,
-        message: "Academic Department Created",
+        message: "Semester Registration Created",
         data: result,
     })
 
 })
 const getAllSemesterRegistration: RequestHandler = catchAsync(async (req, res, _next) => {
 
-    const result = await semesterRegistrationServices.getAllSemesterRegistrationFromDB()
+    const result = await semesterRegistrationServices.getAllSemesterRegistrationFromDB(req.query)
 
     if (!result) {
         return sendErrorResponse(res, { data: result })
@@ -29,7 +29,7 @@ const getAllSemesterRegistration: RequestHandler = catchAsync(async (req, res, _
     return sendResponse(res, {
         success: true,
         statusCode: 200,
-        message: "Academic Departments Retrived",
+        message: "Semester Registrations Retrived",
         data: result,
     })
 
@@ -45,7 +45,7 @@ const getSingleSemesterRegistration: RequestHandler = catchAsync(async (req, res
     return sendResponse(res, {
         success: true,
         statusCode: 200,
-        message: "One Academic Department Retrived",
+        message: "One Semester Registration Retrived",
         data: result,
     })
 
@@ -63,7 +63,7 @@ const updateSingleSemesterRegistration: RequestHandler = catchAsync(async (req, 
     return sendResponse(res, {
         success: true,
         statusCode: 200,
-        message: "Academic Department Updated",
+        message: "Semester Registration Updated",
         data: result,
     })
 
