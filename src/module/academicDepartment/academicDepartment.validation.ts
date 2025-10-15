@@ -12,7 +12,7 @@ export const createAcademicDepartmentValidationSchema = z.object({
       error: "Code must be a string",
     }).optional(),
 
-    AlfaCode: z.string({
+    alfaCode: z.string({
       error: "AlfaCode must be a string",
     }).optional(),
 
@@ -57,7 +57,7 @@ export const updateAcademicDepartmentValidationSchema = z.object({
       error: "Code must be a string",
     }).optional(),
 
-    AlfaCode: z.string({
+    alfaCode: z.string({
       error: "AlfaCode must be a string",
     }).optional(),
 

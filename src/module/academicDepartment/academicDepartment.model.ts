@@ -17,7 +17,7 @@ const AcademicDepartmentSchema = new Schema<IAcademicDepartment>({
     trim: true,
     index: true,
   },
-  AlfaCode: {
+  alfaCode: {
     type: String,
     required: false,
     unique: true,
