@@ -4,7 +4,8 @@ import { studentRoute } from "../module/student/student.route";
 import logger from "../middleware/logger";
 import { AcademicSemesterRoute } from "../module/academicSemester/academicSemester.route";
 import { AcademicFacultyRoute } from "../module/academicFaculty/academicFaculty.route";
-import { AcademicDepartmentRoute } from "../module/academicDepartment/academicFaculty.route";
+import { AcademicDepartmentRoute } from "../module/academicDepartment/academicDepartment.route";
+import { SemesterRegistrationRoute } from "../module/semesterRegistration/semesterRegistration.route";
 import { adminRoute } from "../module/admin/admin.route";
 import { facultyRoute } from "../module/faculty/faculty.route";
 import { courseRoute } from "../module/course/course.route";
@@ -44,6 +45,10 @@ const moduleRoutes = [
     {
         path: '/course',
         route: courseRoute,
+    },
+    {
+        path: '/semester-registration',
+        route: SemesterRegistrationRoute,
     },
 ]
 
