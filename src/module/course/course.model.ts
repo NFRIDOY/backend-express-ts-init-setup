@@ -7,7 +7,7 @@ import { types } from 'util';
 const PreRequisiteCourseSchema = new Schema<IPreRequisiteCourses>({
   course: {
     type: Schema.Types.ObjectId,
-    ref: 'course', // TODO: course model name from the mongoDB table name
+    ref: 'course', // INFO: course model name from the mongoDB table name
   },
   isDeleted: {
     type: Boolean,
