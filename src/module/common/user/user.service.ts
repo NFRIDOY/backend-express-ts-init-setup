@@ -100,7 +100,7 @@ const createFacultyIntoDB = async (password: string, payload: IFaculty) => {
             throw new AppError(404, 'Academic Department not found');
         }
         console.log("academicDepartment", academicDepartment)
-        // TODO: Genareted Faculty ID 
+        // INFO: Genareted Faculty ID 
         userData.id = await generateFacultyId(academicDepartment);
 
         //set status
@@ -111,7 +111,7 @@ const createFacultyIntoDB = async (password: string, payload: IFaculty) => {
 
         if (!newUser.length) throw new AppError(500, "User Creation Failed")
 
-        // TODO: getall facultyCodes
+        // INFO: getall facultyCodes
         const existingCodes = await FacultyModel.find({}, 'facultyCode').lean();
         const existingCodeSet = new Set(existingCodes.map(doc => doc.facultyCode));
 
@@ -166,8 +166,8 @@ const createAdminIntoDB = async (password: string, payload: IFaculty) => {
             throw new AppError(404, 'Academic Department not found');
         }
         console.log("academicDepartment", academicDepartment)
-        // TODO: Genareted Faculty ID 
-        // userData.id = await generateFacultyId(academicDepartment);
+        // TODO: Genareted Admin ID 
+        // userData.id = await generateAdminId(academicDepartment);
 
         //set status
         userData.status = "in-progress";
@@ -176,16 +176,6 @@ const createAdminIntoDB = async (password: string, payload: IFaculty) => {
         console.log('newUser', newUser);
 
         if (!newUser.length) throw new AppError(500, "User Creation Failed")
-
-        // TODO: getall facultyCodes
-        // const existingCodes = await FacultyModel.find({}, 'facultyCode').lean();
-        // const existingCodeSet = new Set(existingCodes.map(doc => doc.facultyCode));
-
-        // console.log("existingCodes", existingCodes)
-        // console.log("codeSet", existingCodeSet)
-
-        // await session.abortTransaction()
-        // throw new AppError(500, "existingCodes")
 
         //create a student
         // if (Object.keys(newUser).length) {
