@@ -1,5 +1,6 @@
 import QueryBuilder from "../../builder/QueryBuilder";
 import AppError from "../../errors/AppError";
+import { isScheduleSame } from "../../utils/scheduleChecker";
 import { AcademicDepartmentModel } from "../academicDepartment/academicDepartment.model";
 import { AcademicFacultyModel } from "../academicFaculty/academicFaculty.model";
 import { CourseModel } from "../course/course.model";
@@ -20,18 +21,7 @@ import { isEqual } from 'lodash';
 //     return sameDays && sameStart && sameEnd;
 // };
 
-// Helper to check time overlap
-function isTimeOverlap(startA: string, endA: string, startB: string, endB: string): boolean {
-  return startA < endB && startB < endA;
-}
 
-// Main comparison function
-export function isScheduleSame(a: IOfferedCourse, b: IOfferedCourse): boolean {
-  const commonDays = a.days.filter(day => b.days.includes(day));
-  if (commonDays.length === 0) return false;
-
-  return isTimeOverlap(a.startTime, a.endTime, b.startTime, b.endTime);
-}
 
 // function arraysEqual(a: any[], b: any[]) {
 //     return a.length === b.length && a.every((val, i) => val === b[i]);
@@ -48,19 +38,6 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
     //     throw new AppError(
     //         409,
     //         'This Course is already exists in Offered Courses!',
-    //     );
-    // }
-
-    // is schadule same
-    // const isDaySame = isOfferedCourseExists && arraysEqual(isOfferedCourseExists?.days, payload?.days)
-    // const isTimeSame = isOfferedCourseExists &&
-    //     isOfferedCourseExists?.startTime === payload?.startTime &&
-    //     isOfferedCourseExists?.endTime === payload?.endTime;
-
-    // if (isDaySame && isTimeSame) {
-    //     throw new AppError(
-    //         409,
-    //         'This Course is already exists in same schadule!',
     //     );
     // }
 
