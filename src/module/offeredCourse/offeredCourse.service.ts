@@ -1,31 +1,12 @@
 import QueryBuilder from "../../builder/QueryBuilder";
 import AppError from "../../errors/AppError";
 import { isScheduleSame } from "../../utils/scheduleChecker";
-import { AcademicDepartmentModel } from "../academicDepartment/academicDepartment.model";
-import { AcademicFacultyModel } from "../academicFaculty/academicFaculty.model";
 import { CourseModel } from "../course/course.model";
 import { FacultyModel } from "../faculty/faculty.model";
 import { SemesterRegistrationModel } from "../semesterRegistration/semesterRegistration.model";
 import { IOfferedCourse } from "./offeredCourse.interface";
 import { OfferedCourseModel } from "./offeredCourse.model";
-
-import { isEqual } from 'lodash';
-
-// const isSameSchedule = (existing: IOfferedCourse, incoming: IOfferedCourse) => {
-//     if (!existing) return false;
-
-//     const sameDays = isEqual(existing.days?.sort(), incoming.days?.sort());
-//     const sameStart = existing.startTime === incoming.startTime;
-//     const sameEnd = existing.endTime === incoming.endTime;
-
-//     return sameDays && sameStart && sameEnd;
-// };
-
-
-
-// function arraysEqual(a: any[], b: any[]) {
-//     return a.length === b.length && a.every((val, i) => val === b[i]);
-// }
+import { validateCourseCreation } from "./offeredCourse.utils";
 
 const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
 
@@ -41,10 +22,6 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
     //     );
     // }
 
-    if (isOfferedCourseExists && isScheduleSame(isOfferedCourseExists, payload)) {
-        throw new AppError(409, 'This course already exists with the same schedule!');
-    }
-
     // check if the semesterRegistration is exist
     const isSemesterRegistrationExists =
         await SemesterRegistrationModel.findById(payload?.semesterRegistration);
@@ -55,43 +32,50 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
             'This Semester Registration not found!',
         );
     }
-    const isAcademicFacultyExists =
-        await AcademicFacultyModel.findById(payload?.academicFaculty);
 
-    if (!isAcademicFacultyExists) {
-        throw new AppError(
-            404,
-            'This Semester Academic Faculty not found!',
-        );
-    }
-    const isAcademicDepartmentExists =
-        await AcademicDepartmentModel.findById(payload?.academicDepartment);
-
-    if (!isAcademicDepartmentExists) {
-        throw new AppError(
-            404,
-            'This Semester Academic Department not found!',
-        );
-    }
-    // check if the Course is already registered!
-    const isCourseExists = await CourseModel.findById(payload?.course);
-    console.log({ isCourseExists })
-    if (!isCourseExists) {
-        throw new AppError(
-            404,
-            'This Course is not exists!',
-        );
+    if (isOfferedCourseExists && isScheduleSame(isOfferedCourseExists, payload)) {
+        throw new AppError(409, 'This course already exists with the same schedule!');
     }
 
-    const isFacultyExists =
-        await FacultyModel.findById(payload?.faculty);
+    await validateCourseCreation(payload);
+    
+    // const isAcademicFacultyExists =
+    //     await AcademicFacultyModel.findById(payload?.academicFaculty);
 
-    if (!isFacultyExists) {
-        throw new AppError(
-            404,
-            'This Semester Academic Department not found!',
-        );
-    }
+    // if (!isAcademicFacultyExists) {
+    //     throw new AppError(
+    //         404,
+    //         'This Semester Academic Faculty not found!',
+    //     );
+    // }
+    // const isAcademicDepartmentExists =
+    //     await AcademicDepartmentModel.findById(payload?.academicDepartment);
+
+    // if (!isAcademicDepartmentExists) {
+    //     throw new AppError(
+    //         404,
+    //         'This Semester Academic Department not found!',
+    //     );
+    // }
+    // // check if the Course is already registered!
+    // const isCourseExists = await CourseModel.findById(payload?.course);
+    // console.log({ isCourseExists })
+    // if (!isCourseExists) {
+    //     throw new AppError(
+    //         404,
+    //         'This Course is not exists!',
+    //     );
+    // }
+
+    // const isFacultyExists =
+    //     await FacultyModel.findById(payload?.faculty);
+
+    // if (!isFacultyExists) {
+    //     throw new AppError(
+    //         404,
+    //         'This Semester Academic Department not found!',
+    //     );
+    // }
 
 
     const result = await OfferedCourseModel.create({

@@ -1,6 +1,6 @@
 import { IOfferedCourse } from "../module/offeredCourse/offeredCourse.interface";
 
-
+// old and wrong
 // is schadule same
 // const isDaySame = isOfferedCourseExists && arraysEqual(isOfferedCourseExists?.days, payload?.days)
 // const isTimeSame = isOfferedCourseExists &&
