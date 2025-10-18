@@ -6,22 +6,22 @@ import { Days, OfferedCourseStatus, OfferedCourseStatusList } from "./offeredCou
 const OfferedCourseSchema = new Schema<IOfferedCourse>({
   semesterRegistration: {
     type: Schema.Types.ObjectId,
-    ref: 'SemesterRegistration',
+    ref: 'semesterRegistration',
     required: true,
   },
   academicSemester: {
     type: Schema.Types.ObjectId,
-    ref: 'AcademicSemester',
+    ref: 'academicSemester',
     required: true,
   },
   academicFaculty: {
     type: Schema.Types.ObjectId,
-    ref: 'AcademicFaculty',
+    ref: 'academicFaculty',
     required: true,
   },
   academicDepartment: {
     type: Schema.Types.ObjectId,
-    ref: 'AcademicDepartment',
+    ref: 'academicDepartment',
     required: true,
   },
   course: {

@@ -4,7 +4,7 @@ import AppError from "../../errors/AppError";
 import flattenNestedDeepKey from "../../utils/flattenNestedDeepKey";
 import { studentSearchableFields } from "./student.constant";
 import { IStudent } from "./student.interface";
-import { Student } from "./student.model";
+import { StudentModel } from "./student.model";
 
 // const createStudentIntoDB = async (student: IStudent): Promise<IStudent> => {
 //   const result = await Student.create(student)
@@ -15,7 +15,7 @@ const getAllStudentFromDB = async (query: Record<string, unknown>): Promise<IStu
   //   path: 'user',
   //   select: ' -password -__v', // Exclude the password field
   // });
-  const studentQuery = new QueryBuilder(Student.find()
+  const studentQuery = new QueryBuilder(StudentModel.find()
     .populate('admissionSemester')
     .populate({
       path: 'user',
@@ -30,7 +30,7 @@ const getAllStudentFromDB = async (query: Record<string, unknown>): Promise<IStu
   return result;
 }
 const getSingleStudentByStudentIdFromDB = async (studentID: string): Promise<IStudent | null> => {
-  const result = await Student.findOne({ id: studentID }).populate('admissionSemester').populate({
+  const result = await StudentModel.findOne({ id: studentID }).populate('admissionSemester').populate({
     path: 'user',
     select: ' -password -__v', // Exclude the password field
   });
@@ -57,7 +57,7 @@ const updateStudentByStudentIdOnDB = async (studentID: string, payload: Partial<
     // }
 
     // const result = await Student.updateOne({ id: studentID }, payload) // for optimized bendwith // minimul data response
-    const result = await Student.findOneAndUpdate({ id: studentID }, modifiedUpdatedData, { new: true })
+    const result = await StudentModel.findOneAndUpdate({ id: studentID }, modifiedUpdatedData, { new: true })
       .populate('admissionSemester')
       .populate({
         path: 'user',

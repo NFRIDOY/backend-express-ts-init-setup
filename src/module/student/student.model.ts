@@ -105,11 +105,11 @@ const studentSchema = new Schema<IStudent>({
   },
   admissionSemester: {
     type: Schema.Types.ObjectId,
-    ref: 'AcademicSemester',
+    ref: 'academicSemester',
   },
   academicDepartment: {
     type: Schema.Types.ObjectId,
-    ref: 'AcademicDepartment',
+    ref: 'academicDepartment',
   },
   status: {
     type: String,
@@ -153,4 +153,4 @@ studentSchema.pre('findOne', async function (next) {
 //   next();
 // })
 
-export const Student = model('Student', studentSchema);
+export const StudentModel = model('student', studentSchema);

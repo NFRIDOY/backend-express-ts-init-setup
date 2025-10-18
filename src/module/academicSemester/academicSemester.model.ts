@@ -61,4 +61,4 @@ AcademicSemesterSchema.pre("save", async function(next) {
 
 
 // AcademicSemester Model
-export const AcademicSemesterModel = mongoose.model<IAcademicSemester>('AcademicSemester', AcademicSemesterSchema);
+export const AcademicSemesterModel = mongoose.model<IAcademicSemester>('academicSemester', AcademicSemesterSchema);

@@ -54,7 +54,7 @@ const AcademicDepartmentSchema = new Schema<IAcademicDepartment>({
   },
   academicFaculty: {
     type: Schema.Types.ObjectId,
-    ref: 'AcademicFaculty',
+    ref: 'academicFaculty',
     required: true,
   },
 },
@@ -71,4 +71,4 @@ const AcademicDepartmentSchema = new Schema<IAcademicDepartment>({
 
 
 // AcademicSemester Model
-export const AcademicDepartmentModel = mongoose.model<IAcademicDepartment>('AcademicDepartment', AcademicDepartmentSchema);
+export const AcademicDepartmentModel = mongoose.model<IAcademicDepartment>('academicDepartment', AcademicDepartmentSchema);

@@ -1,7 +1,7 @@
 import config, { constants } from "../../../config";
 import { AcademicSemesterModel } from "../../academicSemester/academicSemester.model";
 import { IStudent } from "../../student/student.interface";
-import { Student } from "../../student/student.model";
+import { StudentModel } from "../../student/student.model";
 import { IUser } from "./user.interface";
 import { UserModel } from "./user.model";
 import { generateFacultyId, generateStudentId } from "./user.utils";
@@ -64,7 +64,7 @@ const createStudentIntoDB = async (password: string, payload: IStudent) => {
             payload.id = newUser[0].id;
             payload.user = newUser[0]._id; //reference _id
 
-            const newStudent = await Student.create([payload], { session }); // add on the session
+            const newStudent = await StudentModel.create([payload], { session }); // add on the session
 
             await session.commitTransaction() // sucessfull Transition
             await session.endSession() // End Isolation
@@ -212,7 +212,7 @@ const deleteStudentByIdFromDB = async (id: string): Promise<IUser | null> => {
     try {
         session.startTransaction();
 
-        const studentDeleted = await Student.findOneAndUpdate(
+        const studentDeleted = await StudentModel.findOneAndUpdate(
             { _id: id },
             { isDeleted: true },
             { new: true, session } // Use `session` here // `new` is useing for returning the updated value
@@ -248,7 +248,7 @@ const undeletedStudentByIdFromDB = async (studentID: string): Promise<IUser | nu
     try {
         session.startTransaction();
 
-        const studentDeleted = await Student.findOneAndUpdate(
+        const studentDeleted = await StudentModel.findOneAndUpdate(
             { _id: studentID },
             { isDeleted: false },
             { new: true, session } // Use session here

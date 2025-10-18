@@ -6,7 +6,7 @@ import { SemesterRegistrationStatus } from "./semesterRegistration.constant";
 const SemesterRegistrationSchema = new Schema<ISemesterRegistration>({
   academicSemester: {
     type: Schema.Types.ObjectId,
-    ref: 'AcademicSemester',
+    ref: 'academicSemester',
     required: true,
     unique: true,
   },
@@ -52,4 +52,4 @@ const SemesterRegistrationSchema = new Schema<ISemesterRegistration>({
 
 
 // AcademicSemester Model
-export const SemesterRegistrationModel = mongoose.model<ISemesterRegistration>('SemesterRegistration', SemesterRegistrationSchema);
+export const SemesterRegistrationModel = mongoose.model<ISemesterRegistration>('semesterRegistration', SemesterRegistrationSchema);

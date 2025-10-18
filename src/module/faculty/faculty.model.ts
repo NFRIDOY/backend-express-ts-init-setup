@@ -82,7 +82,7 @@ const FacultySchema = new Schema<IFaculty>({
   },
   academicDepartment: {
     type: Schema.Types.ObjectId,
-    ref: 'AcademicDepartment',
+    ref: 'academicDepartment',
   },
   status: {
     type: String,
