@@ -41,6 +41,10 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
         throw new AppError(409, 'This course already exists with the same schedule!');
     }
 
+    // TODO: 16-10 Validate faculty-department and same course-section
+    // TODO: faculty's availavility 
+    // TODO: faculty's max working hour per day = 18hrs :: total schedule time can't exced 9 hrs 
+
     await validateCourseCreation(payload);
 
     // const isAcademicFacultyExists =
