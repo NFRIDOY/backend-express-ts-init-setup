@@ -63,7 +63,7 @@ const updateSingleOfferedCourse: RequestHandler = catchAsync(async (req, res, _n
     return sendResponse(res, {
         success: true,
         statusCode: 200,
-        message: "Offerd CoursesUpdated",
+        message: "Offerd Courses Updated",
         data: result,
     })
 
