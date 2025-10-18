@@ -38,11 +38,12 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
     }
 
     if (isOfferedCourseExists && isScheduleSame(isOfferedCourseExists, payload)) {
-        throw new AppError(409, 'This course already exists with the same schedule!');
+        throw new AppError(409, 'Same Schedule Conflict!');
     }
 
     // TODO: 16-10 Validate faculty-department and same course-section
-    // TODO: faculty's availavility 
+    // TODO: isFacultyBusy on the schedule: findOne(day: { $in {payload.days}, startTime: {payload.startTime}, endTime: {payload.endTime}}) -> ifExist -> AppError
+    // TODO: faculty's availavility > isFacultyBusy > show available Schedule [ADVANCED]
     // TODO: faculty's max working hour per day = 18hrs :: total schedule time can't exced 9 hrs 
 
     await validateCourseCreation(payload);
