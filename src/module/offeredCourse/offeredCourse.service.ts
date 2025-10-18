@@ -8,6 +8,35 @@ import { SemesterRegistrationModel } from "../semesterRegistration/semesterRegis
 import { IOfferedCourse } from "./offeredCourse.interface";
 import { OfferedCourseModel } from "./offeredCourse.model";
 
+import { isEqual } from 'lodash';
+
+// const isSameSchedule = (existing: IOfferedCourse, incoming: IOfferedCourse) => {
+//     if (!existing) return false;
+
+//     const sameDays = isEqual(existing.days?.sort(), incoming.days?.sort());
+//     const sameStart = existing.startTime === incoming.startTime;
+//     const sameEnd = existing.endTime === incoming.endTime;
+
+//     return sameDays && sameStart && sameEnd;
+// };
+
+// Helper to check time overlap
+function isTimeOverlap(startA: string, endA: string, startB: string, endB: string): boolean {
+  return startA < endB && startB < endA;
+}
+
+// Main comparison function
+export function isScheduleSame(a: IOfferedCourse, b: IOfferedCourse): boolean {
+  const commonDays = a.days.filter(day => b.days.includes(day));
+  if (commonDays.length === 0) return false;
+
+  return isTimeOverlap(a.startTime, a.endTime, b.startTime, b.endTime);
+}
+
+// function arraysEqual(a: any[], b: any[]) {
+//     return a.length === b.length && a.every((val, i) => val === b[i]);
+// }
+
 const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
 
     // check if the semester is already registered!
@@ -15,11 +44,28 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
         course: payload?.course,
     });
 
-    if (isOfferedCourseExists) {
-        throw new AppError(
-            409,
-            'This Course is already exists in Offered Courses!',
-        );
+    // if (isOfferedCourseExists) {
+    //     throw new AppError(
+    //         409,
+    //         'This Course is already exists in Offered Courses!',
+    //     );
+    // }
+
+    // is schadule same
+    // const isDaySame = isOfferedCourseExists && arraysEqual(isOfferedCourseExists?.days, payload?.days)
+    // const isTimeSame = isOfferedCourseExists &&
+    //     isOfferedCourseExists?.startTime === payload?.startTime &&
+    //     isOfferedCourseExists?.endTime === payload?.endTime;
+
+    // if (isDaySame && isTimeSame) {
+    //     throw new AppError(
+    //         409,
+    //         'This Course is already exists in same schadule!',
+    //     );
+    // }
+
+    if (isOfferedCourseExists && isScheduleSame(isOfferedCourseExists, payload)) {
+        throw new AppError(409, 'This course already exists with the same schedule!');
     }
 
     // check if the semesterRegistration is exist
@@ -51,14 +97,12 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
         );
     }
     // check if the Course is already registered!
-    const isCourseExists = await CourseModel.findOne({
-        course: payload?.course,
-    });
-
-    if (isCourseExists) {
+    const isCourseExists = await CourseModel.findById(payload?.course);
+    console.log({ isCourseExists })
+    if (!isCourseExists) {
         throw new AppError(
-            409,
-            'This Course is already exists!',
+            404,
+            'This Course is not exists!',
         );
     }
 
@@ -115,7 +159,7 @@ const updateSingleOfferedCourseInDB = async (id: string, payload: Partial<IOffer
         days,
         status,
     } = payload
-    // check if the Course is already registered!
+    // check if the Course is exist
     const isCourseExists = await CourseModel.findOne({
         course: payload?.course,
     });
