@@ -1,6 +1,6 @@
 import QueryBuilder from "../../builder/QueryBuilder";
 import AppError from "../../errors/AppError";
-import { isScheduleSame } from "../../utils/scheduleChecker";
+import { isScheduleSame, isValidTimeRange } from "../../utils/scheduleChecker";
 import { CourseModel } from "../course/course.model";
 import { FacultyModel } from "../faculty/faculty.model";
 import { SemesterRegistrationModel } from "../semesterRegistration/semesterRegistration.model";
@@ -33,12 +33,16 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
         );
     }
 
+    if (!isValidTimeRange(payload.startTime, payload.endTime)) {
+        throw new AppError(409, 'Invalied Time Range');
+    }
+
     if (isOfferedCourseExists && isScheduleSame(isOfferedCourseExists, payload)) {
         throw new AppError(409, 'This course already exists with the same schedule!');
     }
 
     await validateCourseCreation(payload);
-    
+
     // const isAcademicFacultyExists =
     //     await AcademicFacultyModel.findById(payload?.academicFaculty);
 

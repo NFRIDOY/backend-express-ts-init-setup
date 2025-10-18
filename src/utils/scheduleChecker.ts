@@ -14,6 +14,10 @@ import { IOfferedCourse } from "../module/offeredCourse/offeredCourse.interface"
 //     );
 // }
 
+export function isValidTimeRange(start: string, end: string): boolean {
+    return start < end;
+  }
+  
 
 // Helper to check time overlap
 export function isTimeOverlap(startA: string, endA: string, startB: string, endB: string): boolean {

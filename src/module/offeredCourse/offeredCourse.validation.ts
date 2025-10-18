@@ -13,8 +13,14 @@ export const createOfferedCourseValidationSchema = z.object({
       faculty: z.string(),
       maxCapacity: z.number(),
       section: z.number(),
-      startTime: z.string(),
-      endTime: z.string(),
+      startTime: z.string().regex(/^(?:[01]\d|2[0-3]):[0-5]\d$/,
+        {
+          message: "Invalid time format. Expected HH:MM in 24-hour format.",
+        }),
+      endTime: z.string().regex(/^(?:[01]\d|2[0-3]):[0-5]\d$/,
+        {
+          message: "Invalid time format. Expected HH:MM in 24-hour format.",
+        }),
       days: z.array(z.enum(Days)),
       status: z.enum(OfferedCourseStatusList).default(OfferedCourseStatus.ACTIVE),
     })
@@ -34,7 +40,15 @@ export const updateOfferedCourseValidationSchema = z.object({
       days: z.array(z.enum(Days)).optional(),
       status: z.enum(OfferedCourseStatusList).optional(),
     })
-  }),
+  })
+  // ⬇️ Custom refinement to ensure valid time range
+    .refine(
+      (data) => data && (data?.offeredCourse?.startTime < data?.offeredCourse?.endTime),
+      {
+        message: "Start time must be earlier than end time.",
+        path: ["endTime"], // highlight error on endTime field
+      }
+    ),,
 });
 
 // Export bundle
