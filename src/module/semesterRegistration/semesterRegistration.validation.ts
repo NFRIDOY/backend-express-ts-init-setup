@@ -1,14 +1,14 @@
 import z from "zod";
 import { Types } from "mongoose";
 import { ISemesterRegistration } from "./semesterRegistration.interface";
-import { SemesterRegistrationStatus, SemisterRegistrationStatusList } from "./semesterRegistration.constant";
+import { SemesterRegistrationStatus, SemesterRegistrationStatusList } from "./semesterRegistration.constant";
 
 // Create SemesterRegistration Validation
 export const createSemesterRegistrationValidationSchema = z.object({
   body: z.object({
     semesterRegistration: z.object({
       academicSemester: z.string(),
-      status: z.enum(SemisterRegistrationStatusList).default(SemesterRegistrationStatus.UPCOMING),
+      status: z.enum(SemesterRegistrationStatusList).default(SemesterRegistrationStatus.UPCOMING),
       startDate: z.coerce.date(),
       endDate: z.coerce.date(),
       minCredit: z.number().default(3),
@@ -23,7 +23,7 @@ export const updateSemesterRegistrationValidationSchema = z.object({
   body: z.object({
     semesterRegistration: z.object({
       academicSemester: z.string().optional(),
-      status: z.enum(SemisterRegistrationStatusList).default(SemesterRegistrationStatus.UPCOMING).optional(),
+      status: z.enum(SemesterRegistrationStatusList).default(SemesterRegistrationStatus.UPCOMING).optional(),
       startDate: z.coerce.date().optional(),
       endDate: z.coerce.date().optional(),
       minCredit: z.number().default(3).optional(),

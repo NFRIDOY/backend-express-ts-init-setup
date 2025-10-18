@@ -11,7 +11,7 @@ export const SemesterRegistrationStatus = {
  * CLOSED <-> UPCOMING | CURRENT | ENDED [Reversible]
 */
 
-export const SemisterRegistrationStatusList = Object.values(SemesterRegistrationStatus); // array
+export const SemesterRegistrationStatusList = Object.values(SemesterRegistrationStatus); // array
 
 
 export const semesterRegistrationSearchableFields = [
