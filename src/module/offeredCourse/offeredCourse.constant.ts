@@ -10,20 +10,20 @@ export const Day = {
 
 export const Days = Object.values(Day); // array
 
-export const OfferdCoursesStatus = {
+export const OfferedCourseStatus = {
     ACTIVE : 'ACTIVE',
     INACTIVE : 'INACTIVE',
 } as const;
 
-/** DOC: OfferdCoursesStatus
+/** DOC: OfferedCourseStatus
  * UPCOMING -> CURRENT -> ENDED [Ireversible]
  * CLOSED <-> UPCOMING | CURRENT | ENDED [Reversible]
 */
 
-export const OfferdCoursesStatusList = Object.values(OfferdCoursesStatus); // array
+export const OfferedCourseStatusList = Object.values(OfferedCourseStatus); // array
 
 
-export const offerdCoursesSearchableFields = [
+export const offeredCourseSearchableFields = [
     'minCredit',
     'maxCredit',
     'status',

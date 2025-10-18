@@ -1,9 +1,9 @@
 import mongoose, { Schema } from "mongoose";
-import { IOfferedCourse } from "./offerdCourses.interface";
-import { Days, OfferdCoursesStatusList } from "./offerdCourses.constant";
+import { IOfferedCourse } from "./offeredCourse.interface";
+import { Days, OfferedCourseStatus, OfferedCourseStatusList } from "./offeredCourse.constant";
 
-// OfferdCoursesSchema
-const OfferdCoursesSchema = new Schema<IOfferedCourse>({
+// OfferedCourseSchema
+const OfferedCourseSchema = new Schema<IOfferedCourse>({
   semesterRegistration: {
     type: Schema.Types.ObjectId,
     ref: 'AcademicSemester',
@@ -60,8 +60,9 @@ const OfferdCoursesSchema = new Schema<IOfferedCourse>({
   },
   status: {
     type: String,
-    enum: OfferdCoursesStatusList,
+    enum: OfferedCourseStatusList,
     required: true,
+    default: OfferedCourseStatus.ACTIVE
   },
 },
   {
@@ -70,4 +71,4 @@ const OfferdCoursesSchema = new Schema<IOfferedCourse>({
 
 
 // AcademicSemester Model
-export const OfferdCoursesModel = mongoose.model<IOfferedCourse>('OfferdCourses', OfferdCoursesSchema);
+export const OfferedCourseModel = mongoose.model<IOfferedCourse>('OfferedCourse', OfferedCourseSchema);

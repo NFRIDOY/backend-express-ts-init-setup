@@ -1,8 +1,8 @@
 import { Types } from "mongoose";
-import { Days, OfferdCoursesStatusList } from "./offerdCourses.constant";
+import { Days, OfferedCourseStatusList } from "./offeredCourse.constant";
 
 export type IDays = typeof Days[keyof typeof Days]; // Type
-export type IOfferdCoursesStatus = typeof OfferdCoursesStatusList[keyof typeof OfferdCoursesStatusList]; // Type
+export type IOfferedCourseStatus = typeof OfferedCourseStatusList[keyof typeof OfferedCourseStatusList]; // Type
 
 export type IOfferedCourse = {
   semesterRegistration: Types.ObjectId;
@@ -16,7 +16,7 @@ export type IOfferedCourse = {
   days: IDays[];
   startTime: string;
   endTime: string;
-  status: IOfferdCoursesStatus;
+  status: IOfferedCourseStatus;
 };
 
 // export type ISchedule = {
