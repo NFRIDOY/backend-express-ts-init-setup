@@ -4,7 +4,7 @@ import { catchAsync } from "../../utils/catchAsync";
 import { offeredCourseServices } from "./offeredCourse.service";
 
 const createOfferedCourse: RequestHandler = catchAsync(async (req, res, _next) => {
-    const { offeredCourse} = req.body;
+    const { offeredCourse } = req.body;
 
     const result = await offeredCourseServices.createOfferedCourseIntoDB(offeredCourse)
 
@@ -53,7 +53,7 @@ const getSingleOfferedCourse: RequestHandler = catchAsync(async (req, res, _next
 
 const updateSingleOfferedCourse: RequestHandler = catchAsync(async (req, res, _next) => {
     const { id } = req.params;
-    const { offeredCourse} = req.body;
+    const { offeredCourse } = req.body;
 
     const result = await offeredCourseServices.updateSingleOfferedCourseInDB(id, offeredCourse)
 
