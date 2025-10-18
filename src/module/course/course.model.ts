@@ -1,7 +1,6 @@
 import { Schema, model, connect } from 'mongoose';
 import { ICourse, ICourseFacultyAssignment, IPreRequisiteCourses } from './course.interface';
 import { statusList } from '../common/user/user.interface';
-import { types } from 'util';
 
 // pre
 const PreRequisiteCourseSchema = new Schema<IPreRequisiteCourses>({
