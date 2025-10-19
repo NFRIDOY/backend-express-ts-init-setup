@@ -1,15 +1,17 @@
 import QueryBuilder from "../../builder/QueryBuilder";
 import AppError from "../../errors/AppError";
 import { isScheduleSame, isValidTimeRange } from "../../utils/scheduleChecker";
+import { AcademicDepartmentModel } from "../academicDepartment/academicDepartment.model";
+import { AcademicFacultyModel } from "../academicFaculty/academicFaculty.model";
 import { CourseModel } from "../course/course.model";
 import { FacultyModel } from "../faculty/faculty.model";
 import { SemesterRegistrationModel } from "../semesterRegistration/semesterRegistration.model";
 import { IOfferedCourse } from "./offeredCourse.interface";
 import { OfferedCourseModel } from "./offeredCourse.model";
-import { validateCourseCreation } from "./offeredCourse.utils";
+import { isExistValidation } from "./offeredCourse.utils";
 
 const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
-    // check if the semester is already registered!
+    // check if the semester is already registered in same course-section
     const isOfferedCourseExistsInSection = await OfferedCourseModel.findOne({
         semesterRegistration: payload?.semesterRegistration,
         course: payload?.course,
@@ -17,10 +19,7 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
     });
 
     if (isOfferedCourseExistsInSection) {
-        throw new AppError(
-            409,
-            'This Course is already exists in this Section!',
-        );
+        throw new AppError(409, 'This Course is already exists in this Section!');
     }
 
     // check if the semesterRegistration is exist
@@ -40,9 +39,17 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
     //     throw new AppError(409, "This Course has a Schedule Conflict!");
     // }
 
-    // TODO: 16-10 Validate faculty-department and same course-section
-    // TODO: isFacultyBusy on the schedule: findOne(day: { $in {payload.days}, startTime: {payload.startTime}, endTime: {payload.endTime}}) -> ifExist -> AppError
-    // TODO: faculty's availavility > isFacultyBusy > show available Schedule [ADVANCED]
+    // TODO: 16-10 Validate faculty-department 
+    const validateDepartmentOfAcademicFaculty = await AcademicDepartmentModel.findOne({
+        academicFaculty: payload?.academicFaculty
+    })
+    console.log({ validateDepartmentOfAcademicFaculty })
+    if (!validateDepartmentOfAcademicFaculty) {
+        throw new AppError(409, "Academic Faculty and Department doesn't aligned");
+    }
+
+    // INFO: isFacultyBusy on the schedule: findOne(day: { $in {payload.days}, startTime: {payload.startTime}, endTime: {payload.endTime}}) -> ifExist -> AppError
+    // INFO: faculty's availavility > isFacultyBusy > show available Schedule [ADVANCED]
 
     const existingScheduleOfCourse = await OfferedCourseModel.find({
         semesterRegistration: payload?.semesterRegistration,
@@ -80,45 +87,8 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
 
     // TODO: faculty's max working hour per day = 18hrs :: total schedule time can't exced 9 hrs
 
-    await validateCourseCreation(payload);
-
-    // const isAcademicFacultyExists =
-    //     await AcademicFacultyModel.findById(payload?.academicFaculty);
-
-    // if (!isAcademicFacultyExists) {
-    //     throw new AppError(
-    //         404,
-    //         'This Semester Academic Faculty not found!',
-    //     );
-    // }
-    // const isAcademicDepartmentExists =
-    //     await AcademicDepartmentModel.findById(payload?.academicDepartment);
-
-    // if (!isAcademicDepartmentExists) {
-    //     throw new AppError(
-    //         404,
-    //         'This Semester Academic Department not found!',
-    //     );
-    // }
-    // // check if the Course is already registered!
-    // const isCourseExists = await CourseModel.findById(payload?.course);
-    // console.log({ isCourseExists })
-    // if (!isCourseExists) {
-    //     throw new AppError(
-    //         404,
-    //         'This Course is not exists!',
-    //     );
-    // }
-
-    // const isFacultyExists =
-    //     await FacultyModel.findById(payload?.faculty);
-
-    // if (!isFacultyExists) {
-    //     throw new AppError(
-    //         404,
-    //         'This Semester Academic Department not found!',
-    //     );
-    // }
+    // check if exists: isExistValidation, isAcademicFacultyExists, isAcademicDepartmentExists, isCourseExists, isFacultyExists
+    await isExistValidation(payload);
 
     const result = await OfferedCourseModel.create({
         ...payload,

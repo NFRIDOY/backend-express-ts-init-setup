@@ -6,7 +6,7 @@ import { CourseModel } from "../course/course.model";
 import { FacultyModel } from "../faculty/faculty.model";
 
 
-export const validateCourseCreation = async (
+export const isExistValidation = async (
   payload: {
     academicFaculty?: Types.ObjectId;
     academicDepartment?: Types.ObjectId;
