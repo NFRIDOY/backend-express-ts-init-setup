@@ -23,8 +23,8 @@ const createStudentIntoDB = async (password: string, payload: IStudent) => {
     const session = await mongoose.startSession(); // Isolation
     try {
         session.startTransaction(); // Start the Transaction
-        console.log({ password })
-        console.log({ payload: payload })
+        // console.log({ password })
+        // console.log({ payload: payload })
         const userData: Partial<IUser> = {};
 
         userData.password = password || config.default_pass as string;
@@ -53,7 +53,7 @@ const createStudentIntoDB = async (password: string, payload: IStudent) => {
         userData.status = "in-progress";
 
         const newUser = await UserModel.create([userData], { session }) // add on the session
-        console.log('newUser', newUser);
+        // console.log('newUser', newUser);
 
         if (!newUser.length) throw new AppError(500, "User Creation Failed")
 
@@ -81,8 +81,8 @@ const createFacultyIntoDB = async (password: string, payload: IFaculty) => {
     const session = await mongoose.startSession(); // Isolation
     try {
         session.startTransaction(); // Start the Transaction
-        console.log({ password })
-        console.log({ payload })
+        // console.log({ password })
+        // console.log({ payload })
         const userData: Partial<IUser> = {};
 
         userData.password = password || config.default_pass as string;
@@ -99,7 +99,7 @@ const createFacultyIntoDB = async (password: string, payload: IFaculty) => {
         if (!academicDepartment) {
             throw new AppError(404, 'Academic Department not found');
         }
-        console.log("academicDepartment", academicDepartment)
+        // console.log("academicDepartment", academicDepartment)
         // INFO: Genareted Faculty ID 
         userData.id = await generateFacultyId(academicDepartment);
 
@@ -107,7 +107,7 @@ const createFacultyIntoDB = async (password: string, payload: IFaculty) => {
         userData.status = "in-progress";
 
         const newUser = await UserModel.create([userData], { session }) // add on the session
-        console.log('newUser', newUser);
+        // console.log('newUser', newUser);
 
         if (!newUser.length) throw new AppError(500, "User Creation Failed")
 
@@ -115,8 +115,8 @@ const createFacultyIntoDB = async (password: string, payload: IFaculty) => {
         const existingCodes = await FacultyModel.find({}, 'facultyCode').lean();
         const existingCodeSet = new Set(existingCodes.map(doc => doc.facultyCode));
 
-        console.log("existingCodes", existingCodes)
-        console.log("codeSet", existingCodeSet)
+        // console.log("existingCodes", existingCodes)
+        // console.log("codeSet", existingCodeSet)
 
         // await session.abortTransaction()
         // throw new AppError(500, "existingCodes")
@@ -147,8 +147,8 @@ const createAdminIntoDB = async (password: string, payload: IFaculty) => {
     const session = await mongoose.startSession(); // Isolation
     try {
         session.startTransaction(); // Start the Transaction
-        console.log({ password })
-        console.log({ payload })
+        // console.log({ password })
+        // console.log({ payload })
         const userData: Partial<IUser> = {};
 
         userData.password = password || config.default_pass as string;
@@ -165,7 +165,7 @@ const createAdminIntoDB = async (password: string, payload: IFaculty) => {
         if (!academicDepartment) {
             throw new AppError(404, 'Academic Department not found');
         }
-        console.log("academicDepartment", academicDepartment)
+        // console.log("academicDepartment", academicDepartment)
         // TODO: Genareted Admin ID 
         // userData.id = await generateAdminId(academicDepartment);
 
@@ -173,7 +173,7 @@ const createAdminIntoDB = async (password: string, payload: IFaculty) => {
         userData.status = "in-progress";
 
         const newUser = await UserModel.create([userData], { session }) // add on the session
-        console.log('newUser', newUser);
+        // console.log('newUser', newUser);
 
         if (!newUser.length) throw new AppError(500, "User Creation Failed")
 
@@ -217,7 +217,7 @@ const deleteStudentByIdFromDB = async (id: string): Promise<IUser | null> => {
             { isDeleted: true },
             { new: true, session } // Use `session` here // `new` is useing for returning the updated value
         );
-        console.log("studentDeleted", studentDeleted)
+        // console.log("studentDeleted", studentDeleted)
         if (!studentDeleted)
             throw new AppError(400, 'Student Deleting Process Failed')
 
@@ -227,7 +227,7 @@ const deleteStudentByIdFromDB = async (id: string): Promise<IUser | null> => {
             { new: true, session } // Use `session` here // `new` is useing for returning the updated value
         );
 
-        console.log("userDeleted", userDeleted)
+        // console.log("userDeleted", userDeleted)
         if (!userDeleted)
             throw new AppError(400, 'User Deleting Process Failed')
 
@@ -253,7 +253,7 @@ const undeletedStudentByIdFromDB = async (studentID: string): Promise<IUser | nu
             { isDeleted: false },
             { new: true, session } // Use session here
         );
-        console.log("studentDeleted", studentDeleted)
+        // console.log("studentDeleted", studentDeleted)
         if (!studentDeleted)
             throw new AppError(400, 'Student Deleting Process Failed')
 
@@ -263,7 +263,7 @@ const undeletedStudentByIdFromDB = async (studentID: string): Promise<IUser | nu
             { new: true, session } // Use session here
         );
 
-        console.log("userDeleted", userDeleted)
+        // console.log("userDeleted", userDeleted)
         if (!userDeleted)
             throw new AppError(400, 'User Deleting Process Failed')
         // await session.abortTransaction(); // testing
@@ -288,7 +288,7 @@ const deleteFacultyByIdFromDB = async (id: string): Promise<IUser | null> => {
             { isDeleted: true },
             { new: true, session } // Use `session` here // `new` is useing for returning the updated value
         );
-        console.log("studentDeleted", studentDeleted)
+        // console.log("studentDeleted", studentDeleted)
         if (!studentDeleted)
             throw new AppError(400, 'Faculty Deleting Process Failed')
 
@@ -298,7 +298,7 @@ const deleteFacultyByIdFromDB = async (id: string): Promise<IUser | null> => {
             { new: true, session } // Use `session` here // `new` is useing for returning the updated value
         );
 
-        console.log("userDeleted", userDeleted)
+        // console.log("userDeleted", userDeleted)
         if (!userDeleted)
             throw new AppError(400, 'User Deleting Process Failed')
 
@@ -324,7 +324,7 @@ const undeletedFacultyByIdFromDB = async (id: string): Promise<IUser | null> => 
             { isDeleted: false },
             { new: true, session } // Use session here
         );
-        console.log("studentDeleted", studentDeleted)
+        // console.log("studentDeleted", studentDeleted)
         if (!studentDeleted)
             throw new AppError(400, 'Faculty Deleting Process Failed')
 
@@ -334,7 +334,7 @@ const undeletedFacultyByIdFromDB = async (id: string): Promise<IUser | null> => 
             { new: true, session } // Use session here
         );
 
-        console.log("userDeleted", userDeleted)
+        // console.log("userDeleted", userDeleted)
         if (!userDeleted)
             throw new AppError(400, 'User Deleting Process Failed')
         // await session.abortTransaction(); // testing
@@ -359,7 +359,7 @@ const deleteAdminByIdFromDB = async (id: string): Promise<IUser | null> => {
             { isDeleted: true },
             { new: true, session } // Use `session` here // `new` is useing for returning the updated value
         );
-        console.log("studentDeleted", studentDeleted)
+        // console.log("studentDeleted", studentDeleted)
         if (!studentDeleted)
             throw new AppError(400, 'Faculty Deleting Process Failed')
 
@@ -369,7 +369,7 @@ const deleteAdminByIdFromDB = async (id: string): Promise<IUser | null> => {
             { new: true, session } // Use `session` here // `new` is useing for returning the updated value
         );
 
-        console.log("userDeleted", userDeleted)
+        // console.log("userDeleted", userDeleted)
         if (!userDeleted)
             throw new AppError(400, 'User Deleting Process Failed')
 
@@ -395,7 +395,7 @@ const undeletedAdminByIdFromDB = async (id: string): Promise<IUser | null> => {
             { isDeleted: false },
             { new: true, session } // Use session here
         );
-        console.log("studentDeleted", studentDeleted)
+        // console.log("studentDeleted", studentDeleted)
         if (!studentDeleted)
             throw new AppError(400, 'Faculty Deleting Process Failed')
 
@@ -405,7 +405,7 @@ const undeletedAdminByIdFromDB = async (id: string): Promise<IUser | null> => {
             { new: true, session } // Use session here
         );
 
-        console.log("userDeleted", userDeleted)
+        // console.log("userDeleted", userDeleted)
         if (!userDeleted)
             throw new AppError(400, 'User Deleting Process Failed')
         // await session.abortTransaction(); // testing

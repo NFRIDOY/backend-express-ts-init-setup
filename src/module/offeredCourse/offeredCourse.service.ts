@@ -43,7 +43,7 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
     const validateDepartmentOfAcademicFaculty = await AcademicDepartmentModel.findOne({
         academicFaculty: payload?.academicFaculty
     })
-    console.log({ validateDepartmentOfAcademicFaculty })
+    // console.log({ validateDepartmentOfAcademicFaculty })
     if (!validateDepartmentOfAcademicFaculty) {
         throw new AppError(409, "Academic Faculty and Department doesn't aligned");
     }
@@ -57,7 +57,7 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
         section: payload?.section,
     })
         .select('days startTime endTime')
-    console.log({ existingScheduleOfCourse })
+    // console.log({ existingScheduleOfCourse })
     existingScheduleOfCourse.forEach(element => {
         // console.log("element", element)
         const isScheduleConficts = isScheduleSame(element, payload)

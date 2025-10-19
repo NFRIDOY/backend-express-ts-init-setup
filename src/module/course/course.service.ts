@@ -73,7 +73,7 @@ const deleteCourseByIdFromDB = async (id: string): Promise<ICourse | null> => {
       { isDeleted: true },
       { new: true, session } // Use `session` here // `new` is useing for returning the updated value
     );
-    console.log("studentDeleted", deletedData)
+    // console.log("studentDeleted", deletedData)
 
     if (!deletedData)
       throw new AppError(400, 'User Deleting Process Failed')

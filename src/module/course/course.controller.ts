@@ -6,7 +6,7 @@ import { sendErrorResponse, sendResponse } from "../../utils/response/sendRespon
 
 const createCourse: RequestHandler = catchAsync(async (req, res) => {
     const { course: courseData } = req.body;
-    console.log("C = ", courseData)
+    // console.log("C = ", courseData)
     const result = await courseService.createCourseIntoDB(courseData);
 
     if (!result) {

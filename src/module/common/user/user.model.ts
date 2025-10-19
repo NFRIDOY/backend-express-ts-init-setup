@@ -69,7 +69,7 @@ const UserSchema = new Schema<IUser>({
 // before saving on the db
 UserSchema.pre('save', async function (next) {
     const user = this;
-    console.log('user', user)
+    // console.log('user', user)
 
     user.password = await bcrypt.hash(
         user.password,

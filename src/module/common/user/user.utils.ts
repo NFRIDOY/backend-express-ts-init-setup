@@ -43,7 +43,7 @@ export const generateStudentId = async (payload: IAcademicSemester) => {
 
 
   incrementId = `${payload.year}${payload.code}${incrementId}`;
-  console.log("id = ", incrementId)
+  // console.log("id = ", incrementId)
 
   return incrementId;
 };

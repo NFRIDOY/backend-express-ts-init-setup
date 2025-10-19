@@ -7,12 +7,12 @@ import { catchAsync } from '../../../utils/catchAsync';
 
 
 const createStudent: RequestHandler = catchAsync(async (req, res, _next) => {
-    console.log("req", req.body)
+    // console.log("req", req.body)
     const { password, student: studentData } = req.body;
 
     const result = await userService.createStudentIntoDB(password, studentData);
 
-    console.log("data", result);
+    // console.log("data", result);
 
     if (!result) {
         return sendResponse(res, {
@@ -30,12 +30,12 @@ const createStudent: RequestHandler = catchAsync(async (req, res, _next) => {
     })
 })
 const createFaculty: RequestHandler = catchAsync(async (req, res, _next) => {
-    console.log("req", req.body)
+    // console.log("req", req.body)
     const { password, faculty: facultyData } = req.body;
 
     const result = await userService.createFacultyIntoDB(password, facultyData);
 
-    console.log("data", result);
+    // console.log("data", result);
 
     if (!result) {
         return sendResponse(res, {
@@ -54,12 +54,12 @@ const createFaculty: RequestHandler = catchAsync(async (req, res, _next) => {
 })
 
 const createAdmin: RequestHandler = catchAsync(async (req, res, _next) => {
-    console.log("req", req.body)
+    // console.log("req", req.body)
     const { password, admin: adminData } = req.body;
 
     const result = await userService.createAdminIntoDB(password, adminData);
 
-    console.log("data", result);
+    // console.log("data", result);
 
     if (!result) {
         return sendResponse(res, {
@@ -79,11 +79,11 @@ const createAdmin: RequestHandler = catchAsync(async (req, res, _next) => {
 
 
 const allUsers: RequestHandler = catchAsync(async (req, res, next) => {
-    console.log("req");
+    // console.log("req");
 
     const data = await userService.getAllUserFromDB()
 
-    console.log(data)
+    // console.log(data)
 
     if (!data) {
         return sendResponse(res, {
