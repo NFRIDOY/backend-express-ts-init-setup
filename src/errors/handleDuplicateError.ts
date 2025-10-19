@@ -18,7 +18,7 @@ const handleDuplicateError = (err: any): IGenericErrorResponse => {
 
   return {
     statusCode,
-    message: 'Invalid ID',
+    message: 'ID Duplication',
     errorSources,
   };
 };
