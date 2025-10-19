@@ -25,8 +25,8 @@ export function isTimeOverlap(startA: string, endA: string, startB: string, endB
 }
 
 // Main comparison function
-export function isScheduleSame(a: IOfferedCourse, b: IOfferedCourse): boolean {
-    const commonDays = a.days.filter(day => b.days.includes(day));
+export function isScheduleSame(a: any, b: any): boolean {
+    const commonDays = a.days.filter((day: any) => b.days.includes(day));
     if (commonDays.length === 0) return false;
 
     return isTimeOverlap(a.startTime, a.endTime, b.startTime, b.endTime);
