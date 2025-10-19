@@ -29,7 +29,7 @@ export const validateCourseCreation = async (
 
   // Validate course existence
   const isCourseExists = await CourseModel.findById(payload.course);
-  console.log({ isCourseExists });
+
   if (!isCourseExists) {
     throw new AppError(404, 'This Course is not exists!');
   }

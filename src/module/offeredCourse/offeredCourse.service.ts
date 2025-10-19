@@ -10,16 +10,18 @@ import { validateCourseCreation } from "./offeredCourse.utils";
 
 const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
     // check if the semester is already registered!
-    const isOfferedCourseExists = await OfferedCourseModel.findOne({
+    const isOfferedCourseExistsInSection = await OfferedCourseModel.findOne({
+        semesterRegistration: payload?.semesterRegistration,
         course: payload?.course,
+        section: payload?.section,
     });
 
-    // if (isOfferedCourseExists) {
-    //     throw new AppError(
-    //         409,
-    //         'This Course is already exists in Offered Courses!',
-    //     );
-    // }
+    if (isOfferedCourseExistsInSection) {
+        throw new AppError(
+            409,
+            'This Course is already exists in this Section!',
+        );
+    }
 
     // check if the semesterRegistration is exist
     const isSemesterRegistrationExists = await SemesterRegistrationModel.findById(
@@ -34,21 +36,38 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
         throw new AppError(409, "Invalied Time Range");
     }
 
-    if (isOfferedCourseExists && isScheduleSame(isOfferedCourseExists, payload)) {
-        throw new AppError(409, "Same Schedule Conflict!");
-    }
+    // if (isOfferedCourseExists && isScheduleSame(isOfferedCourseExists, payload)) {
+    //     throw new AppError(409, "This Course has a Schedule Conflict!");
+    // }
 
     // TODO: 16-10 Validate faculty-department and same course-section
     // TODO: isFacultyBusy on the schedule: findOne(day: { $in {payload.days}, startTime: {payload.startTime}, endTime: {payload.endTime}}) -> ifExist -> AppError
     // TODO: faculty's availavility > isFacultyBusy > show available Schedule [ADVANCED]
+
+    const existingScheduleOfCourse = await OfferedCourseModel.find({
+        semesterRegistration: payload?.semesterRegistration,
+        days: { $in: payload?.days },
+        section: payload?.section,
+    })
+        .select('days startTime endTime')
+    console.log({ existingScheduleOfCourse })
+    existingScheduleOfCourse.forEach(element => {
+        // console.log("element", element)
+        const isScheduleConficts = isScheduleSame(element, payload)
+
+        if (isScheduleConficts) {
+            throw new AppError(409, "This Course has a Schedule Conflict!");
+        }
+    });
+
     const existingScheduleOfFaculty = await OfferedCourseModel.find({
         semesterRegistration: payload?.semesterRegistration,
         faculty: payload?.faculty,
         days: { $in: payload?.days },
     })
-    .select('days startTime endTime')
+        .select('days startTime endTime')
     existingScheduleOfFaculty.forEach(element => {
-        console.log("element", element)
+        // console.log("element", element)
         const isScheduleConficts = isScheduleSame(element, payload)
 
         if (isScheduleConficts) {
