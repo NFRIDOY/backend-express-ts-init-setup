@@ -1,0 +1,260 @@
+{
+  "info": {
+    "name": "backend-express-ts-init-setup",
+    "description": "",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Root Copy",
+      "event": [],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{base_url}}",
+          "protocol": "",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [],
+          "query": [],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "Root Post",
+      "event": [],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{base_url}}",
+          "protocol": "",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [],
+          "query": [],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "Root",
+      "event": [],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{base_url}}",
+          "protocol": "",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [],
+          "query": [],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "Student",
+      "item": [
+        {
+          "name": "create-student",
+          "event": [],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{base_url}}/student/create-student",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "student",
+                "create-student"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"student\": {\n        \"id\": \"STU123456\",\n        \"name\": {\n            \"firstName\": \"Ayesha\",\n            \"middleName\": \"Fatima\",\n            \"lastName\": \"Rahman\"\n        },\n        \"email\": \"ayesha.rahman@example.com\",\n        \"phone\": \"+8801712345678\",\n        \"dateOfBirth\": \"2005-08-15\",\n        \"address\": \"123 Green Road, Dhaka\",\n        \"gender\": \"Female\",\n        \"profileImage\": \"https://example.com/images/ayesha.jpg\",\n        \"guardian\": {\n            \"name\": {\n                \"firstName\": \"Mohammad\",\n                \"middleName\": \"\",\n                \"lastName\": \"Rahman\"\n            },\n            \"email\": \"guardian.rahman@example.com\",\n            \"phone\": \"+8801612345678\",\n            \"address\": \"123 Green Road, Dhaka\"\n        },\n        \"localGuardian\": {\n            \"name\": {\n                \"firstName\": \"Shirin\",\n                \"middleName\": \"\",\n                \"lastName\": \"Akter\"\n            },\n            \"email\": \"shirin.akter@example.com\",\n            \"phone\": \"+8801912345678\",\n            \"address\": \"456 Lake View, Dhaka\",\n            \"occupation\": \"Lecturer\"\n        },\n        \"bloodGroup\": \"A+\",\n        \"presentAddress\": \"123 Green Road, Dhaka\",\n        \"permanentAddress\": \"456 Lake View, Dhaka\",\n        \"isActive\": true,\n        \"status\": \"enrolled\",\n        \"isDeleted\": false\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "getAllStudents",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{base_url}}/student/",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "student",
+                ""
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "getSingleStudent By Student ID",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{base_url}}/student/STU123456",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "student",
+                "STU123456"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "create-student",
+          "event": [],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{base_url}}/user/create-admin",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "user",
+                "create-admin"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password\": \"123456\",\n  \"admin\": {\n    \"name\": {\n      \"first\": \"Noman\",\n      \"last\": \"Admin\"\n    },\n    \"email\": \"admin.noman@example.com\",\n    \"phone\": \"+8801711223344\",\n    \"emergencyPhone\": \"+8801911223344\",\n    \"dateOfBirth\": \"1985-03-22\",\n    \"gender\": \"male\",\n    \"profileImage\": \"https://example.com/images/aminul.jpg\",\n    \"bloodGroup\": \"B+\",\n    \"presentAddress\": \"Flat 3A, House 7, Banani, Dhaka\",\n    \"permanentAddress\": \"Ward 5, Sadar Upazila, Mymensingh\",\n    \"adminCode\": \"ADM1023\",\n    \"isActive\": true,\n    \"status\": \"active\",\n    \"isDeleted\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "getSingleStudent By Student ID",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{base_url}}/student/STU123456",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "student",
+                "STU123456"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "getAllStudents",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{base_url}}/student/",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "student",
+                ""
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
