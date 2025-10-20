@@ -4,7 +4,7 @@ import { IStudent } from "../../student/student.interface";
 import { StudentModel } from "../../student/student.model";
 import { IUser } from "./user.interface";
 import { UserModel } from "./user.model";
-import { generateFacultyId, generateStudentId } from "./user.utils";
+import { generateAdminId, generateFacultyId, generateStudentId } from "./user.utils";
 import AppError from "../../../errors/AppError";
 import mongoose from "mongoose";
 import { IFaculty } from "../../faculty/faculty.interface";
@@ -157,17 +157,8 @@ const createAdminIntoDB = async (password: string, payload: IFaculty) => {
         // userData.role = 'admin';
         userData.role = UserRole.ADMIN;
 
-        // get academicSemester
-        const academicDepartment = await AcademicDepartmentModel.findOne({
-            _id: payload?.academicDepartment
-        })
-
-        if (!academicDepartment) {
-            throw new AppError(404, 'Academic Department not found');
-        }
-        // console.log("academicDepartment", academicDepartment)
         // TODO: Genareted Admin ID 
-        // userData.id = await generateAdminId(academicDepartment);
+        userData.id = await generateAdminId();
 
         //set status
         userData.status = "in-progress";

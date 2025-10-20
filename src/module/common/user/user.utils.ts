@@ -74,3 +74,31 @@ export const generateFacultyId = async (payload: IAcademicDepartment) => {
 
   return incrementId;
 };
+
+export const generateAdminId = async (accessCode = "01") => {
+  const totalDigitsBeforeSequence = 7; // A202501 0003
+  // const accessCode = "01"; // DAYNAMIC
+  /** 
+   * example: 2025010001
+   * getFullYear + department + 0000
+   * */ 
+  // first time 0000
+  //0001  => 1
+  let currentId = (0).toString(); // 0
+  const lastAdminId = await findLastIdOfThisRole("admin")
+  const lastAccessCode = lastAdminId?.substring(5, 7) // 01 // lastAccessCode = 01 
+
+  const thisYear = new Date().getFullYear();
+  // const accessCode = accessCode; // '01'
+  let incrementId = '';
+
+  if (lastAdminId && lastAccessCode === accessCode) {
+    currentId = lastAdminId?.substring(totalDigitsBeforeSequence) // 0001
+  }
+  incrementId = (Number(currentId) + 1).toString().padStart(4, '0');
+  // 0001+ 1 = 2
+
+  incrementId = `A${thisYear}${accessCode}${incrementId}`;
+
+  return incrementId;
+};

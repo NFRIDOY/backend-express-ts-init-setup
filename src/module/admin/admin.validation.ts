@@ -7,95 +7,41 @@ export const createAdminValidationSchema = z.object({
     password: z.string(),
     admin: z.object({
       name: nameSchema,
-      email: z.string().email("Invalid email format").min(1, "Email is required"),
-      phone: z.string().min(1, "Phone is required"),
-      emergencyPhone: z.string().optional(),
+      email: z.string().trim().email(),
+      phone: z.string().trim().min(1),
+      emergencyPhone: z.string().trim().optional(),
       dateOfBirth: z.string().optional(),
-      // dateOfBirth: z.string().refine(val => !isNaN(Date.parse(val)), {
-      //   message: "Invalid date format",
-      // }),
       gender: z.enum(GENDER_LIST),
       profileImage: z.string().optional(),
-      guardian: z
-        .object({
-          name: nameSchema,
-          email: z.string().email("Invalid email format").min(1, "Email is required"),
-          phone: z.string().min(1, "Phone is required"),
-          address: z.string().optional(),
-        })
-        .optional(),
-      parent: z
-        .array(
-          z.object({
-            id: z.string().min(1, "ID is required"),
-            name: nameSchema,
-            email: z.string().email("Invalid email format").min(1, "Email is required"),
-            phone: z.string().min(1, "Phone is required"),
-            address: z.string().optional(),
-          })
-        )
-        .optional(),
-      localGuardian: z
-        .object({
-          name: nameSchema,
-          email: z.string().email("Invalid email format").min(1, "Email is required"),
-          phone: z.string().min(1, "Phone is required"),
-          address: z.string().optional(),
-          occupation: z.string().min(1, "Occupation is required"),
-        })
-        .optional(),
       bloodGroup: z.enum(bloodGroups).optional(),
-      presentAddress: z.string().min(1, "Present address is required"),
-      permanentAddress: z.string().min(1, "Permanent address is required"),
-      admissionSemester: z.string(),
-      academicDepartment: z.string(),
+      presentAddress: z.string().min(1),
+      permanentAddress: z.string().min(1),
+      adminCode: z.string().optional(),
+      isActive: z.boolean().default(true),
+      status: z.string().default('active'),
+      isDeleted: z.boolean().default(false),
     })
   })
 });
 
 export const updateAdminValidationSchema = z.object({
   body: z.object({
+    password: z.string().optional(),
     admin: z.object({
-      name: nameSchema.partial().optional(),
-      email: z.string().email("Invalid email format").min(1, "Email is required").optional(),
-      phone: z.string().min(1, "Phone is required").optional(),
-      emergencyPhone: z.string().optional(),
+      name: nameSchema,
+      email: z.string().trim().email(),
+      phone: z.string().trim().min(1),
+      emergencyPhone: z.string().trim().optional(),
       dateOfBirth: z.string().optional(),
       gender: z.enum(GENDER_LIST).optional(),
       profileImage: z.string().optional(),
-      guardian: z
-        .object({
-          name: nameSchema.optional(),
-          email: z.string().email("Invalid email format").min(1, "Email is required").optional(),
-          phone: z.string().min(1, "Phone is required").optional(),
-          address: z.string().optional(),
-        })
-        .optional(),
-      parent: z
-        .array(
-          z.object({
-            id: z.string().min(1, "ID is required").optional(),
-            name: nameSchema.optional(),
-            email: z.string().email("Invalid email format").min(1, "Email is required").optional(),
-            phone: z.string().min(1, "Phone is required").optional(),
-            address: z.string().optional(),
-          })
-        )
-        .optional(),
-      localGuardian: z
-        .object({
-          name: nameSchema.optional(),
-          email: z.string().email("Invalid email format").min(1, "Email is required").optional(),
-          phone: z.string().min(1, "Phone is required").optional(),
-          address: z.string().optional(),
-          occupation: z.string().min(1, "Occupation is required").optional(),
-        })
-        .optional(),
       bloodGroup: z.enum(bloodGroups).optional(),
-      presentAddress: z.string().min(1, "Present address is required").optional(),
-      permanentAddress: z.string().min(1, "Permanent address is required").optional(),
-      admissionSemester: z.string().optional(),
-      academicDepartment: z.string().optional(),
+      presentAddress: z.string().min(1),
+      permanentAddress: z.string().min(1),
+      adminCode: z.string().optional(),
+      isActive: z.boolean().default(true),
+      status: z.string().default('active'),
+      isDeleted: z.boolean().default(false),
     }).optional()
   }).optional()
 });
