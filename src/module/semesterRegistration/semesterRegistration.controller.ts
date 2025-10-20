@@ -69,9 +69,28 @@ const updateSingleSemesterRegistration: RequestHandler = catchAsync(async (req, 
 
 })
 
+const destroySemesterRegistration: RequestHandler = catchAsync(async (req, res, _next) => {
+    const { id } = req.params;
+
+    const result = await semesterRegistrationServices.destroySemesterRegistrationWithOfferdCoursesFromDB(id)
+
+    if (!result) {
+        return sendErrorResponse(res, { data: result })
+    }
+    return sendResponse(res, {
+        success: true,
+        statusCode: 200,
+        message: "One Semester Registration Retrived",
+        data: result,
+    })
+
+})
+
 export const semesterRegistrationControllers = {
     createSemesterRegistration,
     getAllSemesterRegistration,
     getSingleSemesterRegistration,
-    updateSingleSemesterRegistration
+    updateSingleSemesterRegistration,
+
+    destroySemesterRegistration,
 }

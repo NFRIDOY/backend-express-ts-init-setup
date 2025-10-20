@@ -1,10 +1,12 @@
 
+import { startSession } from "mongoose";
 import QueryBuilder from "../../builder/QueryBuilder";
 import AppError from "../../errors/AppError";
 import { AcademicSemesterModel } from "../academicSemester/academicSemester.model";
 import { semesterRegistrationSearchableFields } from "./semesterRegistration.constant";
 import { ISemesterRegistration } from "./semesterRegistration.interface";
 import { SemesterRegistrationModel } from "./semesterRegistration.model";
+import { OfferedCourseModel } from "../offeredCourse/offeredCourse.model";
 
 const createSemesterRegistrationIntoDB = async (payload: ISemesterRegistration) => {
 
@@ -58,9 +60,42 @@ const updateSingleSemesterRegistrationInDB = async (id: string, payload: Partial
     return result;
 }
 
+const destroySemesterRegistrationWithOfferdCoursesFromDB = async (id: string) => {
+
+    const session = await startSession();
+    try {
+        await session.startTransaction();
+
+        // delete Accociated OfferCourses
+        const deletedOfferCourses = await OfferedCourseModel.deleteMany({
+            semesterRegistration: id,
+        }, { session })
+
+        if(deletedOfferCourses.deletedCount === 0) {
+            throw new AppError(500, "Failed to Delete Offer Courses from Semester Registration")
+        }
+        console.log({isDeletedOfferCourses: deletedOfferCourses})
+        // TODO: test delete oparation and remove 'abortTransaction()'
+        await session.abortTransaction();
+        const result = await SemesterRegistrationModel.deleteOne({ _id: id }, { session })
+        await session.commitTransaction();
+        return result;
+    } catch (error) {
+        await session.abortTransaction();
+        throw new AppError(500, "Failed to Delete Semester Registration ")
+
+    } finally {
+        await session.endSession();
+    }
+
+}
+
 export const semesterRegistrationServices = {
     createSemesterRegistrationIntoDB,
     getAllSemesterRegistrationFromDB,
     getSingleSemesterRegistrationFromDB,
     updateSingleSemesterRegistrationInDB,
+
+    destroySemesterRegistrationWithOfferdCoursesFromDB,
+
 }
