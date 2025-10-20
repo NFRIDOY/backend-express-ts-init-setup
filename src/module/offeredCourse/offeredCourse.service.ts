@@ -9,7 +9,7 @@ import { SemesterRegistrationModel } from "../semesterRegistration/semesterRegis
 import { Status } from "./offeredCourse.constant";
 import { IOfferedCourse } from "./offeredCourse.interface";
 import { OfferedCourseModel } from "./offeredCourse.model";
-import { isExistValidation } from "./offeredCourse.utils";
+import { hasScheduleConficts, isExistAcademicFacultyDepartmentID, isExistFacultyCourse } from "./offeredCourse.utils";
 
 const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
     // check if the semester is already registered in same course-section
@@ -49,9 +49,6 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
         throw new AppError(409, "Academic Faculty and Department doesn't aligned");
     }
 
-    // INFO: isFacultyBusy on the schedule: findOne(day: { $in {payload.days}, startTime: {payload.startTime}, endTime: {payload.endTime}}) -> ifExist -> AppError
-    // INFO: faculty's availavility > isFacultyBusy > show available Schedule [ADVANCED]
-
     const existingScheduleOfCourse = await OfferedCourseModel.find({
         semesterRegistration: payload?.semesterRegistration,
         days: { $in: payload?.days },
@@ -59,15 +56,13 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
         status: Status.ACTIVE,
     })
         .select('days startTime endTime')
-    // console.log({ existingScheduleOfCourse })
-    existingScheduleOfCourse.forEach(element => {
-        // console.log("element", element)
-        const isScheduleConficts = isScheduleSame(element, payload)
 
-        if (isScheduleConficts) {
-            throw new AppError(409, "This Course has a Schedule Conflict!");
-        }
-    });
+    if (hasScheduleConficts(existingScheduleOfCourse, payload)) {
+        throw new AppError(409, "This Course has a Schedule Conflict!");
+    }
+
+    // INFO: isFacultyBusy on the schedule: findOne(day: { $in {payload.days}, startTime: {payload.startTime}, endTime: {payload.endTime}}) -> ifExist -> AppError
+    // INFO: faculty's availavility > isFacultyBusy > show available Schedule [ADVANCED]
 
     const existingScheduleOfFaculty = await OfferedCourseModel.find({
         semesterRegistration: payload?.semesterRegistration,
@@ -76,22 +71,18 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
         status: Status.ACTIVE,
     })
         .select('days startTime endTime')
-    existingScheduleOfFaculty.forEach(element => {
-        // console.log("element", element)
-        const isScheduleConficts = isScheduleSame(element, payload)
 
-        if (isScheduleConficts) {
-            throw new AppError(
-                404,
-                'The Faculty is busy!',
-            );
-        }
-    });
+
+    if (hasScheduleConficts(existingScheduleOfFaculty, payload)) {
+        throw new AppError(409, 'The Faculty is Busy!');
+    }
 
     // TODO: faculty's max working hour per day = 18hrs :: total schedule time can't exced 9 hrs
 
     // check if exists: isExistValidation, isAcademicFacultyExists, isAcademicDepartmentExists, isCourseExists, isFacultyExists
-    await isExistValidation(payload);
+    await isExistAcademicFacultyDepartmentID(payload);
+    await isExistFacultyCourse(payload);
+
 
     const result = await OfferedCourseModel.create({
         ...payload,
@@ -102,13 +93,13 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
 const getAllOfferedCourseFromDB = async (query: Record<string, unknown>) => {
     const OfferedCourseQuery = new QueryBuilder(
         OfferedCourseModel.find()
-            // .populate("semesterRegistration")
-            // .populate("academicSemester")
-            // .populate("academicFaculty")
-            // .populate("academicDepartment")
-            // .populate("course")
-            // .populate("faculty")
-            ,query,
+        // .populate("semesterRegistration")
+        // .populate("academicSemester")
+        // .populate("academicFaculty")
+        // .populate("academicDepartment")
+        // .populate("course")
+        // .populate("faculty")
+        , query,
     )
         .filter()
         .sort()
@@ -127,29 +118,21 @@ const updateSingleOfferedCourseInDB = async (
     id: string,
     payload: Partial<IOfferedCourse>,
 ) => {
-    const {
-        course,
-        faculty,
-        maxCapacity,
-        section,
-        startTime,
-        endTime,
-        days,
-        status,
-    } = payload;
-    // check if the Course is exist
-    const isCourseExists = await CourseModel.findOne({
-        course: payload?.course,
-    });
+    const { course, faculty, maxCapacity, section, startTime, endTime, days, status } = payload;
+    
+    await isExistFacultyCourse(payload);
 
-    if (isCourseExists) {
-        throw new AppError(409, "This Course is already exists!");
-    }
+    const existingScheduleOfFaculty = await OfferedCourseModel.find({
+        semesterRegistration: payload?.semesterRegistration,
+        faculty: payload?.faculty,
+        days: { $in: payload?.days },
+        status: Status.ACTIVE,
+    })
+        .select('days startTime endTime')
 
-    const isFacultyExists = await FacultyModel.findById(payload?.faculty);
 
-    if (!isFacultyExists) {
-        throw new AppError(404, "This Semester Academic Department not found!");
+    if (hasScheduleConficts(existingScheduleOfFaculty, payload)) {
+        throw new AppError(409, 'The Faculty is Busy!');
     }
 
     const result = await OfferedCourseModel.findOneAndUpdate(

@@ -4,14 +4,13 @@ import { AcademicDepartmentModel } from "../academicDepartment/academicDepartmen
 import { AcademicFacultyModel } from "../academicFaculty/academicFaculty.model";
 import { CourseModel } from "../course/course.model";
 import { FacultyModel } from "../faculty/faculty.model";
+import { isScheduleSame } from "../../utils/scheduleChecker";
 
 
-export const isExistValidation = async (
+export const isExistAcademicFacultyDepartmentID = async (
   payload: {
     academicFaculty?: Types.ObjectId;
     academicDepartment?: Types.ObjectId;
-    course?: Types.ObjectId;
-    faculty?: Types.ObjectId;
   },
 ) => {
 
@@ -26,7 +25,13 @@ export const isExistValidation = async (
   if (!isAcademicDepartmentExists) {
     throw new AppError(404, 'This Semester Academic Department not found!');
   }
-
+};
+export const isExistFacultyCourse = async (
+  payload: {
+    course?: Types.ObjectId;
+    faculty?: Types.ObjectId;
+  },
+) => {
   // Validate course existence
   const isCourseExists = await CourseModel.findById(payload.course);
 
@@ -40,3 +45,14 @@ export const isExistValidation = async (
     throw new AppError(404, 'This Semester Academic Department not found!');
   }
 };
+
+export const hasScheduleConficts = (existingScheduleOfCourse: any, payload: any) => {
+  for (const element of existingScheduleOfCourse) {
+    const isScheduleConficts = isScheduleSame(element, payload)
+
+    if (isScheduleConficts) {
+      return true;
+    }
+  }
+  return false;
+}
