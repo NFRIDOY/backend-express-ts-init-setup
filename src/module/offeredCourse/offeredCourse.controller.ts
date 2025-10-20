@@ -2,6 +2,7 @@ import { RequestHandler } from "express";
 import { sendErrorResponse, sendResponse } from "../../utils/response/sendResponse";
 import { catchAsync } from "../../utils/catchAsync";
 import { offeredCourseServices } from "./offeredCourse.service";
+import { Status } from "./offeredCourse.constant";
 
 const createOfferedCourse: RequestHandler = catchAsync(async (req, res, _next) => {
     const { offeredCourse } = req.body;
@@ -19,6 +20,25 @@ const createOfferedCourse: RequestHandler = catchAsync(async (req, res, _next) =
     })
 
 })
+const getAllInActiveOfferedCourse: RequestHandler = catchAsync(async (req, res, _next) => {
+    const query = req.query
+    query.status = Status.INACTIVE;
+    
+    const result = await offeredCourseServices.getAllOfferedCourseFromDB(query)
+    // const result = await offeredCourseServices.getAllOfferedCourseFromDB("status=INACTIVE")
+
+    if (!result) {
+        return sendErrorResponse(res, { data: result })
+    }
+    return sendResponse(res, {
+        success: true,
+        statusCode: 200,
+        message: "Offerd Courses Retrived",
+        data: result,
+    })
+
+})
+
 const getAllOfferedCourse: RequestHandler = catchAsync(async (req, res, _next) => {
 
     const result = await offeredCourseServices.getAllOfferedCourseFromDB(req.query)
@@ -34,6 +54,7 @@ const getAllOfferedCourse: RequestHandler = catchAsync(async (req, res, _next) =
     })
 
 })
+
 const getSingleOfferedCourse: RequestHandler = catchAsync(async (req, res, _next) => {
     const { id } = req.params;
 
@@ -73,5 +94,7 @@ export const offeredCourseControllers = {
     createOfferedCourse,
     getAllOfferedCourse,
     getSingleOfferedCourse,
-    updateSingleOfferedCourse
+    updateSingleOfferedCourse,
+
+    getAllInActiveOfferedCourse,
 }

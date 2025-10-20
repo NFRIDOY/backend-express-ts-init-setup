@@ -10,7 +10,7 @@ export const Day = {
 
 export const Days = Object.values(Day); // array
 
-export const OfferedCourseStatus = {
+export const Status = {
     ACTIVE : 'ACTIVE',
     INACTIVE : 'INACTIVE',
 } as const;
@@ -20,7 +20,7 @@ export const OfferedCourseStatus = {
  * CLOSED <-> UPCOMING | CURRENT | ENDED [Reversible]
 */
 
-export const OfferedCourseStatusList = Object.values(OfferedCourseStatus); // array
+export const OfferedCourseStatusList = Object.values(Status); // array
 
 
 export const offeredCourseSearchableFields = [

@@ -11,6 +11,7 @@ router.post('/',
     offeredCourseControllers.createOfferedCourse);
 
 router.get('/', offeredCourseControllers.getAllOfferedCourse);
+router.get('/in-active', offeredCourseControllers.getAllInActiveOfferedCourse);
 router.get('/:id', offeredCourseControllers.getSingleOfferedCourse);
 router.patch('/:id',
     validateRequest(OfferedCourseValidationSchema.updateOfferedCourse),

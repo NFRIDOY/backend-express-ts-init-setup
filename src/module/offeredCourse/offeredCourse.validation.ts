@@ -1,5 +1,5 @@
 import z from "zod";
-import { Days, OfferedCourseStatus, OfferedCourseStatusList } from "./offeredCourse.constant";
+import { Days, Status, OfferedCourseStatusList } from "./offeredCourse.constant";
 
 // Create OfferedCourseValidation
 export const createOfferedCourseValidationSchema = z.object({
@@ -22,7 +22,7 @@ export const createOfferedCourseValidationSchema = z.object({
       ),
 
       days: z.array(z.enum(Days)),
-      status: z.enum(OfferedCourseStatusList).default(OfferedCourseStatus.ACTIVE),
+      status: z.enum(OfferedCourseStatusList).default(Status.ACTIVE),
     })
     // ⬇️ Custom refinement to ensure valid time range
     .refine(

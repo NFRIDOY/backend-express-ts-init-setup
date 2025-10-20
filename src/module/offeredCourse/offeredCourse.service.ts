@@ -6,6 +6,7 @@ import { AcademicFacultyModel } from "../academicFaculty/academicFaculty.model";
 import { CourseModel } from "../course/course.model";
 import { FacultyModel } from "../faculty/faculty.model";
 import { SemesterRegistrationModel } from "../semesterRegistration/semesterRegistration.model";
+import { Status } from "./offeredCourse.constant";
 import { IOfferedCourse } from "./offeredCourse.interface";
 import { OfferedCourseModel } from "./offeredCourse.model";
 import { isExistValidation } from "./offeredCourse.utils";
@@ -55,6 +56,7 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
         semesterRegistration: payload?.semesterRegistration,
         days: { $in: payload?.days },
         section: payload?.section,
+        status: Status.ACTIVE,
     })
         .select('days startTime endTime')
     // console.log({ existingScheduleOfCourse })
@@ -71,6 +73,7 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
         semesterRegistration: payload?.semesterRegistration,
         faculty: payload?.faculty,
         days: { $in: payload?.days },
+        
     })
         .select('days startTime endTime')
     existingScheduleOfFaculty.forEach(element => {
@@ -114,6 +117,7 @@ const getAllOfferedCourseFromDB = async (query: Record<string, unknown>) => {
     const result = await OfferedCourseQuery.modelQuery;
     return result;
 };
+
 const getSingleOfferedCourseFromDB = async (id: string) => {
     const result =
         await OfferedCourseModel.findById(id).populate("academicSemester");
@@ -172,4 +176,5 @@ export const offeredCourseServices = {
     getAllOfferedCourseFromDB,
     getSingleOfferedCourseFromDB,
     updateSingleOfferedCourseInDB,
+
 };

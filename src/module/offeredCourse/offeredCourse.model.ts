@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { IOfferedCourse } from "./offeredCourse.interface";
-import { Days, OfferedCourseStatus, OfferedCourseStatusList } from "./offeredCourse.constant";
+import { Days, Status, OfferedCourseStatusList } from "./offeredCourse.constant";
 
 // OfferedCourseSchema
 const OfferedCourseSchema = new Schema<IOfferedCourse>({
@@ -62,7 +62,7 @@ const OfferedCourseSchema = new Schema<IOfferedCourse>({
     type: String,
     enum: OfferedCourseStatusList,
     required: true,
-    default: OfferedCourseStatus.ACTIVE
+    default: Status.ACTIVE
   },
 },
   {
