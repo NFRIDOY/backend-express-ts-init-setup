@@ -40,7 +40,7 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
     //     throw new AppError(409, "This Course has a Schedule Conflict!");
     // }
 
-    // TODO: 16-10 Validate faculty-department 
+    // 16-10 Validate faculty-department 
     const validateDepartmentOfAcademicFaculty = await AcademicDepartmentModel.findOne({
         academicFaculty: payload?.academicFaculty
     })
@@ -77,7 +77,7 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
         throw new AppError(409, 'The Faculty is Busy!');
     }
 
-    // TODO: faculty's max working hour per day = 18hrs :: total schedule time can't exced 9 hrs
+    // TODO: faculty's max working hour per day = 12hrs :: total schedule time can't exced 12 hrs
 
     // check if exists: isExistValidation, isAcademicFacultyExists, isAcademicDepartmentExists, isCourseExists, isFacultyExists
     await isExistAcademicFacultyDepartmentID(payload);
