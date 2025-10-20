@@ -120,6 +120,7 @@ const updateSingleOfferedCourseInDB = async (
 ) => {
     const { course, faculty, maxCapacity, section, startTime, endTime, days, status } = payload;
     
+    // TODO: If the SemeterReg.status === 'ENDED' > cant't update this semester
     await isExistFacultyCourse(payload);
 
     const existingScheduleOfFaculty = await OfferedCourseModel.find({
