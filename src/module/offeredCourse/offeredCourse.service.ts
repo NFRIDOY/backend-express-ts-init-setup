@@ -73,7 +73,7 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
         semesterRegistration: payload?.semesterRegistration,
         faculty: payload?.faculty,
         days: { $in: payload?.days },
-        
+        status: Status.ACTIVE,
     })
         .select('days startTime endTime')
     existingScheduleOfFaculty.forEach(element => {
@@ -102,13 +102,13 @@ const createOfferedCourseIntoDB = async (payload: IOfferedCourse) => {
 const getAllOfferedCourseFromDB = async (query: Record<string, unknown>) => {
     const OfferedCourseQuery = new QueryBuilder(
         OfferedCourseModel.find()
-            .populate("semesterRegistration")
-            .populate("academicSemester")
-            .populate("academicFaculty")
-            .populate("academicDepartment")
-            .populate("course")
-            .populate("faculty"),
-        query,
+            // .populate("semesterRegistration")
+            // .populate("academicSemester")
+            // .populate("academicFaculty")
+            // .populate("academicDepartment")
+            // .populate("course")
+            // .populate("faculty")
+            ,query,
     )
         .filter()
         .sort()
