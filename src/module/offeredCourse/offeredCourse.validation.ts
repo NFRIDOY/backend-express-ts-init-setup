@@ -1,6 +1,11 @@
 import z from "zod";
 import { Days, Status, OfferedCourseStatusList } from "./offeredCourse.constant";
 
+const timeStringSchema = z.string().regex(
+  /^(?:[01]\d|2[0-3]):[0-5]\d$/,
+  { message: "Invalid time format. Expected HH:MM in 24-hour format." }
+)
+
 // Create OfferedCourseValidation
 export const createOfferedCourseValidationSchema = z.object({
   body: z.object({
@@ -12,14 +17,8 @@ export const createOfferedCourseValidationSchema = z.object({
       faculty: z.string(),
       maxCapacity: z.number(),
       section: z.number(),
-      startTime: z.string().regex(
-        /^(?:[01]\d|2[0-3]):[0-5]\d$/,
-        { message: "Invalid time format. Expected HH:MM in 24-hour format." }
-      ),
-      endTime: z.string().regex(
-        /^(?:[01]\d|2[0-3]):[0-5]\d$/,
-        { message: "Invalid time format. Expected HH:MM in 24-hour format." }
-      ),
+      startTime: timeStringSchema,
+      endTime: timeStringSchema,
 
       days: z.array(z.enum(Days)),
       status: z.enum(OfferedCourseStatusList).default(Status.ACTIVE),
@@ -39,28 +38,14 @@ export const createOfferedCourseValidationSchema = z.object({
 // Update OfferedCourseValidation (all fields optional)
 export const updateOfferedCourseValidationSchema = z.object({
   body: z.object({
-    offeredCourse: z
-      .object({
-        course: z.string().optional(),
-        faculty: z.string().optional(),
+    offeredCourse: z.object({
+        course: z.string(),
+        faculty: z.string(),
         maxCapacity: z.number().optional(),
-        section: z.number().optional(),
-
-        startTime: z
-          .string()
-          .regex(/^(?:[01]\d|2[0-3]):[0-5]\d$/, {
-            message: "Invalid time format. Expected HH:MM in 24-hour format.",
-          })
-          .optional(),
-
-        endTime: z
-          .string()
-          .regex(/^(?:[01]\d|2[0-3]):[0-5]\d$/, {
-            message: "Invalid time format. Expected HH:MM in 24-hour format.",
-          })
-          .optional(),
-
-        days: z.array(z.enum(Days)).optional(),
+        section: z.number(),
+        startTime: timeStringSchema,
+        endTime: timeStringSchema,
+        days: z.array(z.enum(Days)),
         status: z.enum(OfferedCourseStatusList).optional(),
       })
       // ✅ Custom refinement for valid time range
