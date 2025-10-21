@@ -19,14 +19,14 @@ const loginAdmin: RequestHandler = catchAsync(async (req, res, _next) => {
         return sendResponse(res, {
             success: false,
             statusCode: 400,
-            message: "Failed to create student",
+            message: "Failed to login",
             data: null,
         })
     }
     return sendResponse(res, {
         statusCode: httpStutus.OK,
         success: true,
-        message: 'Student created successfully',
+        message: 'Login successfully',
         data: result,
     })
 })

@@ -1,23 +1,41 @@
-import config, { constants } from "../../config";
+import httpStatus from 'http-status';
+import bcrypt from 'bcrypt';
 import AppError from "../../errors/AppError";
 import { IAdmin } from "../admin/admin.interface";
 import { UserModel } from "../common/user/user.model";
-import { IFaculty } from "../faculty/faculty.interface";
-import { IStudent } from "../student/student.interface";
 import { ILoginUser } from "./auth.interface";
 
 
-const loginUser = async (loginUser: ILoginUser): Promise<ILoginUser> => {
+const loginUser = async (loginUser: ILoginUser) => {
 
     const { id, password } = loginUser;
-    const isUserExist = await UserModel.findOne({id: id})
+    const isUserExist = await UserModel.findOne({ id: id })
 
     if (!isUserExist) {
-        throw new AppError(404, "User Dosen't Exists")!
+        throw new AppError(404, "User Dosen't Exists") // User or Password doesn't match
     }
-    // validate id & pass
-    const result = await UserModel.create(loginUser)
-    return result;
+
+    // checking if the user is already deleted
+
+    const isDeleted = isUserExist?.isDeleted;
+
+    if (isDeleted) {
+        throw new AppError(httpStatus.FORBIDDEN, 'This user is deleted !');
+    }
+
+    console.log("validate")
+
+    const match = await bcrypt.compare(password, isUserExist.password);
+
+    if (!match) {
+        throw new AppError(httpStatus.NON_AUTHORITATIVE_INFORMATION, "Login Failed") // User or Password doesn't match
+    }
+
+    if (match) {
+        //login
+        console.log("matched")
+        return true;
+    }
 }
 
 // const signupStudentIntoDB = async (password: string, payload: IStudent) => {
@@ -419,7 +437,7 @@ export const loginUserService = {
     // signupLoginUserIntoDB,
     // getAllLoginUserFromDB,
     // getSingleLoginUserByLoginUserIdFromDB,
-    
+
     // signupStudentIntoDB,
     // deleteStudentByIdFromDB,
     // undeletedStudentByIdFromDB,
