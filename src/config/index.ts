@@ -4,13 +4,16 @@ require('dotenv').config()
 
 // dotenv.config({ path: path.join(process.cwd(), '.env') })
 
-export default{
+export default {
     NODE_ENV: process.env.NODE_ENV,
     port: process.env.PORT,
     database_url: process.env.DATABASE_URL,
     default_pass: process.env.DEFAULT_PASS,
     bcrypt_salt: process.env.BCRYPT_SALT,
     jwt_secret_key: process.env.JWT_SECRET_KEY,
+    jwt_refresh_secret: process.env.JWT_REFRESH_SECRET ?? '30d',
+    jwt_access_expires_in: process.env.JWT_ACCESS_EXPIRES_IN ?? '30d',
+    jwt_refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN ?? '30d',
 }
 
 export const constants = {

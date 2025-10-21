@@ -48,15 +48,22 @@ const loginUser = async (loginUser: ILoginUser) => {
         userRole: user.role,
     }
 
-    const accessToken = jwt.sign(jwtPayload, config.jwt_secret_key, {
-        expiresIn: 60 * 60
+    if (!config.jwt_secret_key) {
+        throw new AppError(httpStatus.INTERNAL_SERVER_ERROR, 'JWT secret key is not configured');
+    }
+
+    const accessToken = jwt.sign(jwtPayload, config.jwt_secret_key as string, {
+        expiresIn: config?.jwt_access_expires_in
     })
 
     // send jwt
     if (match) {
         //login
         console.log("matched")
-        return true;
+        return {
+            accessToken,
+            needsPasswordChange: user?.needsPasswordChange,
+        };
     }
 }
 

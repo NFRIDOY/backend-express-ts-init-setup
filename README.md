@@ -11,6 +11,11 @@ npm i dotenv
 npm i ts-node-dev
 npm install zod
 npm i bcrypt
+npm i jsonwebtoken 
+```
+### 64 Bytes toString genaration using node
+```bash
+require('crypto').randomBytes(64).toString('hex')
 ```
 # Config TS
 Run
