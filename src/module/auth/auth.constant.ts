@@ -4,7 +4,7 @@ export const Status = {
     BLOCKED: 'blocked',
 } as const;
 
-export const AuthRole = {
+export const LoginUserRole = {
     ADMIN: 'admin',
     STUDENT: 'student',
     FACULTY: 'faculty',
