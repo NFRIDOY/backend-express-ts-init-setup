@@ -1,20 +1,12 @@
 import express, { RequestHandler } from 'express';
 // import router from "../../../router/router";
-import { authController } from "./auth.controller";
+import { loginUserController } from "./auth.controller";
+import { AdminValidationSchema } from '../admin/admin.validation';
+import { validateRequest } from '../../middleware/validateRequest';
 const router = express.Router();
-import { createStudentValidationSchema } from '../../student/student.validation';
-import { validateRequest } from '../../../middleware/validateRequest';
-import { FacultyValidationSchema } from '../../faculty/faculty.validation';
-import { AdminValidationSchema } from '../../admin/admin.validation';
 
-// router.get('/', authController.allAuths) 
-router.post('/create-student', validateRequest(createStudentValidationSchema), authController.createStudent);
-router.post('/create-faculty', validateRequest(FacultyValidationSchema.createFaculty), authController.createFaculty);
-router.post('/create-admin', validateRequest(AdminValidationSchema.createAdmin), authController.createAdmin);
-router.delete('/delete-student/:id', authController.deleteStudent);
-router.delete('/delete-faculty/:id', authController.deleteFaculty);
-router.delete('/delete-admin/:id', authController.deleteAdmin); 
+router.post('/login-admin', validateRequest(AdminValidationSchema.createAdmin), loginUserController.loginAdmin);
+// router.post('/login-student', validateRequest(createStudentValidationSchema), loginUserController.createStudent);
+// router.post('/login-faculty', validateRequest(FacultyValidationSchema.createFaculty), loginUserController.createFaculty);
 
-router.delete('/undelete/:id', authController.undeleteStudent);
-
-export const authRoute = router
+export const loginUserRoute = router
