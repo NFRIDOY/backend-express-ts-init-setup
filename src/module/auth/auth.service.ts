@@ -5,6 +5,8 @@ import { IAdmin } from "../admin/admin.interface";
 import { UserModel } from "../common/user/user.model";
 import { ILoginUser } from "./auth.interface";
 import { Status } from '../common/user/user.constant';
+import jwt from 'jsonwebtoken';
+import config from '../../config';
 
 
 const loginUser = async (loginUser: ILoginUser) => {
@@ -40,6 +42,15 @@ const loginUser = async (loginUser: ILoginUser) => {
     if (!match) {
         throw new AppError(httpStatus.UNAUTHORIZED, "Login Failed") // User or Password doesn't match
     }
+
+    const jwtPayload = {
+        userId: user.id,
+        userRole: user.role,
+    }
+
+    const accessToken = jwt.sign(jwtPayload, config.jwt_secret_key, {
+        expiresIn: 60 * 60
+    })
 
     // send jwt
     if (match) {
