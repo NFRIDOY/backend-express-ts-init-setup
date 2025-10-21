@@ -16,7 +16,7 @@ const loginAdmin: RequestHandler = catchAsync(async (req, res, _next) => {
     // console.log("data", result);
 
     if (!result) {
-        return sendResponse(res, {
+        return sendErrorResponse(res, {
             success: false,
             statusCode: 400,
             message: "Failed to login",
