@@ -1,7 +1,8 @@
+import { Model } from "mongoose";
 import { Status, UserRole } from "./user.constant";
 
 export type IBloodGroup = "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-";
-export const bloodGroups: IBloodGroup[] = [ "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-",];
+export const bloodGroups: IBloodGroup[] = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-",];
 
 // old
 // export type IRole = 'admin' | 'student' | 'faculty';
@@ -39,11 +40,16 @@ export interface IPersonalInfo {
     permanentAddress: string;
 }
 
-export type IUser = {
+export interface IUser {
     id: string;
     password: string;
     needsPasswordChange?: boolean;
     role: IRole;
     status: IStatus;
     isDeleted?: boolean;
+}
+
+// StaticMethod
+export interface IUserStatics extends Model<IUser> {
+    isUserExistByCustomID(id: string): Promise<IUser | null>; // func defined
 }
