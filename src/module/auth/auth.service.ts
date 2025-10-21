@@ -4,33 +4,40 @@ import AppError from "../../errors/AppError";
 import { IAdmin } from "../admin/admin.interface";
 import { UserModel } from "../common/user/user.model";
 import { ILoginUser } from "./auth.interface";
+import { Status } from '../common/user/user.constant';
 
 
 const loginUser = async (loginUser: ILoginUser) => {
 
     const { id, password } = loginUser;
-    const isUserExist = await UserModel.findOne({ id: id })
+    const user = await UserModel.findOne({ id: id })
 
-    if (!isUserExist) {
+    if (!user) {
         throw new AppError(404, "User Dosen't Exists") // User or Password doesn't match
     }
 
     // checking if the user is already deleted
 
-    const isDeleted = isUserExist?.isDeleted;
+    const isDeleted = user?.isDeleted;
 
     if (isDeleted) {
-        throw new AppError(httpStatus.FORBIDDEN, 'This user is deleted !');
+        throw new AppError(httpStatus.FORBIDDEN, 'This user is deleted!');
+    }
+    // checking if the user is blocked
+
+    const userStatus = user?.status;
+
+    if (userStatus === Status.BLOCKED) {
+        throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked!');
     }
 
-    console.log("validate")
-
-    const match = await bcrypt.compare(password, isUserExist.password);
+    const match = await bcrypt.compare(password, user.password);
 
     if (!match) {
-        throw new AppError(httpStatus.NON_AUTHORITATIVE_INFORMATION, "Login Failed") // User or Password doesn't match
+        throw new AppError(httpStatus.UNAUTHORIZED, "Login Failed") // User or Password doesn't match
     }
 
+    // send jwt
     if (match) {
         //login
         console.log("matched")
