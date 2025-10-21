@@ -10,7 +10,11 @@ import { Status } from '../common/user/user.constant';
 const loginUser = async (loginUser: ILoginUser) => {
 
     const { id, password } = loginUser;
-    const user = await UserModel.findOne({ id: id })
+    // normal findOne
+    // const user = await UserModel.findOne({ id: id })
+   
+    // mongoose statics method
+    const user = await UserModel.isUserExistByCustomID(id)
 
     if (!user) {
         throw new AppError(404, "User Dosen't Exists") // User or Password doesn't match
