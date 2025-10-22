@@ -4,8 +4,15 @@ require('dotenv').config()
 
 // dotenv.config({ path: path.join(process.cwd(), '.env') })
 
+export const constants = {
+    development: "development",
+    production: "production",
+    hideDefaultFields: '-password -__v',
+} as const
+
 export default {
     NODE_ENV: process.env.NODE_ENV,
+    NODE_ENV_DEV: process.env.NODE_ENV === constants.development,
     port: process.env.PORT,
     database_url: process.env.DATABASE_URL,
     default_pass: process.env.DEFAULT_PASS,
@@ -16,8 +23,3 @@ export default {
     jwt_refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN,
 }
 
-export const constants = {
-    development: "development",
-    production: "production",
-    hideDefaultFields: '-password -__v',
-} as const
