@@ -15,9 +15,12 @@ async function main() {
         await mongoose.connect(DATABASE_URL as string);
 
         // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled  
-
+        const NODE_ENV = config.NODE_ENV_DEV ? '⚡️ NODE_ENV_DEVELOPMENT 🔨' : '🚀 NODE_ENV_PRODUCTION 🚀'
+        const status = config.NODE_ENV_DEV ? '⚡️ Running Locally 🔨' : '🚀 Set for Deploy 🚀'
         server = app.listen(PORT, () => {
+            console.log(`===${NODE_ENV}===${status}`)
             console.log(`🚀 Server is online and ready — listening on 🛰️  port ${PORT}`)
+            console.log(`=========================================================`)
         })
     } catch (error) {
         console.log("Error: ", error)
