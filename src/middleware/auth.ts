@@ -41,7 +41,8 @@ export const auth = (role: IRole = UserRole.ADMIN): RequestHandler => {
             throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked!');
         }
         if (decoded?.userRole == role) {
-            console.log("Welcome ", decoded?.userRole)
+            req.user = decoded;
+            config.NODE_ENV_DEV && console.log("Welcome ", decoded?.userRole)
             next()
         }
         else {
