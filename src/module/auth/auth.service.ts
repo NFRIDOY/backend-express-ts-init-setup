@@ -51,13 +51,29 @@ const loginUser = async (loginUser: ILoginUser) => {
             userRole: user.role,
         }
 
+        const jwtOptions = { expiresIn: config.jwt_access_expires_in as string }
+
         if (!config.jwt_access_secret) {
             throw new AppError(httpStatus.INTERNAL_SERVER_ERROR, 'JWT secret key is not configured');
         }
 
-        const accessToken = jwt.sign(jwtPayload, config.jwt_access_secret as string, {
-            expiresIn: config.jwt_access_expires_in as string ?? '24h',
-        });
+        if (!config.jwt_access_expires_in) {
+            throw new AppError(httpStatus.INTERNAL_SERVER_ERROR, 'JWT ERROR');
+        }
+        
+        const accessToken = jwt.sign(
+            jwtPayload,
+            config.jwt_access_secret,
+            { expiresIn: '365d' },
+        );
+
+        // const accessToken = jwt.sign(
+        //     jwtPayload, 
+        //     config.jwt_access_secret as string, 
+        //     {
+        //         expiresIn: config.jwt_access_expires_in as string ?? '24h',
+        //     }
+        // );
 
         // send jwt
         if (match) {
