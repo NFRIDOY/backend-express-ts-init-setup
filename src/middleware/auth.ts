@@ -43,7 +43,7 @@ export const auth = (...role: IRole[]): RequestHandler => {
         if (role && !role.includes(decoded?.userRole)) {
             throw new AppError(
                 httpStatus.UNAUTHORIZED,
-                'You are not authorized  hi!',
+                'You are not Athorized',
             );
         }
         req.user = decoded as JwtPayload;
