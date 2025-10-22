@@ -53,6 +53,7 @@ const UserSchema = new Schema<IUser, IUserStatics>({
   password: {
     type: String,
     required: true,
+    // select: 0, // hide password from response
   },
   needsPasswordChange: {
     type: Boolean,
