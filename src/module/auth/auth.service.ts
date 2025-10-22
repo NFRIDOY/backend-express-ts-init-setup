@@ -77,7 +77,7 @@ const loginUser = async (loginUser: ILoginUser) => {
             //login
             console.log("matched")
             return {
-                accessToken,
+                accessToken: `Bearer ${accessToken}`,
                 needsPasswordChange: user?.needsPasswordChange,
             };
         }
