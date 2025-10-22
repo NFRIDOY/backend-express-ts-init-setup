@@ -3,17 +3,18 @@ import { IRole } from './../module/common/user/user.interface';
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../config';
-import { IjwtPayload } from '../module/auth/auth.interface';
 import AppError from '../errors/AppError';
 import { UserModel } from '../module/common/user/user.model';
-import { Status } from '../module/common/user/user.constant';
+import { Status, UserRole } from '../module/common/user/user.constant';
 import { catchAsync } from '../utils/catchAsync';
 
-export const auth = (role: IRole): RequestHandler => {
+export const auth = (role: IRole = f.ADMIN): RequestHandler => {
     return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
         const token = req.headers['authorization']?.split(' ')[1];
         // console.log("authHeader", token)
-
+        if (!token) {
+            throw new AppError(httpStatus.BAD_REQUEST, 'Token is not found!');
+        }
         // verify a token symmetric - synchronous
         const decoded = jwt.verify(token as string, config.jwt_access_secret as string) as JwtPayload;
         // config?.NODE_ENV 
