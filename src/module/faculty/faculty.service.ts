@@ -50,7 +50,7 @@ const updateFacultyByFacultyIdOnDB = async (facultyID: string, payload: Partial<
       .populate({
         path: 'user',
         // select: '-password -__v', // Exclude the password field
-        select: constants.defaultClassifiedFields, // Exclude the password field
+        select: constants.hideDefaultFields, // Exclude the password field
       });
     return result;
   } catch (err) {
