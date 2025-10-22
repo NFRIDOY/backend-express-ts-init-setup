@@ -8,7 +8,7 @@ import { UserModel } from '../module/common/user/user.model';
 import { Status, UserRole } from '../module/common/user/user.constant';
 import { catchAsync } from '../utils/catchAsync';
 
-export const auth = (role: IRole = f.ADMIN): RequestHandler => {
+export const auth = (role: IRole = UserRole.ADMIN): RequestHandler => {
     return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
         const token = req.headers['authorization']?.split(' ')[1];
         // console.log("authHeader", token)
