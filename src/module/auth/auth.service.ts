@@ -86,6 +86,10 @@ const loginUser = async (loginUser: ILoginUser) => {
     }
 }
 
+// const changePassword = async ( user, payload ) => {
+
+// }
+
 export const loginUserService = {
     loginUser,
 }
