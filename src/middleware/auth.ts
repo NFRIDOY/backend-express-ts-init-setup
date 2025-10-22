@@ -8,7 +8,7 @@ import { UserModel } from '../module/common/user/user.model';
 import { Status, UserRole } from '../module/common/user/user.constant';
 import { catchAsync } from '../utils/catchAsync';
 
-export const auth = (role: IRole = UserRole.ADMIN): RequestHandler => {
+export const auth = (...role: IRole[]): RequestHandler => {
     return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
         const token = req.headers['authorization']?.split(' ')[1];
         // console.log("authHeader", token)
@@ -40,14 +40,23 @@ export const auth = (role: IRole = UserRole.ADMIN): RequestHandler => {
         if (userStatus === Status.BLOCKED) {
             throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked!');
         }
-        if (decoded?.userRole == role) {
-            req.user = decoded;
-            config.NODE_ENV_DEV && console.log("Welcome ", decoded?.userRole)
-            next()
+        if (role && !role.includes(decoded?.userRole)) {
+            throw new AppError(
+                httpStatus.UNAUTHORIZED,
+                'You are not authorized  hi!',
+            );
         }
-        else {
-            throw new AppError(401, "Unauthoraized")
-        }
+        req.user = decoded as JwtPayload;
+        config.NODE_ENV_DEV && console.log("Welcome ", decoded?.userRole)
+        next()
+        // if (role.includes(decoded?.userRole)) {
+        //     req.user = decoded;
+        //     config.NODE_ENV_DEV && console.log("Welcome ", decoded?.userRole)
+        //     next()
+        // }
+        // else {
+        //     throw new AppError(401, "Unauthoraized")
+        // }
 
     })
 }
