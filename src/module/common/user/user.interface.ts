@@ -44,6 +44,7 @@ export interface IUser {
     id: string;
     password: string;
     needsPasswordChange?: boolean;
+    passwordChangedAt?: Date;
     role: IRole;
     status: IStatus;
     isDeleted?: boolean;

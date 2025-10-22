@@ -60,6 +60,9 @@ const UserSchema = new Schema<IUser, IUserStatics>({
     required: true,
     default: true
   },
+  passwordChangedAt: {
+    type: Date,
+  },
   role: {
     type: String,
     enum: userRoles,

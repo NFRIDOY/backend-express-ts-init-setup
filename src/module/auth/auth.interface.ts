@@ -4,6 +4,11 @@ export type ILoginUser = {
     password: string;
 }
 
+export type IChanagePassword = {
+    oldPassword: string;
+    newPassword: string;
+}
+
 export type IjwtPayload = {
     userId: string;
     userRole: string;

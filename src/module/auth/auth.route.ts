@@ -8,6 +8,12 @@ const router = express.Router();
 
 router.post('/login', validateRequest(LoginUserValidation.LoginUserValidationSchema), loginUserController.loginAdmin);
 router.post('/login-admin', validateRequest(LoginUserValidation.LoginUserValidationSchema), loginUserController.loginAdmin);
+router.post('/change-password',
+    auth(UserRole.ADMIN,
+        UserRole.FACULTY,
+        UserRole.STUDENT),
+    validateRequest(LoginUserValidation.changePasswordValidationSchema),
+    loginUserController.changePassword);
 // router.post('/login-student', validateRequest(createStudentValidationSchema), loginUserController.createStudent);
 // router.post('/login-faculty', validateRequest(FacultyValidationSchema.createFaculty), loginUserController.createFaculty);
 

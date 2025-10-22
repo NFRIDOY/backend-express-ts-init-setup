@@ -2,9 +2,9 @@ import httpStatus from 'http-status';
 import bcrypt from 'bcrypt';
 import AppError from "../../errors/AppError";
 import { UserModel } from "../common/user/user.model";
-import { IjwtPayload, ILoginUser } from "./auth.interface";
+import { IChanagePassword, IjwtPayload, ILoginUser } from "./auth.interface";
 import { Status } from '../common/user/user.constant';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../../config';
 
 
@@ -57,7 +57,7 @@ const loginUser = async (loginUser: ILoginUser) => {
         if (!config.jwt_access_expires_in) {
             throw new AppError(httpStatus.INTERNAL_SERVER_ERROR, 'JWT ERROR');
         }
-        
+
         const accessToken = jwt.sign(
             jwtPayload,
             config.jwt_access_secret,
@@ -86,10 +86,50 @@ const loginUser = async (loginUser: ILoginUser) => {
     }
 }
 
-// const changePassword = async ( user, payload ) => {
+const changePassword = async (user: JwtPayload, payload: IChanagePassword) => {
+    try {
+        // const { userId, userRole } = user
+        // console.log({ user })
+        // console.log({ payload })
+        const isUserExist = await UserModel.findOne({ id: user?.userId })
 
-// }
+        if (!isUserExist) {
+            throw new AppError(404, "User Dosn't Exist");
+        }
+        console.log({ isUserExist })
+        const match = await bcrypt.compare(payload?.oldPassword, isUserExist?.password)
+        if (!match) {
+            throw new AppError(401, "Wrong Password");
+        }
+
+        const newPassword = await bcrypt.hash(
+            payload.newPassword,
+            Number(config.bcrypt_salt)
+        );
+
+        const updatePassword = await UserModel.findOneAndUpdate(
+            {
+                id: user.userId,
+                role: user.userRole,
+            },
+            {
+                password: newPassword,
+                needsPasswordChange: false,
+                passwordChangedAt: new Date(),
+            },
+            { new: true })
+        if (!updatePassword) {
+            throw new AppError(500, "Update Password Failed");
+        }
+        return true;
+    } catch (error) {
+        console.log({ error })
+        return false;
+        // throw new AppError(500, "Internal Error. Update Password Failed", error);
+    }
+}
 
 export const loginUserService = {
     loginUser,
+    changePassword
 }
