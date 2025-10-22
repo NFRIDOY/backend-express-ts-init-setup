@@ -1,26 +1,51 @@
+import httpStatus from 'http-status';
 import { IRole } from './../module/common/user/user.interface';
-import { RequestHandler } from "express";
-import jwt from 'jsonwebtoken';
+import { NextFunction, Request, RequestHandler, Response } from "express";
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../config';
-import { UserRole } from '../module/common/user/user.constant';
 import { IjwtPayload } from '../module/auth/auth.interface';
 import AppError from '../errors/AppError';
+import { UserModel } from '../module/common/user/user.model';
+import { Status } from '../module/common/user/user.constant';
+import { catchAsync } from '../utils/catchAsync';
 
 export const auth = (role: IRole): RequestHandler => {
-    return async (req, res, next) => {
+    return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
         const token = req.headers['authorization']?.split(' ')[1];
-        console.log("authHeader", token)
-    
+        // console.log("authHeader", token)
+
         // verify a token symmetric - synchronous
-        const decoded = jwt.verify(token as string, config.jwt_access_secret as string) as IjwtPayload;
-        console.log(decoded) 
-        if(decoded?.userRole == role) {
-            console.log("Welcome Admin")
+        const decoded = jwt.verify(token as string, config.jwt_access_secret as string) as JwtPayload;
+        // config?.NODE_ENV 
+        console.log(decoded)
+        // const { role: userRole, userId, iat } = decoded;
+
+        // checking if the user is exist
+        const user = await UserModel.isUserExistByCustomID(decoded?.userId);
+
+        if (!user) {
+            throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
+        }
+        // checking if the user is already deleted
+
+        const isDeleted = user?.isDeleted;
+        if (isDeleted === true) {
+            throw new AppError(httpStatus.NOT_FOUND, 'This user is deleted!');
+        }
+
+        // checking if the user is blocked
+        const userStatus = user?.status;
+
+        if (userStatus === Status.BLOCKED) {
+            throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked!');
+        }
+        if (decoded?.userRole == role) {
+            console.log("Welcome ", decoded?.userRole)
             next()
         }
         else {
             throw new AppError(401, "Unauthoraized")
         }
-    
-    }
+
+    })
 }
