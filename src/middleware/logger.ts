@@ -24,7 +24,9 @@ const logger = (req: Request, res: Response, next: NextFunction) => {
     console.log("🧩 Route Params  :", params);
   }
 
-  console.log("======================================");
+  console.log("===================================");
+  console.log("========== [Logger Ends] ==========");
+  console.log("===================================");
 
   next();
 };

@@ -2,7 +2,7 @@ import httpStatus from 'http-status';
 import bcrypt from 'bcrypt';
 import AppError from "../../errors/AppError";
 import { UserModel } from "../common/user/user.model";
-import { ILoginUser } from "./auth.interface";
+import { IjwtPayload, ILoginUser } from "./auth.interface";
 import { Status } from '../common/user/user.constant';
 import jwt from 'jsonwebtoken';
 import config from '../../config';
@@ -43,10 +43,7 @@ const loginUser = async (loginUser: ILoginUser) => {
             throw new AppError(httpStatus.UNAUTHORIZED, "Login Failed") // User or Password doesn't match
         }
 
-        const jwtPayload: {
-            userId: string;
-            userRole: string;
-        } = {
+        const jwtPayload: IjwtPayload = {
             userId: user.id,
             userRole: user.role,
         }

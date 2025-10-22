@@ -44,6 +44,15 @@ const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFun
         statusCode = simplifiedError?.statusCode;
         message = simplifiedError?.message;
         errorSources = simplifiedError?.errorSources;
+    } else if (err.name === 'JsonWebTokenError') {
+        message = "Auth Verification Failed";
+        // message = err.message;
+        errorSources = [
+            {
+                path: '',
+                message: err?.message,
+            },
+        ];
     } else if (err instanceof AppError) {
         statusCode = err?.statusCode;
         message = err.message;
@@ -53,6 +62,7 @@ const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFun
                 message: err?.message,
             },
         ];
+        
     } else if (err instanceof Error) {
         message = err.message;
         errorSources = [
@@ -62,7 +72,6 @@ const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFun
             },
         ];
     }
-
     //   //ultimate return
     //   return res.status(statusCode).json({
     //     success: false,

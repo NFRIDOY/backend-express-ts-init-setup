@@ -17,6 +17,10 @@ npm i jsonwebtoken
 ```bash
 require('crypto').randomBytes(64).toString('hex')
 ```
+### header
+```bash
+Authorization: Bearer <token>
+```
 # Config TS
 Run
 ```bash
