@@ -117,7 +117,7 @@ const changePassword = async (user: JwtPayload, payload: IChanagePassword) => {
                 needsPasswordChange: false,
                 passwordChangedAt: new Date(),
                 // check if user is changing password for first time or not.
-                status: Status.ACTIVE, // this account is now active after changing the default password.
+                status: isUserExist?.status === Status.BLOCKED ? isUserExist?.status : Status.ACTIVE, // this account is now active after changing the default password.
             },
             { new: true })
         if (!updatePassword) {
