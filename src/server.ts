@@ -18,6 +18,7 @@ async function main() {
         const NODE_ENV = config.NODE_ENV_DEV ? '⚡️ NODE_ENV_DEVELOPMENT 🔨' : '🚀 NODE_ENV_PRODUCTION 🚀'
         const status = config.NODE_ENV_DEV ? '⚡️ Running Locally 🔨' : '🚀 Set for Deploy 🚀'
         server = app.listen(PORT, () => {
+            console.log(`=========================================================`)
             console.log(`===${NODE_ENV}===${status}`)
             console.log(`🚀 Server is online and ready — listening on 🛰️  port ${PORT}`)
             console.log(`=========================================================`)
