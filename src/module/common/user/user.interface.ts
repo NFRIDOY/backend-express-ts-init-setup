@@ -53,4 +53,5 @@ export interface IUser {
 // StaticMethod
 export interface IUserStatics extends Model<IUser> {
     isUserExistByCustomID(id: string): Promise<IUser | null>; // func defined
+    isJWTIssuedBeforePasswordChanged(passwordChangedAt: Date, iat: number): boolean | null; // func defined
 }

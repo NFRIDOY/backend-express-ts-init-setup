@@ -119,6 +119,12 @@ UserSchema.post('save', function (doc, next) {
 UserSchema.statics.isUserExistByCustomID = async function (id: string) {
   return await UserModel.findOne({ id: id }).select('+password')
 }
+// static method: 
+UserSchema.statics.isJWTIssuedBeforePasswordChanged = async function (passwordChangedTimestamp: Date, jwtIssuedTimestamp: number) {
+  const passwordChangedTime =
+    new Date(passwordChangedTimestamp).getTime() / 1000;
+  return passwordChangedTime > jwtIssuedTimestamp;
+}
 
 // User Model
 export const UserModel = mongoose.model<IUser, IUserStatics>('User', UserSchema);

@@ -96,7 +96,7 @@ const changePassword = async (user: JwtPayload, payload: IChanagePassword) => {
         if (!isUserExist) {
             throw new AppError(404, "User Dosn't Exist");
         }
-        console.log({ isUserExist })
+        // console.log({ isUserExist })
         const match = await bcrypt.compare(payload?.oldPassword, isUserExist?.password)
         if (!match) {
             throw new AppError(401, "Wrong Password");

@@ -1,4 +1,5 @@
 import httpStatus from 'http-status';
+import bcrypt from 'bcrypt';
 import { IRole } from './../module/common/user/user.interface';
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import jwt, { JwtPayload } from 'jsonwebtoken';
@@ -27,8 +28,8 @@ export const auth = (...role: IRole[]): RequestHandler => {
         if (!user) {
             throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
         }
-        // checking if the user is already deleted
 
+        // checking if the user is already deleted
         const isDeleted = user?.isDeleted;
         if (isDeleted === true) {
             throw new AppError(httpStatus.NOT_FOUND, 'This user is deleted!');
@@ -47,19 +48,19 @@ export const auth = (...role: IRole[]): RequestHandler => {
             );
         }
         req.user = decoded as JwtPayload;
+
         config.NODE_ENV_DEV && console.log("Welcome ", decoded?.userRole)
 
-        // TODO: validate user exist etc code from 'module\auth\auth.service.ts' use initial code and cleanup the auth.service
-        // TODO: if change password after create jwt don't give access. [change password > create jwt] 
+        // if  create jwt before change password af then give access. [change password > create jwt] else don't.
+        if (
+            user.passwordChangedAt &&
+            UserModel.isJWTIssuedBeforePasswordChanged(
+              user.passwordChangedAt,
+              decoded.iat as number,
+            )
+          ) {
+            throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized !');
+          }
         next()
-        // if (role.includes(decoded?.userRole)) {
-        //     req.user = decoded;
-        //     config.NODE_ENV_DEV && console.log("Welcome ", decoded?.userRole)
-        //     next()
-        // }
-        // else {
-        //     throw new AppError(401, "Unauthoraized")
-        // }
-
     })
 }
