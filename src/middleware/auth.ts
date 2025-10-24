@@ -48,6 +48,9 @@ export const auth = (...role: IRole[]): RequestHandler => {
         }
         req.user = decoded as JwtPayload;
         config.NODE_ENV_DEV && console.log("Welcome ", decoded?.userRole)
+
+        // TODO: validate user exist etc code from 'module\auth\auth.service.ts' use initial code and cleanup the auth.service
+        // TODO: if change password after create jwt don't give access. [change password > create jwt] 
         next()
         // if (role.includes(decoded?.userRole)) {
         //     req.user = decoded;
