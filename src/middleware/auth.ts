@@ -26,7 +26,7 @@ export const auth = (...role: IRole[]): RequestHandler => {
         const user = await UserModel.isUserExistByCustomID(decoded?.userId);
 
         if (!user) {
-            throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
+            throw new AppError(httpStatus.NOT_FOUND, 'This user is not found!');
         }
 
         // checking if the user is already deleted
@@ -59,7 +59,7 @@ export const auth = (...role: IRole[]): RequestHandler => {
               decoded.iat as number,
             )
           ) {
-            throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized !');
+            throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized!');
           }
         next()
     })

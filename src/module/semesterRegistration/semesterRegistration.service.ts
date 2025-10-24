@@ -17,7 +17,7 @@ const createSemesterRegistrationIntoDB = async (payload: ISemesterRegistration) 
     if (!isAcademicSemesterExists) {
         throw new AppError(
             404,
-            'This academic semester not found !',
+            'This academic semester not found!',
         );
     }
 
