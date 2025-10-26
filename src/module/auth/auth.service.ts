@@ -131,7 +131,16 @@ const changePassword = async (user: JwtPayload, payload: IChanagePassword) => {
     }
 }
 
+const forgetPassword = async (payload: string) => {
+    // TODO: gives accessToken
+}
+const resetPassword = async (payload: string) => {
+    // TODO: accessToken verify ID and token update password on db
+}
+
 export const loginUserService = {
     loginUser,
-    changePassword
+    changePassword,
+    forgetPassword,
+    resetPassword
 }
