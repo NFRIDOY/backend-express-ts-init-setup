@@ -12,7 +12,7 @@ import { AcademicDepartmentModel } from "../../academicDepartment/academicDepart
 import { FacultyModel } from "../../faculty/faculty.model";
 import generateCode from "../../faculty/faculty.generateCode";
 import { AdminModel } from "../../admin/admin.model";
-import { UserRole } from "./user.constant";
+import { Status, UserRole } from "./user.constant";
 
 
 const createUserIntoDB = async (user: IUser): Promise<IUser> => {
@@ -32,6 +32,7 @@ const createStudentIntoDB = async (password: string, payload: IStudent) => {
         //set student role
         // userData.role = "student";
         userData.role = UserRole.STUDENT;
+        userData.email = payload?.email;
 
         // get academicSemester
         const academicSemester = await AcademicSemesterModel.findOne({
@@ -50,7 +51,7 @@ const createStudentIntoDB = async (password: string, payload: IStudent) => {
         userData.id = await generateStudentId(academicSemester);
 
         //set status
-        userData.status = "in-progress";
+        userData.status = Status.PROGRESS;
 
         const newUser = await UserModel.create([userData], { session }) // add on the session
         // console.log('newUser', newUser);
@@ -90,6 +91,7 @@ const createFacultyIntoDB = async (password: string, payload: IFaculty) => {
         //set faculty role
         // userData.role = 'faculty';
         userData.role = UserRole.FACULTY;
+        userData.email = payload?.email;
 
         // get academicSemester
         const academicDepartment = await AcademicDepartmentModel.findOne({
@@ -104,7 +106,7 @@ const createFacultyIntoDB = async (password: string, payload: IFaculty) => {
         userData.id = await generateFacultyId(academicDepartment);
 
         //set status
-        userData.status = "in-progress";
+        userData.status = Status.PROGRESS;
 
         const newUser = await UserModel.create([userData], { session }) // add on the session
         // console.log('newUser', newUser);
@@ -156,12 +158,13 @@ const createAdminIntoDB = async (password: string, payload: IFaculty) => {
         //set admin role
         // userData.role = 'admin';
         userData.role = UserRole.ADMIN;
+        userData.email = payload?.email;
 
         // TODO: Genareted Admin ID 
         userData.id = await generateAdminId();
 
         //set status
-        userData.status = "in-progress";
+        userData.status = Status.PROGRESS;
 
         const newUser = await UserModel.create([userData], { session }) // add on the session
         // console.log('newUser', newUser);

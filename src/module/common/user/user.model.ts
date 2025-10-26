@@ -48,7 +48,15 @@ export const nameSchema = new Schema<IName>({
 const UserSchema = new Schema<IUser, IUserStatics>({
   id: {
     type: String,
-    required: true
+    required: true,
+    unique: true,
+    index: true   
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true
   },
   password: {
     type: String,
