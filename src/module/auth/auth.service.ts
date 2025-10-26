@@ -132,7 +132,7 @@ const changePassword = async (user: JwtPayload, payload: IChanagePassword) => {
 }
 
 const forgetPassword = async (payload: string) => {
-    // TODO: gives accessToken
+    // TODO: gives accessToken via nodeMailer email
 }
 const resetPassword = async (payload: string) => {
     // TODO: accessToken verify ID and token update password on db
