@@ -6,6 +6,7 @@ import { IChanagePassword, IjwtPayload, ILoginUser } from "./auth.interface";
 import { Status } from '../common/user/user.constant';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../../config';
+import { validateUserExistence } from './auth.utils';
 
 
 const loginUser = async (loginUser: ILoginUser) => {
@@ -93,11 +94,18 @@ const changePassword = async (user: JwtPayload, payload: IChanagePassword) => {
         // console.log({ payload })
         const isUserExist = await UserModel.findOne({ id: user?.userId })
 
-        if (!isUserExist) {
-            throw new AppError(404, "User Dosn't Exist");
-        }
+        validateUserExistence(isUserExist)
+        // if (!isUserExist) {
+        //     throw new AppError(404, "User Dosn't Exist");
+        // }
+        // if(isUserExist.status === Status.BLOCKED) {
+        //     throw new AppError(404, "User is Blocked");
+        // }
+        // if(isUserExist.isDeleted === true) {
+        //     throw new AppError(404, "User is Deleted");
+        // }
         // console.log({ isUserExist })
-        const match = await bcrypt.compare(payload?.oldPassword, isUserExist?.password)
+        const match = await bcrypt.compare(payload?.oldPassword, isUserExist?.password as string)
         if (!match) {
             throw new AppError(401, "Wrong Password");
         }
@@ -117,7 +125,7 @@ const changePassword = async (user: JwtPayload, payload: IChanagePassword) => {
                 needsPasswordChange: false,
                 passwordChangedAt: new Date(),
                 // check if user is changing password for first time or not.
-                status: isUserExist?.status === Status.BLOCKED ? isUserExist?.status : Status.ACTIVE, // this account is now active after changing the default password.
+                status: isUserExist?.status !== Status.PROGRESS ? Status.ACTIVE : isUserExist?.status, // this account is now active after changing the default password.
             },
             { new: true })
         if (!updatePassword) {
