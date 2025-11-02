@@ -52,15 +52,10 @@ export const auth = (...role: IRole[]): RequestHandler => {
         config.NODE_ENV_DEV && console.log("Welcome ", decoded?.userRole)
 
         // if  create jwt before change password af then give access. [change password > create jwt] else don't.
-        if (
-            user.passwordChangedAt &&
-            UserModel.isJWTIssuedBeforePasswordChanged(
-              user?.passwordChangedAt,
-              decoded?.iat as number,
-            )
-          ) {
+        if (user?.passwordChangedAt && UserModel.isJWTIssuedBeforePasswordChanged(user?.passwordChangedAt as Date,decoded?.iat as number)) {
+            console.log("True??")
             throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized!');
-          }
+        }
         next()
     })
 }

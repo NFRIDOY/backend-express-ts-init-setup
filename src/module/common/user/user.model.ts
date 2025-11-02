@@ -129,11 +129,7 @@ UserSchema.statics.isUserExistByCustomID = async function (id: string) {
 }
 // static method: 
 UserSchema.statics.isJWTIssuedBeforePasswordChanged = async function (passwordChangedTimestamp: Date, jwtIssuedTimestamp: number) {
-  const passwordChangedTime =
-    new Date(passwordChangedTimestamp).getTime() / 1000;
-    console.log("passwordChangedTime", passwordChangedTime);
-    console.log("jwtIssuedTimestamp", jwtIssuedTimestamp);
-    console.log("comp", passwordChangedTime > jwtIssuedTimestamp);
+  const passwordChangedTime = await new Date(passwordChangedTimestamp).getTime() / 1000;
     return passwordChangedTime > jwtIssuedTimestamp;
 }
 
