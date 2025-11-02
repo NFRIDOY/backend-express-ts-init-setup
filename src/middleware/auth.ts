@@ -55,8 +55,8 @@ export const auth = (...role: IRole[]): RequestHandler => {
         if (
             user.passwordChangedAt &&
             UserModel.isJWTIssuedBeforePasswordChanged(
-              user.passwordChangedAt,
-              decoded.iat as number,
+              user?.passwordChangedAt,
+              decoded?.iat as number,
             )
           ) {
             throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized!');

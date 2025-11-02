@@ -50,7 +50,7 @@ const UserSchema = new Schema<IUser, IUserStatics>({
     type: String,
     required: true,
     unique: true,
-    index: true   
+    index: true
   },
   email: {
     type: String,
@@ -131,7 +131,10 @@ UserSchema.statics.isUserExistByCustomID = async function (id: string) {
 UserSchema.statics.isJWTIssuedBeforePasswordChanged = async function (passwordChangedTimestamp: Date, jwtIssuedTimestamp: number) {
   const passwordChangedTime =
     new Date(passwordChangedTimestamp).getTime() / 1000;
-  return passwordChangedTime > jwtIssuedTimestamp;
+    console.log("passwordChangedTime", passwordChangedTime);
+    console.log("jwtIssuedTimestamp", jwtIssuedTimestamp);
+    console.log("comp", passwordChangedTime > jwtIssuedTimestamp);
+    return passwordChangedTime > jwtIssuedTimestamp;
 }
 
 // User Model
