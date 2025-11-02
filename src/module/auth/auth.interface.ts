@@ -9,9 +9,9 @@ export type IChanagePassword = {
     newPassword: string;
 }
 
-export type IjwtPayload = {
-    userId: string;
-    userRole: string;
-    iat?: number;
-    exp?: number;
-} 
+// export type IjwtPayload = {
+//     userId: string;
+//     userRole: string;
+//     iat?: number;
+//     exp?: number;
+// } 

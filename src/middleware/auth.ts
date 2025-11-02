@@ -8,6 +8,7 @@ import AppError from '../errors/AppError';
 import { UserModel } from '../module/common/user/user.model';
 import { Status, UserRole } from '../module/common/user/user.constant';
 import { catchAsync } from '../utils/catchAsync';
+import { verifyToken } from '../module/auth/auth.utils';
 
 export const auth = (...role: IRole[]): RequestHandler => {
     return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
@@ -17,7 +18,7 @@ export const auth = (...role: IRole[]): RequestHandler => {
             throw new AppError(httpStatus.BAD_REQUEST, 'Token is not found!');
         }
         // verify a token symmetric - synchronous
-        const decoded = jwt.verify(token as string, config.jwt_access_secret as string) as JwtPayload;
+        const decoded = await verifyToken(token as string);
         // config?.NODE_ENV 
         console.log(decoded)
         // const { role: userRole, userId, iat } = decoded;

@@ -50,7 +50,27 @@ const changePassword: RequestHandler = catchAsync(async (req, res, _next) => {
     })
 })
 
+const forgetPassword: RequestHandler = catchAsync(async (req, res, _next) => {
+    const { auth } = req.body
+    const result = await loginUserService.forgetPassword(auth)
+    if (!result) {
+        return sendErrorResponse(res, {
+            success: false,
+            statusCode: 400,
+            message: "Forget Password Email Sending Failed",
+            data: null,
+        })
+    }
+    return sendResponse(res, {
+        statusCode: httpStutus.OK,
+        success: true,
+        message: 'Forget Password Email Sent Successfully',
+        data: result,
+    })
+})
+
 export const loginUserController = {
     loginAdmin,
     changePassword,
+    forgetPassword,
 }

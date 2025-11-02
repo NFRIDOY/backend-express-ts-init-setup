@@ -2,11 +2,12 @@ import httpStatus from 'http-status';
 import bcrypt from 'bcrypt';
 import AppError from "../../errors/AppError";
 import { UserModel } from "../common/user/user.model";
-import { IChanagePassword, IjwtPayload, ILoginUser } from "./auth.interface";
+import { IChanagePassword, ILoginUser } from "./auth.interface";
 import { Status } from '../common/user/user.constant';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../../config';
 import { validateUserExistence } from './auth.utils';
+import { emailSender, IEmail } from '../../utils/emailSender';
 
 
 const loginUser = async (loginUser: ILoginUser) => {
@@ -44,10 +45,7 @@ const loginUser = async (loginUser: ILoginUser) => {
             throw new AppError(httpStatus.UNAUTHORIZED, "Login Failed") // User or Password doesn't match
         }
 
-        const jwtPayload: IjwtPayload = {
-            userId: user.id,
-            userRole: user.role,
-        }
+
 
         const jwtOptions = { expiresIn: config.jwt_access_expires_in as string }
 
@@ -57,6 +55,11 @@ const loginUser = async (loginUser: ILoginUser) => {
 
         if (!config.jwt_access_expires_in) {
             throw new AppError(httpStatus.INTERNAL_SERVER_ERROR, 'JWT ERROR');
+        }
+
+        const jwtPayload: JwtPayload = {
+            userId: user.id,
+            userRole: user.role,
         }
 
         const accessToken = jwt.sign(
@@ -139,8 +142,91 @@ const changePassword = async (user: JwtPayload, payload: IChanagePassword) => {
     }
 }
 
-const forgetPassword = async (payload: string) => {
+/** 
+ * user hit the forget password endpoint
+ * user provide email
+ * we send a token to the email
+ * user click the link in the email
+ * we verify the token
+ * we update the password
+ * we send a success message
+ */
+/**
+ * 
+ * @param payload { email: string }
+ * @returns { token: string }
+ * @description user hit the forget password endpoint
+ * @description user provide email
+ * @description we send a token to the email
+ * @description user click the link in the email
+ * @description we verify the token
+ * @description we update the password
+ * @description we send a success message
+ */
+const forgetPassword = async (payload: { userId: string, email: string }) => {
+    // const { userId, email } = payload;
     // TODO: gives accessToken via nodeMailer email
+    try {
+        const user = await UserModel.findOne({ email: payload.email, id: payload.userId })
+        validateUserExistence(user)
+
+        const jwtPayload: JwtPayload = {
+            userId: user?.id as string,
+            userRole: user?.role as string,
+            reset_password_url: config.reset_password_url,
+        }
+        /**
+         * TODO:
+         * add a UI for forgetpassword
+         * 
+         */
+
+        const resetToken = jwt.sign(
+            jwtPayload,
+            config.jwt_access_secret as string,
+            { expiresIn: '1h' },
+        );
+
+        const emailSenderObj: IEmail = {
+            from: config.email_user as string,
+            to: user?.email as string,
+            subject: 'Do You Want To Reset Your Password?',
+            html: `
+              <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 40px;">
+                <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                  <div style="background-color: #007bff; color: #ffffff; padding: 20px; text-align: center;">
+                    <h2>Password Reset Request</h2>
+                  </div>
+                  <div style="padding: 30px;">
+                    <p>Hi ${user?.id || 'there'},</p>
+                    <p>We received a request to reset your password. If you made this request, please click the button below to proceed:</p>
+                    <div style="text-align: center; margin: 30px 0;">
+                      <a href="${config?.reset_password_url}" style="background-color: #007bff; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">Reset Password</a>
+                    </div>
+                    <p>If the button doesn't work, you can copy and paste the following token into the reset form:</p>
+                    <div style="background-color: #f9f9f9; border: 1px dashed #ccc; padding: 15px; font-family: monospace; font-size: 14px; word-break: break-all; color: #333;">
+                      ${resetToken}
+                    </div>
+                    <p>If you didn’t request a password reset, you can safely ignore this email.</p>
+                    <p style="margin-top: 40px;">Thanks,<br>The ${config?.app_name || 'Support'} Team</p>
+                  </div>
+                  <div style="background-color: #f1f1f1; padding: 20px; text-align: center; font-size: 12px; color: #888;">
+                    <p>If you have any questions, contact us at <a href="mailto:${config?.support_email}" style="color: #007bff;">${config?.support_email}</a></p>
+                  </div>
+                </div>
+              </div>
+            `
+        }
+
+        // send email with the accessToken
+        await emailSender(emailSenderObj)
+
+        return true;
+
+    } catch (err) {
+        console.log({ err })
+        throw new AppError(500, "Internal Error. Forget Password Email Sending Failed", err);
+    }
 }
 const resetPassword = async (payload: string) => {
     // TODO: accessToken verify ID and token update password on db
