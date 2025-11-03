@@ -70,10 +70,10 @@ const forgetPassword: RequestHandler = catchAsync(async (req, res, _next) => {
 })
 
 const resetPassword: RequestHandler = catchAsync(async (req, res, _next) => {
-    console.log("req")
+    
     const { auth } = req.body
     const result = await loginUserService.resetPassword(req.query?.token as string, auth)
-    console.log("result:", result)
+
     if (!result) {
         return sendErrorResponse(res, {
             success: false,

@@ -4,7 +4,7 @@ import { IUser } from "../common/user/user.interface";
 import { Status } from "./auth.constant";
 import config from "../../config";
 
-export function validateUserExistence(user: IUser | null | undefined): void {
+export function validateUserExist(user: IUser | null | undefined): void {
   if (!user) {
     throw new AppError(404, "User Doesn't Exist");
   }

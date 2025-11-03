@@ -6,7 +6,7 @@ import { IChanagePassword, ILoginUser } from "./auth.interface";
 import { Status } from '../common/user/user.constant';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../../config';
-import { validateUserExistence, verifyToken } from './auth.utils';
+import { validateUserExist, verifyToken } from './auth.utils';
 import { emailSender, IEmail } from '../../utils/emailSender';
 
 
@@ -97,7 +97,7 @@ const changePassword = async (user: JwtPayload, payload: IChanagePassword) => {
         // console.log({ payload })
         const isUserExist = await UserModel.findOne({ id: user?.userId })
 
-        validateUserExistence(isUserExist)
+        validateUserExist(isUserExist)
         // if (!isUserExist) {
         //     throw new AppError(404, "User Dosn't Exist");
         // }
@@ -168,7 +168,7 @@ const forgetPassword = async (payload: { userId: string, email: string }) => {
     // TODO: gives accessToken via nodeMailer email
     try {
         const user = await UserModel.findOne({ email: payload.email, id: payload.userId })
-        validateUserExistence(user)
+        validateUserExist(user)
 
         const jwtPayload: JwtPayload = {
             userId: user?.id as string,
@@ -231,24 +231,26 @@ const forgetPassword = async (payload: { userId: string, email: string }) => {
         throw new AppError(500, "Internal Error. Forget Password Email Sending Failed", err);
     }
 }
-const resetPassword = async (token: string, payload: string) => {
-    console.log("token= ", token)
-    console.log("payload= ", payload)
+const resetPassword = async (token: string, payload: { newPassword: string }) => {
     // TODO: accessToken verify ID and token update password on db
     const decoded = await verifyToken(token)
-    console.log("decoded=", decoded)
 
     if (!decoded) {
         throw new AppError(401, "Invalid Token")
     }
 
-    
-    // update password using token email
-    // const result = await UserModel.findOneAndUpdate({ email: decoded?.email, password: decoded?.password })
+    const user = await UserModel.findOne({ email: decoded?.email })
 
-    // console.log("result= ", result);
-    // return result;
-    return true;
+    await validateUserExist(user)
+
+    const hashedPassword = await bcrypt.hash(payload?.newPassword as string, Number(config.bcrypt_salt));
+
+    const result = await UserModel.findOneAndUpdate(
+        { email: decoded?.email },
+        { password: hashedPassword },
+    );
+
+    return result ? true : false;
 }
 
 export const loginUserService = {

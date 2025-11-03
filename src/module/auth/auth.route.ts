@@ -18,7 +18,7 @@ router.post('/forget-password',
     validateRequest(LoginUserValidation.forgetPasswordValidationSchema),
     loginUserController.forgetPassword);
 router.post('/reset-password',
-    validateRequest(LoginUserValidation.resetPasswordValidationSchema),
+    // validateRequest(LoginUserValidation.resetPasswordVal idationSchema),
     loginUserController.resetPassword);
 
     // router.post('/login-student', validateRequest(createStudentValidationSchema), loginUserController.createStudent);

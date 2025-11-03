@@ -10,7 +10,13 @@ import router from './routes';
 
 // Persers
 app.use(express.json()); // to recive json object
-app.use(cors())
+// app.use(cors())
+app.use(cors({
+    origin: '*', // allows all origins
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
 // app.use(express.text()); // to recive text
 
 // Routes
