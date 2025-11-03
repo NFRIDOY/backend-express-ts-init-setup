@@ -208,7 +208,7 @@ const forgetPassword = async (payload: { userId: string, email: string }) => {
                     </div>
                     <p>If the button doesn't work, you can copy and paste the following token into the reset form:</p>
                     <div style="background-color: #f9f9f9; border: 1px dashed #ccc; padding: 15px; font-family: monospace; font-size: 14px; word-break: break-all; color: #333;">
-                      Bearer ${resetToken}
+                      ${urlToken}
                     </div>
                     <p>If you didn’t request a password reset, you can safely ignore this email.</p>
                     <p style="margin-top: 40px;">Thanks,<br>The ${config?.app_name || 'Support'} Team</p>
