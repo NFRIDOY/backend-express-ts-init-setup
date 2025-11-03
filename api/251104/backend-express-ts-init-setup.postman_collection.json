@@ -1,0 +1,1530 @@
+{
+	"info": {
+		"_postman_id": "465c9201-34d6-4f52-a0fe-f049b14445ab",
+		"name": "backend-express-ts-init-setup",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30943233"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "/create-student",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"password\": \"123456\",\r\n  \"student\": {\r\n    \"name\": {\r\n      \"firstName\": \"Muhammad\",\r\n      \"middleName\": \"Salahuddin\",\r\n      \"lastName\": \"Ali\"\r\n    },\r\n    \"email\": \"muhammad.ali@student.edu.bd\",\r\n    \"phone\": \"01711223344\",\r\n    \"emergencyPhone\": \"01899887766\",\r\n    \"dateOfBirth\": \"2006-03-21\",\r\n    \"gender\": \"male\",\r\n    \"profileImage\": \"https://example.com/images/muhammad-ali.jpg\",\r\n    \"guardian\": {\r\n      \"name\": {\r\n        \"firstName\": \"Abdul\",\r\n        \"middleName\": \"Karim\",\r\n        \"lastName\": \"Ali\"\r\n      },\r\n      \"email\": \"abdul.karim@example.com\",\r\n      \"phone\": \"01922334455\",\r\n      \"address\": \"House 45, Road 10, Uttara, Dhaka\"\r\n    },\r\n    \"parent\": [\r\n      {\r\n        \"id\": \"PARENT002\",\r\n        \"name\": {\r\n          \"firstName\": \"Abdul\",\r\n          \"middleName\": \"Karim\",\r\n          \"lastName\": \"Ali\"\r\n        },\r\n        \"email\": \"abdul.karim@example.com\",\r\n        \"phone\": \"01922334455\",\r\n        \"address\": \"House 45, Road 10, Uttara, Dhaka\"\r\n      }\r\n    ],\r\n    \"localGuardian\": {\r\n      \"name\": {\r\n        \"firstName\": \"Shamsul\",\r\n        \"middleName\": \"Haque\",\r\n        \"lastName\": \"Khan\"\r\n      },\r\n      \"email\": \"shamsul.khan@example.com\",\r\n      \"phone\": \"01633445566\",\r\n      \"address\": \"Flat 3A, Block D, Mirpur DOHS, Dhaka\",\r\n      \"occupation\": \"Engineer\"\r\n    },\r\n    \"bloodGroup\": \"B+\",\r\n    \"presentAddress\": \"Flat 3A, Block D, Mirpur DOHS, Dhaka\",\r\n    \"permanentAddress\": \"Village: Bhuapur, Upazila: Tangail Sadar, District: Tangail\",\r\n    \"admissionSemester\": \"68db5ec01831ffc34ff8f0d9\",\r\n    \"academicDepartment\": \"68dd65b68781ea1c6e70f5f3\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/create-student",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"create-student"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/create-faculty",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJBMjAyNTAxMDAwMSIsInVzZXJSb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjExMTQ5MzQsImV4cCI6MTc5MjY1MDkzNH0.4SxCgt5MBiJV7iv0x_axneqfOdTo-zYRAgL7qE1X_Uw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"123456\",\r\n    \"faculty\": {\r\n        \"name\": {\r\n            \"firstName\": \"Md\",\r\n            \"middleName\": \"Saladin\",\r\n            \"lastName\": \"Ali\"\r\n        },\r\n        \"email\": \"muhammad.ali@faculty.edu.bd\",\r\n        \"phone\": \"01733223344\",\r\n        \"emergencyPhone\": \"01899887766\",\r\n        \"dateOfBirth\": \"2006-03-21\",\r\n        \"gender\": \"male\",\r\n        \"profileImage\": \"https://example.com/images/muhammad-ali.jpg\",\r\n        \"bloodGroup\": \"B+\",\r\n        \"presentAddress\": \"Flat 3A, Block D, Mirpur DOHS, Dhaka\",\r\n        \"permanentAddress\": \"Village: Bhuapur, Upazila: Tangail Sadar, District: Tangail\",\r\n        \"designation\": \"Acociate Profesor\",\r\n        \"facultyCode\": \"SALADIN\",\r\n        \"academicDepartment\": \"68dd65b68781ea1c6e70f5f3\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/faculty/create-faculty",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"faculty",
+								"create-faculty"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/create-admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"123456\",\r\n    \"admin\": {\r\n        \"name\": {\r\n            \"firstName\": \"Md\",\r\n            \"middleName\": \"Saladin\",\r\n            \"lastName\": \"Ali\"\r\n        },\r\n        \"email\": \"muhammad.ali@faculty.edu.bd\",\r\n        \"phone\": \"01733223344\",\r\n        \"emergencyPhone\": \"01899887766\",\r\n        \"dateOfBirth\": \"2006-03-21\",\r\n        \"gender\": \"male\",\r\n        \"profileImage\": \"https://example.com/images/muhammad-ali.jpg\",\r\n        \"bloodGroup\": \"B+\",\r\n        \"presentAddress\": \"Flat 3A, Block D, Mirpur DOHS, Dhaka\",\r\n        \"permanentAddress\": \"Village: Bhuapur, Upazila: Tangail Sadar, District: Tangail\",\r\n        \"designation\": \"Acociate Profesor\",\r\n        \"facultyCode\": \"SALADIN\",\r\n        \"academicDepartment\": \"68dd65b68781ea1c6e70f5f3\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/faculty/create-admin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"faculty",
+								"create-admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[delete]/create-student",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"654321\",\r\n    \"student\": {\r\n        \"name\": {\r\n            \"firstName\": \"Ayesha\",\r\n            \"middleName\": \"Fatima\",\r\n            \"lastName\": \"Rahman\"\r\n        },\r\n        \"email\": \"ayesha.rahman@example.com\",\r\n        \"phone\": \"+8801712345678\",\r\n        \r\n        \"address\": \"123 Green Road, Dhaka\",\r\n        \"gender\": \"female\",\r\n        \"profileImage\": \"https://example.com/images/ayesha.jpg\",\r\n        \"guardian\": {\r\n            \"name\": {\r\n                \"firstName\": \"Mohammad\",\r\n                \"middleName\": \"\",\r\n                \"lastName\": \"Rahman\"\r\n            },\r\n            \"email\": \"guardian.rahman@example.com\",\r\n            \"phone\": \"+8801612345678\",\r\n            \"address\": \"123 Green Road, Dhaka\"\r\n        },\r\n        \"localGuardian\": {\r\n            \"name\": {\r\n                \"firstName\": \"Shirin\",\r\n                \"middleName\": \"\",\r\n                \"lastName\": \"Akter\"\r\n            },\r\n            \"email\": \"shirin.akter@example.com\",\r\n            \"phone\": \"+8801912345678\",\r\n            \"address\": \"456 Lake View, Dhaka\",\r\n            \"occupation\": \"Lecturer\"\r\n        },\r\n        \"bloodGroup\": \"A+\",\r\n        \"presentAddress\": \"123 Green Road, Dhaka\",\r\n        \"permanentAddress\": \"456 Lake View, Dhaka\",\r\n        \"admissionSemester\": \"68db5ec01831ffc34ff8f0d9\",\r\n        \"academicDepartment\": \"68dd65b68781ea1c6e70f5f3\",\r\n        \"isActive\": true,\r\n        \"status\": \"in-progress\",\r\n        \"isDeleted\": false\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2025010001"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[undelete]/undelete/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"654321\",\r\n    \"student\": {\r\n        \"name\": {\r\n            \"firstName\": \"Ayesha\",\r\n            \"middleName\": \"Fatima\",\r\n            \"lastName\": \"Rahman\"\r\n        },\r\n        \"email\": \"ayesha.rahman@example.com\",\r\n        \"phone\": \"+8801712345678\",\r\n        \r\n        \"address\": \"123 Green Road, Dhaka\",\r\n        \"gender\": \"female\",\r\n        \"profileImage\": \"https://example.com/images/ayesha.jpg\",\r\n        \"guardian\": {\r\n            \"name\": {\r\n                \"firstName\": \"Mohammad\",\r\n                \"middleName\": \"\",\r\n                \"lastName\": \"Rahman\"\r\n            },\r\n            \"email\": \"guardian.rahman@example.com\",\r\n            \"phone\": \"+8801612345678\",\r\n            \"address\": \"123 Green Road, Dhaka\"\r\n        },\r\n        \"localGuardian\": {\r\n            \"name\": {\r\n                \"firstName\": \"Shirin\",\r\n                \"middleName\": \"\",\r\n                \"lastName\": \"Akter\"\r\n            },\r\n            \"email\": \"shirin.akter@example.com\",\r\n            \"phone\": \"+8801912345678\",\r\n            \"address\": \"456 Lake View, Dhaka\",\r\n            \"occupation\": \"Lecturer\"\r\n        },\r\n        \"bloodGroup\": \"A+\",\r\n        \"presentAddress\": \"123 Green Road, Dhaka\",\r\n        \"permanentAddress\": \"456 Lake View, Dhaka\",\r\n        \"admissionSemester\": \"68db5ec01831ffc34ff8f0d9\",\r\n        \"academicDepartment\": \"68dd65b68781ea1c6e70f5f3\",\r\n        \"isActive\": true,\r\n        \"status\": \"in-progress\",\r\n        \"isDeleted\": false\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/undelete/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"undelete",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2025010002"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"auth\": {\r\n    \"id\": \"A2025010001\",\r\n    \"password\": \"123\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change-password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJBMjAyNTAxMDAwMSIsInVzZXJSb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjIwODQxNTAsImV4cCI6MTc5MzYyMDE1MH0.eUYdH5C2AYw1sf7neydIjHveN_aVq80kmafWOdauP4o",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"auth\": {\r\n        \"oldPassword\": \"1234567\",\r\n        \"newPassword\": \"123456\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/change-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forget-password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJBMjAyNTAxMDAwMSIsInVzZXJSb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjIwODQxNTAsImV4cCI6MTc5MzYyMDE1MH0.eUYdH5C2AYw1sf7neydIjHveN_aVq80kmafWOdauP4o",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"auth\": {\r\n        \"userId\": \"A2025010001\",\r\n        \"email\": \"nfridoy@gmail.com\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/forget-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"forget-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset-password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJBMjAyNTAxMDAwMSIsInVzZXJSb2xlIjoiYWRtaW4iLCJyZXNldF9wYXNzd29yZF91cmwiOiJkaGFrYWFwcHMuZGFsQGdtYWlsLmNvbSIsImlhdCI6MTc2MjE4MTU3NiwiZXhwIjoxNzYyMTg1MTc2fQ.hyrXNw-Ak8y3A0b351lR9A8wFaRCKvLxVyj4XitL9kk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"auth\": {\r\n        \"newPassword\": \"1234567\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/reset-password?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJBMjAyNTAxMDAwMSIsInVzZXJSb2xlIjoiYWRtaW4iLCJlbWFpbCI6Im5mcmlkb3lAZ21haWwuY29tIiwid2Vic2l0ZSI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTE3My8iLCJiYWNrZW5kIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwL2F1dGgvcmVzZXQtcGFzc3dvcmQiLCJpYXQiOjE3NjIxOTU1NjIsImV4cCI6MTc2MjE5OTE2Mn0.WubDMZNQEqo1_tEovKpi_bdcc32yIdmV6w8xyKMjPVc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"reset-password"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJBMjAyNTAxMDAwMSIsInVzZXJSb2xlIjoiYWRtaW4iLCJlbWFpbCI6Im5mcmlkb3lAZ21haWwuY29tIiwid2Vic2l0ZSI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTE3My8iLCJiYWNrZW5kIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwL2F1dGgvcmVzZXQtcGFzc3dvcmQiLCJpYXQiOjE3NjIxOTU1NjIsImV4cCI6MTc2MjE5OTE2Mn0.WubDMZNQEqo1_tEovKpi_bdcc32yIdmV6w8xyKMjPVc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset-password Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJBMjAyNTAxMDAwMSIsInVzZXJSb2xlIjoiYWRtaW4iLCJyZXNldF9wYXNzd29yZF91cmwiOiJkaGFrYWFwcHMuZGFsQGdtYWlsLmNvbSIsImlhdCI6MTc2MjE4MTU3NiwiZXhwIjoxNzYyMTg1MTc2fQ.hyrXNw-Ak8y3A0b351lR9A8wFaRCKvLxVyj4XitL9kk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"auth\": {\r\n        \"newPassword\": \"1234567\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/reset-password?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJBMjAyNTAxMDAwMSIsInVzZXJSb2xlIjoiYWRtaW4iLCJlbWFpbCI6Im5mcmlkb3lAZ21haWwuY29tIiwid2Vic2l0ZSI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTE3My8iLCJiYWNrZW5kIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwL2F1dGgvcmVzZXQtcGFzc3dvcmQiLCJpYXQiOjE3NjIxOTU1NjIsImV4cCI6MTc2MjE5OTE2Mn0.WubDMZNQEqo1_tEovKpi_bdcc32yIdmV6w8xyKMjPVc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"reset-password"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJBMjAyNTAxMDAwMSIsInVzZXJSb2xlIjoiYWRtaW4iLCJlbWFpbCI6Im5mcmlkb3lAZ21haWwuY29tIiwid2Vic2l0ZSI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTE3My8iLCJiYWNrZW5kIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwL2F1dGgvcmVzZXQtcGFzc3dvcmQiLCJpYXQiOjE3NjIxOTU1NjIsImV4cCI6MTc2MjE5OTE2Mn0.WubDMZNQEqo1_tEovKpi_bdcc32yIdmV6w8xyKMjPVc"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "course",
+			"item": [
+				{
+					"name": "Assign Faculty for Course",
+					"item": [
+						{
+							"name": "Add Faculty for Course",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"faculties\": [\"68eb86f3e614f5c7beea1cc7\", \"68ede74596dbb65dbf897b6b\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/course/:id/assign-faculties",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"course",
+										":id",
+										"assign-faculties"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "68eded8d74bb551e6b0ee790"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove Faculty from Course",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"faculties\": [\"68eb86f3e614f5c7beea1cc7\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/course/:id/remove-faculties",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"course",
+										":id",
+										"remove-faculties"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "68eded8d74bb551e6b0ee790"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create Course",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"course\": {\r\n        \"title\": \"Computer Architecture\",\r\n        \"prifix\": \"CSE\",\r\n        \"courseCode\": \"204\",\r\n        \"credit\": 3,\r\n        \"preRequisiteCourses\": [\r\n            {\r\n                \"course\": \"68edebf374bb551e6b0ee775\"\r\n            },\r\n            {\r\n                \"course\": \"68edec7074bb551e6b0ee77b\"\r\n            }\r\n        ],\r\n        \"isActive\": true,\r\n        \"status\": \"active\",\r\n        \"isDeleted\": false\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/course",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"course"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Courses",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"course\": {\r\n        \"title\": \"Computer Architectureee\",\r\n        \"prifix\": \"EEE\",\r\n        \"courseCode\": \"204\",\r\n        \"credit\": 3,\r\n        \"preRequisiteCourses\": [\r\n            {\r\n                \"course\": \"68edebf374bb551e6b0ee775\"\r\n            },\r\n            {\r\n                \"course\": \"68edec7074bb551e6b0ee77b\"\r\n            }\r\n        ],\r\n        \"isActive\": true,\r\n        \"status\": \"active\",\r\n        \"isDeleted\": false\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/course",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"course"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signle Course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/course/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"course",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "68eded8d74bb551e6b0ee790"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Course",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"course\": {\r\n        \"title\": \"Computer Architectureee\",\r\n        \"prifix\": \"EEE\",\r\n        \"courseCode\": \"204\",\r\n        \"credit\": 2\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/course/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"course",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "68eded8d74bb551e6b0ee790"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[delete]/create-student",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"654321\",\r\n    \"student\": {\r\n        \"name\": {\r\n            \"firstName\": \"Ayesha\",\r\n            \"middleName\": \"Fatima\",\r\n            \"lastName\": \"Rahman\"\r\n        },\r\n        \"email\": \"ayesha.rahman@example.com\",\r\n        \"phone\": \"+8801712345678\",\r\n        \r\n        \"address\": \"123 Green Road, Dhaka\",\r\n        \"gender\": \"female\",\r\n        \"profileImage\": \"https://example.com/images/ayesha.jpg\",\r\n        \"guardian\": {\r\n            \"name\": {\r\n                \"firstName\": \"Mohammad\",\r\n                \"middleName\": \"\",\r\n                \"lastName\": \"Rahman\"\r\n            },\r\n            \"email\": \"guardian.rahman@example.com\",\r\n            \"phone\": \"+8801612345678\",\r\n            \"address\": \"123 Green Road, Dhaka\"\r\n        },\r\n        \"localGuardian\": {\r\n            \"name\": {\r\n                \"firstName\": \"Shirin\",\r\n                \"middleName\": \"\",\r\n                \"lastName\": \"Akter\"\r\n            },\r\n            \"email\": \"shirin.akter@example.com\",\r\n            \"phone\": \"+8801912345678\",\r\n            \"address\": \"456 Lake View, Dhaka\",\r\n            \"occupation\": \"Lecturer\"\r\n        },\r\n        \"bloodGroup\": \"A+\",\r\n        \"presentAddress\": \"123 Green Road, Dhaka\",\r\n        \"permanentAddress\": \"456 Lake View, Dhaka\",\r\n        \"admissionSemester\": \"68db5ec01831ffc34ff8f0d9\",\r\n        \"academicDepartment\": \"68dd65b68781ea1c6e70f5f3\",\r\n        \"isActive\": true,\r\n        \"status\": \"in-progress\",\r\n        \"isDeleted\": false\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2025010001"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[undelete]/undelete/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"654321\",\r\n    \"student\": {\r\n        \"name\": {\r\n            \"firstName\": \"Ayesha\",\r\n            \"middleName\": \"Fatima\",\r\n            \"lastName\": \"Rahman\"\r\n        },\r\n        \"email\": \"ayesha.rahman@example.com\",\r\n        \"phone\": \"+8801712345678\",\r\n        \r\n        \"address\": \"123 Green Road, Dhaka\",\r\n        \"gender\": \"female\",\r\n        \"profileImage\": \"https://example.com/images/ayesha.jpg\",\r\n        \"guardian\": {\r\n            \"name\": {\r\n                \"firstName\": \"Mohammad\",\r\n                \"middleName\": \"\",\r\n                \"lastName\": \"Rahman\"\r\n            },\r\n            \"email\": \"guardian.rahman@example.com\",\r\n            \"phone\": \"+8801612345678\",\r\n            \"address\": \"123 Green Road, Dhaka\"\r\n        },\r\n        \"localGuardian\": {\r\n            \"name\": {\r\n                \"firstName\": \"Shirin\",\r\n                \"middleName\": \"\",\r\n                \"lastName\": \"Akter\"\r\n            },\r\n            \"email\": \"shirin.akter@example.com\",\r\n            \"phone\": \"+8801912345678\",\r\n            \"address\": \"456 Lake View, Dhaka\",\r\n            \"occupation\": \"Lecturer\"\r\n        },\r\n        \"bloodGroup\": \"A+\",\r\n        \"presentAddress\": \"123 Green Road, Dhaka\",\r\n        \"permanentAddress\": \"456 Lake View, Dhaka\",\r\n        \"admissionSemester\": \"68db5ec01831ffc34ff8f0d9\",\r\n        \"academicDepartment\": \"68dd65b68781ea1c6e70f5f3\",\r\n        \"isActive\": true,\r\n        \"status\": \"in-progress\",\r\n        \"isDeleted\": false\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/undelete/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"undelete",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2025010002"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Student",
+			"item": [
+				{
+					"name": "/create-student",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"password\": \"123456\",\r\n  \"student\": {\r\n    \"name\": {\r\n      \"firstName\": \"Muhammad\",\r\n      \"middleName\": \"Salahuddin\",\r\n      \"lastName\": \"Ali\"\r\n    },\r\n    \"email\": \"muhammad.ali@student.edu.bd\",\r\n    \"phone\": \"01711223344\",\r\n    \"emergencyPhone\": \"01899887766\",\r\n    \"dateOfBirth\": \"2006-03-21\",\r\n    \"gender\": \"male\",\r\n    \"profileImage\": \"https://example.com/images/muhammad-ali.jpg\",\r\n    \"guardian\": {\r\n      \"name\": {\r\n        \"firstName\": \"Abdul\",\r\n        \"middleName\": \"Karim\",\r\n        \"lastName\": \"Ali\"\r\n      },\r\n      \"email\": \"abdul.karim@example.com\",\r\n      \"phone\": \"01922334455\",\r\n      \"address\": \"House 45, Road 10, Uttara, Dhaka\"\r\n    },\r\n    \"parent\": [\r\n      {\r\n        \"id\": \"PARENT002\",\r\n        \"name\": {\r\n          \"firstName\": \"Abdul\",\r\n          \"middleName\": \"Karim\",\r\n          \"lastName\": \"Ali\"\r\n        },\r\n        \"email\": \"abdul.karim@example.com\",\r\n        \"phone\": \"01922334455\",\r\n        \"address\": \"House 45, Road 10, Uttara, Dhaka\"\r\n      }\r\n    ],\r\n    \"localGuardian\": {\r\n      \"name\": {\r\n        \"firstName\": \"Shamsul\",\r\n        \"middleName\": \"Haque\",\r\n        \"lastName\": \"Khan\"\r\n      },\r\n      \"email\": \"shamsul.khan@example.com\",\r\n      \"phone\": \"01633445566\",\r\n      \"address\": \"Flat 3A, Block D, Mirpur DOHS, Dhaka\",\r\n      \"occupation\": \"Engineer\"\r\n    },\r\n    \"bloodGroup\": \"B+\",\r\n    \"presentAddress\": \"Flat 3A, Block D, Mirpur DOHS, Dhaka\",\r\n    \"permanentAddress\": \"Village: Bhuapur, Upazila: Tangail Sadar, District: Tangail\",\r\n    \"admissionSemester\": \"68db5ec01831ffc34ff8f0d9\",\r\n    \"academicDepartment\": \"68dd65b68781ea1c6e70f5f3\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/create-student",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"create-student"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllStudents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/student?page=1&fields=name&limit=3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "fields",
+									"value": "name"
+								},
+								{
+									"key": "sort",
+									"value": "name",
+									"disabled": true
+								},
+								{
+									"key": "searchTerm",
+									"value": "ayesha",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSingleStudent By Student ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/student/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2025010002"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update student",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"student\": {\r\n        \"name\": {\r\n            \"lastName\": \"Ali123\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/student/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2025010002"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Faculty",
+			"item": [
+				{
+					"name": "/create-faculty",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"password\": \"123456\",\r\n  \"student\": {\r\n    \"name\": {\r\n      \"firstName\": \"Muhammad\",\r\n      \"middleName\": \"Salahuddin\",\r\n      \"lastName\": \"Ali\"\r\n    },\r\n    \"email\": \"muhammad.ali@student.edu.bd\",\r\n    \"phone\": \"01711223344\",\r\n    \"emergencyPhone\": \"01899887766\",\r\n    \"dateOfBirth\": \"2006-03-21\",\r\n    \"gender\": \"male\",\r\n    \"profileImage\": \"https://example.com/images/muhammad-ali.jpg\",\r\n    \"guardian\": {\r\n      \"name\": {\r\n        \"firstName\": \"Abdul\",\r\n        \"middleName\": \"Karim\",\r\n        \"lastName\": \"Ali\"\r\n      },\r\n      \"email\": \"abdul.karim@example.com\",\r\n      \"phone\": \"01922334455\",\r\n      \"address\": \"House 45, Road 10, Uttara, Dhaka\"\r\n    },\r\n    \"parent\": [\r\n      {\r\n        \"id\": \"PARENT002\",\r\n        \"name\": {\r\n          \"firstName\": \"Abdul\",\r\n          \"middleName\": \"Karim\",\r\n          \"lastName\": \"Ali\"\r\n        },\r\n        \"email\": \"abdul.karim@example.com\",\r\n        \"phone\": \"01922334455\",\r\n        \"address\": \"House 45, Road 10, Uttara, Dhaka\"\r\n      }\r\n    ],\r\n    \"localGuardian\": {\r\n      \"name\": {\r\n        \"firstName\": \"Shamsul\",\r\n        \"middleName\": \"Haque\",\r\n        \"lastName\": \"Khan\"\r\n      },\r\n      \"email\": \"shamsul.khan@example.com\",\r\n      \"phone\": \"01633445566\",\r\n      \"address\": \"Flat 3A, Block D, Mirpur DOHS, Dhaka\",\r\n      \"occupation\": \"Engineer\"\r\n    },\r\n    \"bloodGroup\": \"B+\",\r\n    \"presentAddress\": \"Flat 3A, Block D, Mirpur DOHS, Dhaka\",\r\n    \"permanentAddress\": \"Village: Bhuapur, Upazila: Tangail Sadar, District: Tangail\",\r\n    \"admissionSemester\": \"68db5ec01831ffc34ff8f0d9\",\r\n    \"academicDepartment\": \"Electrical and Electronic Engineering\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/create-faculty",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"create-faculty"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All faculty",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJBMjAyNTAxMDAwMSIsInVzZXJSb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjIwODEyMDksImV4cCI6MTc5MzYxNzIwOX0.afEPhixx9LMZF4UDunzZG7PnjXng6HGx_lRxriyKVNM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/faculty",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"faculty"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "fields",
+									"value": "name",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "name",
+									"disabled": true
+								},
+								{
+									"key": "searchTerm",
+									"value": "ayesha",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSingleStudent By Student ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/student/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2025010002"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update student",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"student\": {\r\n        \"name\": {\r\n            \"firstName\": \"Abdul\",\r\n            \"middleName\": \"Karim\",\r\n            \"lastName\": \"Ali\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/student/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2025010002"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Academic Semester",
+			"item": [
+				{
+					"name": "(Create)/academic-semester",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Fall\",\r\n  \"code\": \"03\",\r\n  \"year\": \"2020\",\r\n  \"startMonth\": \"September\",\r\n  \"endMonth\": \"December\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/academic-semester",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"academic-semester"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/academic-semester",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/academic-semester",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"academic-semester"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/academic-semester/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/academic-semester/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"academic-semester",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "68d7b8d2b9a4f8ed3906605f"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[patch]/academic-semester/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Fall\",\r\n  \"code\": \"03\",\r\n  \"year\": \"2027\",\r\n  \"startMonth\": \"September\",\r\n  \"endMonth\": \"December\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/academic-semester/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"academic-semester",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "68d7b8d2b9a4f8ed3906605f"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Academic Faculty",
+			"item": [
+				{
+					"name": "(Create)/academic-faculty",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Faculty of Arts\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/academic-faculty",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"academic-faculty"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/academic-faculty",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/academic-faculty",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"academic-faculty"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/academic-faculty/id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/academic-faculty/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"academic-faculty",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "68dbb6d249035e8f9e37e826"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[patch]/academic-semester/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Faculty of Science\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/academic-faculty/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"academic-faculty",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "68dbc40f508c16fb01571dde"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Academic Department",
+			"item": [
+				{
+					"name": "(Create)/Academic Department",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Sketh\",\r\n  \"code\": \"30\",\r\n  \"alfaCode\": \"SK\",\r\n  \"shortName\": \"SK\",\r\n  \"description\": \"sketh 101\",\r\n  \"initiatedYear\": \"2025\",\r\n  \"isActive\": true,\r\n  \"isDeleted\": false,\r\n  \"academicFaculty\": \"68dd4e3fa921fc0771561196\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/academic-department",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"academic-department"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/academic-department",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/academic-department",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"academic-department"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/academic-department/id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/academic-department/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"academic-department",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "68dd65b68781ea1c6e70f5f3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[patch]/academic-department/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Computer Science and Engineering\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/academic-department/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"academic-department",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "68dd65b68781ea1c6e70f5f3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Semester Registration",
+			"item": [
+				{
+					"name": "(Create)/Semester Registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"semesterRegistration\": {\r\n        \"academicSemester\": \"68db5ec01831ffc34ff8f0d9\",\r\n        \"status\": \"UPCOMING\",\r\n        \"startDate\": \"2025-10-01T00:00:00.000Z\",\r\n        \"endDate\": \"2026-01-15T00:00:00.000Z\",\r\n        \"minCredit\": 3,\r\n        \"maxCredit\": 12,\r\n        \"isDeleted\": false\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/semester-registration",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"semester-registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Semester Registration",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/semester-registration",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"semester-registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/academic-Reg/id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/semester-registration/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"semester-registration",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "68ef5b3357023b85f5d56d9d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[patch]/academic-department/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Computer Science and Engineering\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/academic-department/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"academic-department",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "68dd65b68781ea1c6e70f5f3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Offered Courses",
+			"item": [
+				{
+					"name": "(Create)/offered Course",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"offeredCourse\": {\r\n    \"semesterRegistration\": \"68ef5b3357023b85f5d56d9d\",\r\n    \"academicFaculty\": \"68dbb6d249035e8f9e37e826\",\r\n    \"academicDepartment\": \"68dd65b68781ea1c6e70f5f3\",\r\n    \"course\": \"68edeb6c74bb551e6b0ee770\",\r\n    \"faculty\": \"68ede74596dbb65dbf897b6b\",\r\n    \"maxCapacity\": 60,\r\n    \"section\": 1,\r\n    \"startTime\": \"09:00\",\r\n    \"endTime\": \"11:00\",\r\n    \"days\": [ \"Tue\", \"Fri\"],\r\n    \"status\": \"ACTIVE\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/offerd-courses",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"offerd-courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2 (Create)/offered Course Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"offeredCourse\": {\r\n    \"semesterRegistration\": \"68ef5b3357023b85f5d56d9d\",\r\n    \"academicFaculty\": \"68dd4e3fa921fc0771561196\",\r\n    \"academicDepartment\": \"68dd65b68781ea1c6e70f5f3\",\r\n    \"course\": \"68edeb6c74bb551e6b0ee770\",\r\n    \"faculty\": \"68ede74096dbb65dbf897b63\",\r\n    \"maxCapacity\": 60,\r\n    \"section\": 2,\r\n    \"startTime\": \"09:00\",\r\n    \"endTime\": \"11:00\",\r\n    \"days\": [ \"Tue\" ],\r\n    \"status\": \"ACTIVE\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/offerd-courses",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"offerd-courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All offerd-courses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/offerd-courses",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"offerd-courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All in-active offerd-courses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/offerd-courses/in-active",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"offerd-courses",
+								"in-active"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One Offerd-courses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/offerd-courses/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"offerd-courses",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[patch]/offerd-courses/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"offeredCourse\": {\r\n    \"maxCapacity\": 30,\r\n    \"section\": 1,\r\n    \"startTime\": \"09:00\",\r\n    \"endTime\": \"10:30\",\r\n    \"days\": [\"Sat\", \"Wed\", \"Fri\", \"Sun\"],\r\n    \"status\": \"ACTIVE\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/offerd-courses/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"offerd-courses",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "68f343d3e8c92080e41cb608"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Root",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}",
+					"host": [
+						"{{base_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Root Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/user",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Root Post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Name\" : \"Sam\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}",
+					"host": [
+						"{{base_url}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000",
+			"type": "string"
+		}
+	]
+}
