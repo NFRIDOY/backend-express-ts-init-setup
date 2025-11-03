@@ -17,7 +17,11 @@ router.post('/change-password',
 router.post('/forget-password',
     validateRequest(LoginUserValidation.forgetPasswordValidationSchema),
     loginUserController.forgetPassword);
-// router.post('/login-student', validateRequest(createStudentValidationSchema), loginUserController.createStudent);
+router.post('/reset-password',
+    validateRequest(LoginUserValidation.resetPasswordValidationSchema),
+    loginUserController.resetPassword);
+
+    // router.post('/login-student', validateRequest(createStudentValidationSchema), loginUserController.createStudent);
 // router.post('/login-faculty', validateRequest(FacultyValidationSchema.createFaculty), loginUserController.createFaculty);
 
 export const AuthRoute = router

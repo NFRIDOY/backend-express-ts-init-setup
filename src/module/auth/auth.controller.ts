@@ -57,14 +57,35 @@ const forgetPassword: RequestHandler = catchAsync(async (req, res, _next) => {
         return sendErrorResponse(res, {
             success: false,
             statusCode: 400,
-            message: "Forget Password Email Sending Failed",
+            message: "Forget Password Email Sending Failed.",
             data: null,
         })
     }
     return sendResponse(res, {
         statusCode: httpStutus.OK,
         success: true,
-        message: 'Forget Password Email Sent Successfully',
+        message: 'Reset Password Link Has Been Sent To Your Email. Please Check Your Email.',
+        data: result,
+    })
+})
+
+const resetPassword: RequestHandler = catchAsync(async (req, res, _next) => {
+    console.log("req")
+    const { auth } = req.body
+    const result = await loginUserService.resetPassword(req.query?.token as string, auth)
+    console.log("result:", result)
+    if (!result) {
+        return sendErrorResponse(res, {
+            success: false,
+            statusCode: 400,
+            message: "Reset Password Failed.",
+            data: null,
+        })
+    }
+    return sendResponse(res, {
+        statusCode: httpStutus.OK,
+        success: true,
+        message: 'Password Has Been Reset.',
         data: result,
     })
 })
@@ -73,4 +94,6 @@ export const loginUserController = {
     loginAdmin,
     changePassword,
     forgetPassword,
+    resetPassword,
+
 }

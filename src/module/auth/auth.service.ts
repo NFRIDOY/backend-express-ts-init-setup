@@ -6,7 +6,7 @@ import { IChanagePassword, ILoginUser } from "./auth.interface";
 import { Status } from '../common/user/user.constant';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../../config';
-import { validateUserExistence } from './auth.utils';
+import { validateUserExistence, verifyToken } from './auth.utils';
 import { emailSender, IEmail } from '../../utils/emailSender';
 
 
@@ -173,7 +173,9 @@ const forgetPassword = async (payload: { userId: string, email: string }) => {
         const jwtPayload: JwtPayload = {
             userId: user?.id as string,
             userRole: user?.role as string,
-            reset_password_url: config.reset_password_url,
+            email: user?.email as string,
+            website: config.genarel_reset_password_url, // password reset website link
+            backend: config.backend_url, // new password sending link
         }
         /**
          * TODO:
@@ -186,6 +188,7 @@ const forgetPassword = async (payload: { userId: string, email: string }) => {
             config.jwt_access_secret as string,
             { expiresIn: '1h' },
         );
+        const urlToken = `${config?.genarel_reset_password_url}?token=${resetToken}`;
 
         const emailSenderObj: IEmail = {
             from: config.email_user as string,
@@ -201,11 +204,11 @@ const forgetPassword = async (payload: { userId: string, email: string }) => {
                     <p>Hi ${user?.id || 'there'},</p>
                     <p>We received a request to reset your password. If you made this request, please click the button below to proceed:</p>
                     <div style="text-align: center; margin: 30px 0;">
-                      <a href="${config?.reset_password_url}" style="background-color: #007bff; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">Reset Password</a>
+                      <a href="${urlToken}" style="background-color: #007bff; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">Reset Password</a>
                     </div>
                     <p>If the button doesn't work, you can copy and paste the following token into the reset form:</p>
                     <div style="background-color: #f9f9f9; border: 1px dashed #ccc; padding: 15px; font-family: monospace; font-size: 14px; word-break: break-all; color: #333;">
-                      ${resetToken}
+                      Bearer ${resetToken}
                     </div>
                     <p>If you didn’t request a password reset, you can safely ignore this email.</p>
                     <p style="margin-top: 40px;">Thanks,<br>The ${config?.app_name || 'Support'} Team</p>
@@ -228,13 +231,29 @@ const forgetPassword = async (payload: { userId: string, email: string }) => {
         throw new AppError(500, "Internal Error. Forget Password Email Sending Failed", err);
     }
 }
-const resetPassword = async (payload: string) => {
+const resetPassword = async (token: string, payload: string) => {
+    console.log("token= ", token)
+    console.log("payload= ", payload)
     // TODO: accessToken verify ID and token update password on db
+    const decoded = await verifyToken(token)
+    console.log("decoded=", decoded)
+
+    if (!decoded) {
+        throw new AppError(401, "Invalid Token")
+    }
+
+    
+    // update password using token email
+    // const result = await UserModel.findOneAndUpdate({ email: decoded?.email, password: decoded?.password })
+
+    // console.log("result= ", result);
+    // return result;
+    return true;
 }
 
 export const loginUserService = {
     loginUser,
     changePassword,
     forgetPassword,
-    resetPassword
+    resetPassword,
 }

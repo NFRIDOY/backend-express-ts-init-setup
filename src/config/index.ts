@@ -29,8 +29,9 @@ export default {
     email_user: process.env.EMAIL_USER,
     email_app_password: process.env.EMAIL_APP_PASSWORD,
 
-    reset_password_url: process.env.EMAIL_USER,
+    genarel_reset_password_url: process.env.GENAREL_RESET_PASSWORD_URL,
     app_name: process.env.EMAIL_USER,
     support_email: process.env.EMAIL_USER,
+    backend_url: process.env.BACKEND_URL,
 }
 
