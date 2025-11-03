@@ -1,3 +1,29 @@
+# API Formate
+## [POST]
+```json
+{
+    "TYPE": {
+        "name": "value"
+        }
+}
+```
+## Example
+```json
+{
+    "auth": {
+        "newPassword": "123"
+        }
+}
+```
+OR
+```json
+{
+    "student": {
+        "name": "Saladin"
+        }
+}
+```
+
 # Installing
 
 ```bash 
