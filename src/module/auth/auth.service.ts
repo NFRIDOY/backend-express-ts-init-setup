@@ -186,7 +186,7 @@ const forgetPassword = async (payload: { userId: string, email: string }) => {
         const resetToken = jwt.sign(
             jwtPayload,
             config.jwt_access_secret as string,
-            { expiresIn: '1h' },
+            { expiresIn: '5m' },
         );
         const urlToken = `${config?.genarel_reset_password_url}?token=${resetToken}`;
 
