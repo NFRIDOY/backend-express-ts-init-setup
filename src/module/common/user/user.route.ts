@@ -9,9 +9,13 @@ import { AdminValidationSchema } from '../../admin/admin.validation';
 import { auth } from '../../../middleware/auth';
 import { UserRole } from './user.constant';
 import { UserValidation } from './user.validation';
+import { upload } from '../../../utils/uploadImage';
 
 // router.get('/', userController.allUsers) 
-router.post('/create-student', validateRequest(createStudentValidationSchema), userController.createStudent);
+router.post('/create-student',
+    upload.single('file'),
+    // validateRequest(createStudentValidationSchema),
+    userController.createStudent);
 router.post('/create-faculty', validateRequest(FacultyValidationSchema.createFaculty), userController.createFaculty);
 router.post('/create-admin', validateRequest(AdminValidationSchema.createAdmin), userController.createAdmin);
 router.delete('/delete-student/:id', userController.deleteStudent);

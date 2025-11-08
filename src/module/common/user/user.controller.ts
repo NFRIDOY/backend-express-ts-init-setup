@@ -3,13 +3,15 @@ import { sendErrorResponse, sendResponse } from './../../../utils/response/sendR
 import { RequestHandler } from "express";
 import { userService } from "./user.service";
 import { catchAsync } from '../../../utils/catchAsync';
+import AppError from '../../../errors/AppError';
 
 
 
 const createStudent: RequestHandler = catchAsync(async (req, res, _next) => {
-    // console.log("req", req.body)
+    console.log("req files", req.files)
     const { password, student: studentData } = req.body;
 
+    throw new AppError(500, "Stop");
     const result = await userService.createStudentIntoDB(password, studentData);
 
     // console.log("data", result);
