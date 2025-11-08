@@ -104,8 +104,10 @@ const allUsers: RequestHandler = catchAsync(async (req, res, next) => {
 
 const getMeController: RequestHandler = catchAsync(async (req, res, next) => {
     // console.log("request meController: ", req);
+    // const token = req?.headers?.authorization?.split(' ')[1];
+    
 
-    const data = await userService.getMeByTokenFromDB(req)
+    const data = await userService.getMeByTokenFromDB(req?.user)
 
     // console.log(data)
 
@@ -113,14 +115,14 @@ const getMeController: RequestHandler = catchAsync(async (req, res, next) => {
         return sendResponse(res, {
             success: false,
             statusCode: 400,
-            message: "Failed to retrieve all users",
+            message: "Failed to retrieve Your Data",
             data: null,
         })
     }
     return sendResponse(res, {
         statusCode: 200,
         success: true,
-        message: "All Users retrieved successfully",
+        message: "Your Info Has Retrieved Successfully",
         data: data,
     })
 
