@@ -82,7 +82,7 @@ const loginUser = async (loginUser: ILoginUser) => {
         // send jwt
         if (match) {
             //login
-            console.log("matched")
+            // console.log("matched")
             return {
                 accessToken: `Bearer ${accessToken}`,
                 needsPasswordChange: user?.needsPasswordChange,

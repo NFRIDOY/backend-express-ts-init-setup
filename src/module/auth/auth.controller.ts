@@ -8,7 +8,7 @@ import { loginUserService } from './auth.service';
 
 
 const loginAdmin: RequestHandler = catchAsync(async (req, res, _next) => {
-    console.log("req", req.body)
+
     const { auth: loginData } = req.body;
 
     const result = await loginUserService.loginUser(loginData);
@@ -19,10 +19,18 @@ const loginAdmin: RequestHandler = catchAsync(async (req, res, _next) => {
         return sendErrorResponse(res, {
             success: false,
             statusCode: 400,
-            message: "Failed to login",
+            message: "User Credential Dosen't Match. Failed to login",
             data: null,
         })
     }
+
+    res.cookie('token', result?.accessToken?.split(' ')[1], {
+        httpOnly: true,       // prevents client-side JS access
+        secure: true,         // ensures cookie is sent over HTTPS
+        sameSite: 'strict',   // CSRF protection
+        maxAge: 24 * 60 * 60 * 1000 // 1 day in milliseconds
+    });
+
     return sendResponse(res, {
         statusCode: httpStutus.OK,
         success: true,
@@ -70,7 +78,7 @@ const forgetPassword: RequestHandler = catchAsync(async (req, res, _next) => {
 })
 
 const resetPassword: RequestHandler = catchAsync(async (req, res, _next) => {
-    
+
     const { auth } = req.body
     const result = await loginUserService.resetPassword(req.query?.token as string, auth)
 

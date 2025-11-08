@@ -10,12 +10,22 @@ import { Status, UserRole } from '../module/common/user/user.constant';
 import { catchAsync } from '../utils/catchAsync';
 import { verifyToken } from '../module/auth/auth.utils';
 import { isJWTIssuedBeforePasswordChanged } from '../utils/auth.util';
+import cookie from 'cookie';
 
 export const auth = (...role: IRole[]): RequestHandler => {
     return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+        // console.log("req.headers: ", req?.headers);
+        
         const authHeader = req.headers.authorization;
+        
+        // TODO: get Token from cookie
+        // console.log("req.headers.cookie: ", req?.headers?.cookie);
+        // const headercookies = req?.headers?.cookie;
+        // const cookies = cookie.parse(headercookies as string);
+        // console.log("cookiessssssssssssssssss", cookies)
+
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            throw new AppError(httpStatus.BAD_REQUEST, 'Invalid or missing authorization header!');
+            throw new AppError(httpStatus.BAD_REQUEST, 'Invalid or missing authorization header or Token!');
         }
         const token = authHeader.split(' ')[1];
         // console.log("authHeader", token)
@@ -56,7 +66,7 @@ export const auth = (...role: IRole[]): RequestHandler => {
         req.user = decoded as JwtPayload;
 
         config.NODE_ENV_DEV && console.log("Welcome ", decoded?.userRole)
-        
+
         // if  create jwt before change password af then give access. [change password > create jwt] else don't.
         const isJwtIssuedBeforPasswordChanged = await isJWTIssuedBeforePasswordChanged(user?.passwordChangedAt as Date, decoded?.iat as number);
         if (user?.passwordChangedAt && isJwtIssuedBeforPasswordChanged) {

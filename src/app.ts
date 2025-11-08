@@ -7,9 +7,12 @@ import path from 'path';
 import globalErrorHandler from './middleware/globalErrorHandler';
 import notFound from './middleware/notFound';
 import router from './routes';
+import cookieParser from 'cookie-parser';
 
 // Persers
 app.use(express.json()); // to recive json object
+app.use(cookieParser());
+
 // app.use(cors())
 app.use(cors({
     origin: '*', // allows all origins
