@@ -86,6 +86,7 @@ const loginUser = async (loginUser: ILoginUser) => {
             return {
                 accessToken: `Bearer ${accessToken}`,
                 needsPasswordChange: user?.needsPasswordChange,
+                role: user?.role,
             };
         }
     } catch (error) {

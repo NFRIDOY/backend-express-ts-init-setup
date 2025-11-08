@@ -64,6 +64,7 @@ export const auth = (...role: IRole[]): RequestHandler => {
             );
         }
         req.user = decoded as JwtPayload;
+        // req.role = [...role] as IRole[];
 
         config.NODE_ENV_DEV && console.log("Welcome ", decoded?.userRole)
 
@@ -71,7 +72,7 @@ export const auth = (...role: IRole[]): RequestHandler => {
         const isJwtIssuedBeforPasswordChanged = await isJWTIssuedBeforePasswordChanged(user?.passwordChangedAt as Date, decoded?.iat as number);
         if (user?.passwordChangedAt && isJwtIssuedBeforPasswordChanged) {
             config.NODE_ENV_DEV && console.log("LOG: Password has been Changed. Please Login and Provide The New Token.")
-            throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized!');
+            throw new AppError(httpStatus.UNAUTHORIZED, 'You Are Not Authorized! Password has been Changed. Please Login.');
         }
         next()
     })
