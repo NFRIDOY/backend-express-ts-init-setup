@@ -22,7 +22,6 @@ export default {
     jwt_access_expires_in: process.env.JWT_ACCESS_EXPIRES_IN,
     jwt_refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN,
 
-    
     email_host: process.env.EMAIL_HOST,
     email_port: process.env.EMAIL_PORT,
     email_secure: process.env.EMAIL_SECURE,
@@ -33,5 +32,7 @@ export default {
     app_name: process.env.EMAIL_USER,
     support_email: process.env.EMAIL_USER,
     backend_url: process.env.BACKEND_URL,
+    
+    image_api_key: process.env.CLOUDINARY_API_KEY,
 }
 
