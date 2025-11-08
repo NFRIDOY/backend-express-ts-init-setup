@@ -2,6 +2,7 @@ import mongoose, { Schema } from "mongoose";
 import { IName, IUser, statusList, IUserStatics, userRoles } from "./user.interface";
 import config from "../../../config";
 import bcrypt from "bcrypt";
+import { result } from "lodash";
 
 // Name Schema
 export const nameSchema = new Schema<IName>({
@@ -130,7 +131,11 @@ UserSchema.statics.isUserExistByCustomID = async function (id: string) {
 // static method: 
 UserSchema.statics.isJWTIssuedBeforePasswordChanged = async function (passwordChangedTimestamp: Date, jwtIssuedTimestamp: number) {
   const passwordChangedTime = await new Date(passwordChangedTimestamp).getTime() / 1000;
-    return passwordChangedTime > jwtIssuedTimestamp;
+  console.log("passwordChangedTime ", passwordChangedTime)
+  console.log("jwtIssuedTimestamp ", jwtIssuedTimestamp)
+  const result = passwordChangedTime > jwtIssuedTimestamp;
+  console.log("result", result)
+  return result;
 }
 
 // User Model

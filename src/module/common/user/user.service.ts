@@ -198,7 +198,7 @@ const getAllUserFromDB = async (): Promise<IUser[]> => {
 }
 
 const getMeByTokenFromDB = async (req: any) => {
-    console.log("req getMeByTokenFromDB: ", req);
+    // console.log("req getMeByTokenFromDB: ", req);
     const result = await UserModel.find();
     return result;
 }

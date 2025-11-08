@@ -103,7 +103,7 @@ const allUsers: RequestHandler = catchAsync(async (req, res, next) => {
 })
 
 const getMeController: RequestHandler = catchAsync(async (req, res, next) => {
-    console.log("request meController: ", req);
+    // console.log("request meController: ", req);
 
     const data = await userService.getMeByTokenFromDB(req)
 

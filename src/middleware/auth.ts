@@ -9,18 +9,23 @@ import { UserModel } from '../module/common/user/user.model';
 import { Status, UserRole } from '../module/common/user/user.constant';
 import { catchAsync } from '../utils/catchAsync';
 import { verifyToken } from '../module/auth/auth.utils';
+import { isJWTIssuedBeforePasswordChanged } from '../utils/auth.util';
 
 export const auth = (...role: IRole[]): RequestHandler => {
     return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-        const token = req.headers['authorization']?.split(' ')[1];
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            throw new AppError(httpStatus.BAD_REQUEST, 'Invalid or missing authorization header!');
+        }
+        const token = authHeader.split(' ')[1];
         // console.log("authHeader", token)
         if (!token) {
             throw new AppError(httpStatus.BAD_REQUEST, 'Token is not found!');
         }
         // verify a token symmetric - synchronous
         const decoded = await verifyToken(token as string);
-        // config?.NODE_ENV 
-        console.log(decoded)
+
+        config?.NODE_ENV_DEV && console.log(decoded)
         // const { role: userRole, userId, iat } = decoded;
 
         // checking if the user is exist
@@ -51,10 +56,11 @@ export const auth = (...role: IRole[]): RequestHandler => {
         req.user = decoded as JwtPayload;
 
         config.NODE_ENV_DEV && console.log("Welcome ", decoded?.userRole)
-
+        
         // if  create jwt before change password af then give access. [change password > create jwt] else don't.
-        if (user?.passwordChangedAt && UserModel.isJWTIssuedBeforePasswordChanged(user?.passwordChangedAt as Date,decoded?.iat as number)) {
-            console.log("True??")
+        const isJwtIssuedBeforPasswordChanged = await isJWTIssuedBeforePasswordChanged(user?.passwordChangedAt as Date, decoded?.iat as number);
+        if (user?.passwordChangedAt && isJwtIssuedBeforPasswordChanged) {
+            config.NODE_ENV_DEV && console.log("LOG: Password has been Changed. Please Login and Provide The New Token.")
             throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized!');
         }
         next()
