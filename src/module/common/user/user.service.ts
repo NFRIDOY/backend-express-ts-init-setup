@@ -437,6 +437,43 @@ const undeletedAdminByIdFromDB = async (id: string): Promise<IUser | null> => {
     }
 };
 
+const updateUserStatusOnDB = async (id: string, payload: { status: string }): Promise<IUser | null> => {
+    const session = await mongoose.startSession(); // Isolation
+    try {
+        session.startTransaction();
+
+        // const studentDeleted = await FacultyModel.findOneAndUpdate(
+        //     { _id: id },
+        //     { isDeleted: true },
+        //     { new: true, session } // Use `session` here // `new` is useing for returning the updated value
+        // );
+        // // console.log("studentDeleted", studentDeleted)
+        // if (!studentDeleted)
+        //     throw new AppError(400, 'Faculty Deleting Process Failed')
+        // TODO: updateUserStatusOnDB Controller
+        const userStatusUpdated = await UserModel.findOneAndUpdate(
+            { id: id },
+            { status: payload?.status },
+            { new: true, session } // Use `session` here // `new` is useing for returning the updated value
+        );
+
+        // console.log("userDeleted", userDeleted)
+        if (!userStatusUpdated)
+            throw new AppError(400, 'User Status Updating Process Failed')
+
+        // await session.abortTransaction(); // testing
+        await session.commitTransaction();
+
+        // const result = {...userDeleted};
+        return userStatusUpdated;
+    } catch (err) {
+        await session.abortTransaction();
+        throw new AppError(400, 'Faculty is not Deleted', (config.NODE_ENV === constants.development && err));
+    } finally {
+        session.endSession(); // Ensure session is always ended
+    }
+};
+
 export const userService = {
     createUserIntoDB,
     getAllUserFromDB,
@@ -453,5 +490,7 @@ export const userService = {
 
     createAdminIntoDB,
     deleteAdminByIdFromDB,
-    undeletedAdminByIdFromDB
+    undeletedAdminByIdFromDB,
+
+    updateUserStatusOnDB,
 }
