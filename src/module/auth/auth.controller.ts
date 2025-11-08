@@ -7,7 +7,7 @@ import { loginUserService } from './auth.service';
 
 
 
-const loginAdmin: RequestHandler = catchAsync(async (req, res, _next) => {
+const login: RequestHandler = catchAsync(async (req, res, _next) => {
 
     const { auth: loginData } = req.body;
 
@@ -99,7 +99,7 @@ const resetPassword: RequestHandler = catchAsync(async (req, res, _next) => {
 })
 
 export const loginUserController = {
-    loginAdmin,
+    login,
     changePassword,
     forgetPassword,
     resetPassword,
