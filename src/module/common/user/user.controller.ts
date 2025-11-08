@@ -251,7 +251,7 @@ const updateUserStatus: RequestHandler = catchAsync(async (req, res) => {
     if (!result) {
         return sendErrorResponse(res, {
             statusCode: 404,
-            message: "Student Not Found",
+            message: "Student Status Updated Failed",
             data: {},
         });
     }
@@ -259,8 +259,9 @@ const updateUserStatus: RequestHandler = catchAsync(async (req, res) => {
     return sendResponse(res, {
         statusCode: 200,
         success: true,
-        message: "Students is Deleted Successfully",
-        data: result,
+        message: "Student Status Updated Successfully",
+        data: {},
+        // data: result,
     })
 })
 

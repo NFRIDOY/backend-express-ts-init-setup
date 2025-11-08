@@ -438,6 +438,15 @@ const undeletedAdminByIdFromDB = async (id: string): Promise<IUser | null> => {
 };
 
 const updateUserStatusOnDB = async (id: string, payload: { status: string }): Promise<IUser | null> => {
+    
+    // const isAdmin = await AdminModel?.findOne({
+    //     id
+    // })
+
+    // if(isAdmin) {
+    //     throw new AppError(403, "You Can Not Update Status Of An Admin")
+    // }
+
     const session = await mongoose.startSession(); // Isolation
     try {
         session.startTransaction();
@@ -455,7 +464,7 @@ const updateUserStatusOnDB = async (id: string, payload: { status: string }): Pr
             { id: id },
             { status: payload?.status },
             { new: true, session } // Use `session` here // `new` is useing for returning the updated value
-        );
+        ).select("-password");
 
         // console.log("userDeleted", userDeleted)
         if (!userStatusUpdated)
