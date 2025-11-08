@@ -196,6 +196,12 @@ const getAllUserFromDB = async (): Promise<IUser[]> => {
     const result = await UserModel.find();
     return result;
 }
+
+const getMeByTokenFromDB = async (req: any) => {
+    console.log("req getMeByTokenFromDB: ", req);
+    const result = await UserModel.find();
+    return result;
+}
 const getSingleUserByUserIdFromDB = async (id: string): Promise<IUser | null> => {
     const result = await UserModel.findOne({ _id: id });
     return result;
@@ -419,7 +425,8 @@ export const userService = {
     createUserIntoDB,
     getAllUserFromDB,
     getSingleUserByUserIdFromDB,
-    
+    getMeByTokenFromDB,
+
     createStudentIntoDB,
     deleteStudentByIdFromDB,
     undeletedStudentByIdFromDB,

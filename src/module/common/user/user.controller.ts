@@ -102,6 +102,30 @@ const allUsers: RequestHandler = catchAsync(async (req, res, next) => {
 
 })
 
+const getMeController: RequestHandler = catchAsync(async (req, res, next) => {
+    console.log("request meController: ", req);
+
+    const data = await userService.getMeByTokenFromDB(req)
+
+    // console.log(data)
+
+    if (!data) {
+        return sendResponse(res, {
+            success: false,
+            statusCode: 400,
+            message: "Failed to retrieve all users",
+            data: null,
+        })
+    }
+    return sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "All Users retrieved successfully",
+        data: data,
+    })
+
+})
+
 const deleteStudent: RequestHandler = catchAsync(async (req, res) => {
     const result = await userService.deleteStudentByIdFromDB(req.params?.id);
 
@@ -221,6 +245,7 @@ const undeleteAdmin: RequestHandler = catchAsync(async (req, res) => {
 export const userController = {
     createStudent,
     allUsers,
+    getMeController,
 
     deleteStudent,
     undeleteStudent,

@@ -6,6 +6,8 @@ import { createStudentValidationSchema } from '../../student/student.validation'
 import { validateRequest } from '../../../middleware/validateRequest';
 import { FacultyValidationSchema } from '../../faculty/faculty.validation';
 import { AdminValidationSchema } from '../../admin/admin.validation';
+import { auth } from '../../../middleware/auth';
+import { UserRole } from './user.constant';
 
 // router.get('/', userController.allUsers) 
 router.post('/create-student', validateRequest(createStudentValidationSchema), userController.createStudent);
@@ -16,5 +18,9 @@ router.delete('/delete-faculty/:id', userController.deleteFaculty);
 router.delete('/delete-admin/:id', userController.deleteAdmin); 
 
 router.delete('/undelete/:id', userController.undeleteStudent);
+
+router.get('/me', 
+    auth(UserRole.ADMIN, UserRole.FACULTY, UserRole.STUDENT),
+    userController.getMeController); 
 
 export const userRoute = router
