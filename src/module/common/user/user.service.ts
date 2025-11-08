@@ -13,6 +13,7 @@ import { FacultyModel } from "../../faculty/faculty.model";
 import generateCode from "../../faculty/faculty.generateCode";
 import { AdminModel } from "../../admin/admin.model";
 import { Status, UserRole } from "./user.constant";
+import { sendImageToCloudinary } from "../../../utils/sendImageToCloudinary";
 
 
 const createUserIntoDB = async (user: IUser): Promise<IUser> => {
@@ -64,6 +65,9 @@ const createStudentIntoDB = async (password: string, payload: IStudent) => {
             // set id as student id, _id as user
             payload.id = newUser[0].id;
             payload.user = newUser[0]._id; //reference _id
+
+            // send Image To Cloudinary // TODO: SEND PROFILE IMAGE
+            await sendImageToCloudinary()
 
             const newStudent = await StudentModel.create([payload], { session }); // add on the session
 
