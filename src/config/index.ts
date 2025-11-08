@@ -33,6 +33,8 @@ export default {
     support_email: process.env.EMAIL_USER,
     backend_url: process.env.BACKEND_URL,
     
-    image_api_key: process.env.CLOUDINARY_API_KEY,
+    cloudinaray_cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    cloudinaray_api_key: process.env.CLOUDINARY_API_KEY,
+    cloudinaray_api_secret: process.env.CLOUDINARY_API_SECRET,
 }
 
