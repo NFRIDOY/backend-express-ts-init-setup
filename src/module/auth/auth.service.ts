@@ -6,7 +6,7 @@ import { IChanagePassword, ILoginUser } from "./auth.interface";
 import { Status } from '../common/user/user.constant';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../../config';
-import { validateUserExist, verifyToken } from './auth.utils';
+import { userValidation, verifyToken } from './auth.utils';
 import { emailSender, IEmail } from '../../utils/emailSender';
 
 
@@ -18,31 +18,34 @@ const loginUser = async (loginUser: ILoginUser) => {
         // const user = await UserModel.findOne({ id: id })
 
         // mongoose statics method
-        const user = await UserModel.isUserExistByCustomID(id)
+        const user = await UserModel.isUserExistByCustomID(id);
 
-        if (!user) {
-            throw new AppError(404, "User Dosen't Exists") // User or Password doesn't match
+        // if (!user) {
+        //     throw new AppError(404, "User Dosen't Exists") // User or Password doesn't match
+        // }
+
+        // // checking if the user is already deleted
+        // const isDeleted = user?.isDeleted;
+
+        // if (isDeleted) {
+        //     throw new AppError(httpStatus.FORBIDDEN, 'This user is deleted!');
+        // }
+        // // checking if the user is blocked
+
+        // const userStatus = user?.status;
+
+        // if (userStatus === Status.BLOCKED) {
+        //     throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked!');
+        // }
+
+        userValidation(user);
+        if (!user?.password) {
+            throw new AppError(httpStatus.UNAUTHORIZED, "Login Failed"); // User or Password doesn't match
         }
-
-        // checking if the user is already deleted
-
-        const isDeleted = user?.isDeleted;
-
-        if (isDeleted) {
-            throw new AppError(httpStatus.FORBIDDEN, 'This user is deleted!');
-        }
-        // checking if the user is blocked
-
-        const userStatus = user?.status;
-
-        if (userStatus === Status.BLOCKED) {
-            throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked!');
-        }
-
         const match = await bcrypt.compare(password, user.password);
 
         if (!match) {
-            throw new AppError(httpStatus.UNAUTHORIZED, "Login Failed") // User or Password doesn't match
+            throw new AppError(httpStatus.UNAUTHORIZED, "Login Failed"); // User or Password doesn't match
         }
 
 
@@ -97,7 +100,7 @@ const changePassword = async (user: JwtPayload, payload: IChanagePassword) => {
         // console.log({ payload })
         const isUserExist = await UserModel.findOne({ id: user?.userId })
 
-        validateUserExist(isUserExist)
+        userValidation(isUserExist)
         // if (!isUserExist) {
         //     throw new AppError(404, "User Dosn't Exist");
         // }
@@ -168,7 +171,7 @@ const forgetPassword = async (payload: { userId: string, email: string }) => {
     // TODO: gives accessToken via nodeMailer email
     try {
         const user = await UserModel.findOne({ email: payload.email, id: payload.userId })
-        validateUserExist(user)
+        userValidation(user)
 
         const jwtPayload: JwtPayload = {
             userId: user?.id as string,
@@ -241,7 +244,7 @@ const resetPassword = async (token: string, payload: { newPassword: string }) =>
 
     const user = await UserModel.findOne({ email: decoded?.email })
 
-    await validateUserExist(user)
+    await userValidation(user)
 
     const hashedPassword = await bcrypt.hash(payload?.newPassword as string, Number(config.bcrypt_salt));
 
