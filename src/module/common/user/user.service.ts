@@ -197,9 +197,25 @@ const getAllUserFromDB = async (): Promise<IUser[]> => {
     return result;
 }
 
-const getMeByTokenFromDB = async (req: any) => {
-    // console.log("req getMeByTokenFromDB: ", req);
-    const result = await UserModel.find();
+const getMeByTokenFromDB = async (user: any) => {
+    let result;
+    const role = user?.userRole;
+    if (role == UserRole.ADMIN) {
+        result = await AdminModel.findOne({
+            id: user?.userId,
+        }).populate('user').select('-password');
+    }
+    if (role == UserRole.FACULTY) {
+        result = await FacultyModel.findOne({
+            id: user?.userId,
+        }).populate('user').select('-password');
+    }
+    if (role == UserRole.STUDENT) {
+        result = await StudentModel.findOne({
+            id: user?.userId,
+        }).populate('user').select('-password');
+    }
+
     return result;
 }
 const getSingleUserByUserIdFromDB = async (id: string): Promise<IUser | null> => {
