@@ -244,6 +244,26 @@ const undeleteAdmin: RequestHandler = catchAsync(async (req, res) => {
         data: result,
     })
 })
+
+const updateUserStatus: RequestHandler = catchAsync(async (req, res) => {
+    const result = await userService.updateUserStatusOnDB(req.params?.id, req?.body);
+
+    if (!result) {
+        return sendErrorResponse(res, {
+            statusCode: 404,
+            message: "Student Not Found",
+            data: {},
+        });
+    }
+
+    return sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Students is Deleted Successfully",
+        data: result,
+    })
+})
+
 export const userController = {
     createStudent,
     allUsers,
@@ -259,4 +279,6 @@ export const userController = {
     createAdmin,
     deleteAdmin,
     undeleteAdmin,
+
+    updateUserStatus,
 }
