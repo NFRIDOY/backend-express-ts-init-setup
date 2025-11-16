@@ -40,5 +40,7 @@ export const sendImageToCloudinary = (path: string, imageName: string) => {
         });
 
         console.log(autoCropUrl);
+
+        return uploadResult;
     })()
 }

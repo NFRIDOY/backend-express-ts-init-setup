@@ -12,8 +12,8 @@ const createStudent: RequestHandler = catchAsync(async (req, res, _next) => {
     const { password, student: studentData } = req.body;
 
     console.log("studentData", studentData) 
-    throw new AppError(500, "Stop");
-    const result = await userService.createStudentIntoDB(password, studentData);
+    // throw new AppError(500, "Stop");
+    const result = await userService.createStudentIntoDB(password, studentData, req?.image_path, req?.image_name);
 
     // console.log("data", result);
 

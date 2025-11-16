@@ -7,6 +7,8 @@ declare global {
       user: JwtPayload;
       role: IRole[];
       data: any;
+      image_path: string;
+      image_name: string;
     }
   }
 }

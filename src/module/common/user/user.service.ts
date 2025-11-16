@@ -20,7 +20,7 @@ const createUserIntoDB = async (user: IUser): Promise<IUser> => {
     const result = await UserModel.create(user)
     return result;
 }
-const createStudentIntoDB = async (password: string, payload: IStudent) => {
+const createStudentIntoDB = async (password: string, payload: IStudent, image_path: string, image_name: string) => {
     const session = await mongoose.startSession(); // Isolation
     try {
         session.startTransaction(); // Start the Transaction
@@ -67,7 +67,8 @@ const createStudentIntoDB = async (password: string, payload: IStudent) => {
             payload.user = newUser[0]._id; //reference _id
 
             // send Image To Cloudinary // TODO: SEND PROFILE IMAGE
-            await sendImageToCloudinary()
+            const uploadResult = await sendImageToCloudinary(image_path, image_name)
+            console.log("uploadResult", uploadResult)
 
             const newStudent = await StudentModel.create([payload], { session }); // add on the session
 
@@ -442,7 +443,7 @@ const undeletedAdminByIdFromDB = async (id: string): Promise<IUser | null> => {
 };
 
 const updateUserStatusOnDB = async (id: string, payload: { status: string }): Promise<IUser | null> => {
-    
+
     // const isAdmin = await AdminModel?.findOne({
     //     id
     // })
