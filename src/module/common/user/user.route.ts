@@ -10,11 +10,13 @@ import { auth } from '../../../middleware/auth';
 import { UserRole } from './user.constant';
 import { UserValidation } from './user.validation';
 import { upload } from '../../../utils/uploadImage';
+import { reqBodyDataParser } from '../../../middleware/reqBodyDataParser';
 
 // router.get('/', userController.allUsers) 
 router.post('/create-student',
     upload.single('file'),
-    // validateRequest(createStudentValidationSchema),
+    reqBodyDataParser,
+    validateRequest(createStudentValidationSchema),
     userController.createStudent);
 router.post('/create-faculty', validateRequest(FacultyValidationSchema.createFaculty), userController.createFaculty);
 router.post('/create-admin', validateRequest(AdminValidationSchema.createAdmin), userController.createAdmin);

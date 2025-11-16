@@ -8,9 +8,10 @@ import AppError from '../../../errors/AppError';
 
 
 const createStudent: RequestHandler = catchAsync(async (req, res, _next) => {
-    console.log("req files", req.files)
+    console.log("req file   ", req.file)
     const { password, student: studentData } = req.body;
 
+    console.log("studentData", studentData) 
     throw new AppError(500, "Stop");
     const result = await userService.createStudentIntoDB(password, studentData);
 

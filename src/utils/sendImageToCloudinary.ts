@@ -1,21 +1,20 @@
 import { v2 as cloudinary } from 'cloudinary';
 import config from '../config';
 
-export const sendImageToCloudinary = () => {
+// Configuration
+cloudinary.config({
+    cloud_name: config?.cloudinaray_cloud_name,
+    api_key: config?.cloudinaray_api_key,
+    api_secret: config?.cloudinaray_api_secret // Click 'View API Keys' above to copy your API secret
+});
+
+export const sendImageToCloudinary = (path: string, imageName: string) => {
     (async function () {
-
-        // Configuration
-        cloudinary.config({
-            cloud_name: config?.cloudinaray_cloud_name,
-            api_key: config?.cloudinaray_api_key,
-            api_secret: config?.cloudinaray_api_secret // Click 'View API Keys' above to copy your API secret
-        });
-
         // Upload an image
         const uploadResult = await cloudinary.uploader
             .upload(
-                'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Flag_of_Bangladesh.svg/2560px-Flag_of_Bangladesh.svg.png', {
-                public_id: 'shoes',
+                path, {
+                public_id: imageName,
             }
             )
             .catch((error) => {
@@ -25,7 +24,7 @@ export const sendImageToCloudinary = () => {
         console.log(uploadResult);
 
         // Optimize delivery by resizing and applying auto-format and auto-quality
-        const optimizeUrl = cloudinary.url('shoes', {
+        const optimizeUrl = cloudinary.url(imageName, {
             fetch_format: 'auto',
             quality: 'auto'
         });
@@ -33,7 +32,7 @@ export const sendImageToCloudinary = () => {
         console.log(optimizeUrl);
 
         // Transform the image: auto-crop to square aspect_ratio
-        const autoCropUrl = cloudinary.url('shoes', {
+        const autoCropUrl = cloudinary.url(imageName, {
             crop: 'auto',
             gravity: 'auto',
             width: 500,
@@ -41,5 +40,5 @@ export const sendImageToCloudinary = () => {
         });
 
         console.log(autoCropUrl);
-    })();
+    })()
 }

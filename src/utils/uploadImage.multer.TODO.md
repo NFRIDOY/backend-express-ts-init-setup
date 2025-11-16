@@ -31,7 +31,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const ext = path.extname(file.originalname);
-    const safeName = file.fieldname.replace(/\s+/g, '-').toLowerCase();
+    const safeName = file.fieldname.replace(/\s+/g, '_').toLowerCase();
     const uniqueName = `${safeName}-${uuidv4()}${ext}`;
     cb(null, uniqueName);
   },
