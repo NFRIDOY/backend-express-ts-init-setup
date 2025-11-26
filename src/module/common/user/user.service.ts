@@ -22,7 +22,10 @@ const createUserIntoDB = async (user: IUser): Promise<IUser> => {
 }
 const createStudentIntoDB = async (password: string, payload: IStudent, image_path: string, image_name: string) => {
     const session = await mongoose.startSession(); // Isolation
+    // send Image To Cloudinary // TODO: SEND PROFILE IMAGE
     try {
+        const uploadResult = await sendImageToCloudinary(image_path, image_name,{DoDelete: false})
+        console.log("uploadResult Service", uploadResult)
         session.startTransaction(); // Start the Transaction
         // console.log({ password })
         // console.log({ payload: payload })
@@ -62,13 +65,15 @@ const createStudentIntoDB = async (password: string, payload: IStudent, image_pa
         //create a student
         // if (Object.keys(newUser).length) {
         if (newUser.length && payload) {
+
+
             // set id as student id, _id as user
             payload.id = newUser[0].id;
             payload.user = newUser[0]._id; //reference _id
 
-            // send Image To Cloudinary // TODO: SEND PROFILE IMAGE
-            const uploadResult = await sendImageToCloudinary(image_path, image_name)
-            console.log("uploadResult", uploadResult)
+            payload.profileImage = uploadResult?.secure_url as string || null;
+
+            console.log("payload.profileImage; ", payload.profileImage)
 
             const newStudent = await StudentModel.create([payload], { session }); // add on the session
 
