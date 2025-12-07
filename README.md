@@ -57,33 +57,39 @@ Update
 - "outDir": "./dist",
 
 # Besic File Structure
-```txt
+```bash
 |.env
 |-dist                  # after build
     |-server.js  
 |-src
     |-app.ts
     |-server.ts
-    |-app
-        |-config        # Centralized configuration
-            |-env.config.ts     # Loads and validates .env variables
-            |-db.config.ts      # Database connection setup
-            |-logger.config.ts  # Winston or similar logging setup
-        |-modules       # Business logic and route handlers
-            |-user/     # Example module
-                |-user.types.ts
-                |-user.validation.ts
-                |-user.model.ts
-                |-user.controller.ts
-                |-user.service.ts
-                |-user.routes.ts
-
-        |-middleware    # Express middlewares
-            |-errorHandler.ts
-            |-requestLogger.ts
-            |-authMiddleware.ts
-        |-utils         # Reusable helpers
-        |-types         # Global types/interfaces
+    |-middleware    # Express middlewares
+        |-errorHandler.ts
+        |-requestLogger.ts
+        |-authMiddleware.ts # auth
+    |-utils         # Reusable helpers
+    |-interfaces    # Global types/interfaces
+    |-config        # Centralized configuration
+        |-env.config.ts     # Loads and validates .env variables
+        |-db.config.ts      # Database connection setup
+        |-logger.config.ts  # Winston or similar logging setup
+    |-modules       # Business logic and route handlers
+        |-user/     # Example module
+            |-user.types.ts
+            |-user.validation.ts
+            |-user.model.ts
+            |-user.controller.ts
+            |-user.service.ts
+            |-user.routes.ts
+        |-student/     # Example module
+            |-student.types.ts
+            |-student.validation.ts
+            |-student.model.ts
+            |-student.controller.ts
+            |-student.service.ts
+            |-student.routes.ts
+    
 ```
 
 # Config: package.json 
