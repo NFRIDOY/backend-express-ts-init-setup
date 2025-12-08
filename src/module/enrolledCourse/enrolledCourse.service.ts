@@ -37,7 +37,7 @@ const getAllEnrolledCourseFromDB = async (query: Record<string, unknown>) => {
     const OfferedCourseQuery = new QueryBuilder(
         EnrolledCourseModel.find()
         .populate("offeredCourse")
-        .populate("student") // name of the field in the model
+        .populate("student", " -password -__v") // name of the field in the model
         // .populate("semesterRegistration")
         // .populate("academicSemester")
         // .populate("academicFaculty")
