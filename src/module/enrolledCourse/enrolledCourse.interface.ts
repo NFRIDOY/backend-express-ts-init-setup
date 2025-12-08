@@ -7,8 +7,15 @@ export type IEnrolledCourseStatus = typeof EnrolledCourseStatusList[keyof typeof
 export type IEnrolledCourse = {
   studentId: string;
   offeredCourse: Types.ObjectId;
-  // courseMarks: ICourseMarks;
   status: IEnrolledCourseStatus;
+  isEnrolled: boolean; // Default false 
+  courseMarks: ICourseMarks;
+  totalMarks: number; // Default 0
+  grade: IGrade; // A, B, C, D, F
+  gradePoints: number; // 4.0, 3.7, 3.3, 3.0, 2.7, 2.3, 2.0, 1.7, 1.3, 1.0, 0.0
+  isCompleted: boolean; // Default false 
+  isFailed?: boolean; // Default false
+  isDeleted: boolean; // true or false
 };
 
 export const StatusCourseMarksList = Object.values(StatusCourseMarksObject); // array
@@ -24,10 +31,6 @@ export interface ICourseMarks {
   midTermMarks: number;
   assignmentMarks: number;
   finalTermMarks: number;
-  totalMarks: number;
-  grade: IGrade; // A, B, C, D, F
-  gradePoints: number; // 4.0, 3.7, 3.3, 3.0, 2.7, 2.3, 2.0, 1.7, 1.3, 1.0, 0.0
-  isFailed?: boolean;
   isDeleted: boolean; // true or false
   status: IStatusCourseMarks; 
 }
