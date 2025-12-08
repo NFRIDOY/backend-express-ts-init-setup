@@ -5,9 +5,8 @@ import { Status, EnrolledCourseStatusList } from "./enrolledCourse.constant";
 export const createEnrolledCourseValidationSchema = z.object({
   body: z.object({
     enrolledCourse: z.object({
-      student: z.string(),
+      studentId: z.string().optional().default(""),
       offeredCourse: z.string(),
-      offeredCourseSection: z.string(),
       status: z.enum(EnrolledCourseStatusList).default(Status.ACTIVE),
     })
   }),
@@ -18,9 +17,8 @@ export const createEnrolledCourseValidationSchema = z.object({
 export const updateEnrolledCourseValidationSchema = z.object({
   body: z.object({
     enrolledCourse: z.object({
-        student: z.string().optional(),
+        studentId: z.string().optional(),
         offeredCourse: z.string().optional(),
-        offeredCourseSection: z.string().optional(),
         status: z.enum(EnrolledCourseStatusList).optional(),
       })
   }),

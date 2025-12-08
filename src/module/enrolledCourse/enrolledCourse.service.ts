@@ -14,11 +14,12 @@ import { EnrolledCourseModel } from "./enrolledCourse.model";
 
 const createEnrolledCourseIntoDB = async (payload: IEnrolledCourse) => {
     // check if the semester is already registered in same course-section
-    const isOfferedCourseExistsInSection = await OfferedCourseModel.findOne({
-        offeredCourse: payload?.offeredCourse,
-        offeredCourseSection: payload?.offeredCourseSection,
+    const isOfferedCourseExists = await OfferedCourseModel.findOne({
+        _id: payload?.offeredCourse,
     });
-
+    if (!isOfferedCourseExists) {
+        throw new AppError(409, 'This Offered Course is not found!');
+    }
 
     // INFO: isFacultyBusy on the schedule: findOne(day: { $in {payload.days}, startTime: {payload.startTime}, endTime: {payload.endTime}}) -> ifExist -> AppError
     // INFO: faculty's availavility > isFacultyBusy > show available Schedule [ADVANCED]
@@ -34,7 +35,9 @@ const createEnrolledCourseIntoDB = async (payload: IEnrolledCourse) => {
 };
 const getAllEnrolledCourseFromDB = async (query: Record<string, unknown>) => {
     const OfferedCourseQuery = new QueryBuilder(
-        OfferedCourseModel.find()
+        EnrolledCourseModel.find()
+        .populate("offeredCourse")
+        .populate("student") // name of the field in the model
         // .populate("semesterRegistration")
         // .populate("academicSemester")
         // .populate("academicFaculty")
@@ -60,14 +63,13 @@ const updateSingleEnrolledCourseInDB = async (
     id: string,
     payload: Partial<IEnrolledCourse>,
 ) => {
-    const { student, offeredCourse, offeredCourseSection, status } = payload;
+    const { studentId, offeredCourse, status } = payload;
     
     const result = await EnrolledCourseModel.findOneAndUpdate(
         { _id: id },
         {
-            student,
+            studentId,
             offeredCourse,
-            offeredCourseSection,
             status,
         },
         {

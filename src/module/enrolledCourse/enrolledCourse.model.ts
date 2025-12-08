@@ -4,19 +4,13 @@ import { Status, EnrolledCourseStatusList } from "./enrolledCourse.constant";
 
 // EnrolledCourseSchema
 const EnrolledCourseSchema = new Schema<IEnrolledCourse>({
-  student: {
-    type: Schema.Types.ObjectId,
-    ref: 'student',
+  studentId: {
+    type: String,
     required: true,
   },
   offeredCourse: {
     type: Schema.Types.ObjectId,
-    ref: 'offeredCourse',
-    required: true,
-  },
-  offeredCourseSection: {
-    type: Schema.Types.ObjectId,
-    ref: 'offeredCourseSection',
+    ref: 'OfferedCourse',
     required: true,
   },
   status: {
