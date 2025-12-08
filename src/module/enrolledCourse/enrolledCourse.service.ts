@@ -1,18 +1,13 @@
 import QueryBuilder from "../../builder/QueryBuilder";
 import AppError from "../../errors/AppError";
-import { isScheduleSame, isValidTimeRange } from "../../utils/scheduleChecker";
-import { AcademicDepartmentModel } from "../academicDepartment/academicDepartment.model";
-import { AcademicFacultyModel } from "../academicFaculty/academicFaculty.model";
-import { CourseModel } from "../course/course.model";
-import { FacultyModel } from "../faculty/faculty.model";
-import { SemesterRegistrationModel } from "../semesterRegistration/semesterRegistration.model";
 import { IEnrolledCourse } from "./enrolledCourse.interface";
-import { Status } from "./enrolledCourse.constant";
-import { hasScheduleConficts, isExistAcademicFacultyDepartmentID, isExistFacultyCourse } from "./enrolledCourse.utils";
 import { OfferedCourseModel } from "../offeredCourse/offeredCourse.model";
 import { EnrolledCourseModel } from "./enrolledCourse.model";
+import { UserModel } from "../common/user/user.model";
+import { JwtPayload } from "jsonwebtoken";
+import { IUser } from "../common/user/user.interface";
 
-const createEnrolledCourseIntoDB = async (payload: IEnrolledCourse) => {
+const createEnrolledCourseIntoDB = async (payload: IEnrolledCourse, user: JwtPayload) => {
     // check if the semester is already registered in same course-section
     const isOfferedCourseExists = await OfferedCourseModel.findOne({
         _id: payload?.offeredCourse,
@@ -20,6 +15,13 @@ const createEnrolledCourseIntoDB = async (payload: IEnrolledCourse) => {
     if (!isOfferedCourseExists) {
         throw new AppError(409, 'This Offered Course is not found!');
     }
+    const isStudentExists = await UserModel.findOne({
+        id: user?.userId || payload?.studentId, // userId from token or studentId from payload
+    });
+    if (!isStudentExists) {
+        throw new AppError(409, 'This Student is not found!');
+    }
+    
 
     // INFO: isFacultyBusy on the schedule: findOne(day: { $in {payload.days}, startTime: {payload.startTime}, endTime: {payload.endTime}}) -> ifExist -> AppError
     // INFO: faculty's availavility > isFacultyBusy > show available Schedule [ADVANCED]
@@ -30,7 +32,10 @@ const createEnrolledCourseIntoDB = async (payload: IEnrolledCourse) => {
     // await isExistOfferedCourseSectionExists(payload);
 
 
-    const result = await EnrolledCourseModel.create(payload);
+    const result = await EnrolledCourseModel.create({
+        ...payload,
+        studentId: isStudentExists?.id,
+    });
     return result;
 };
 const getAllEnrolledCourseFromDB = async (query: Record<string, unknown>) => {

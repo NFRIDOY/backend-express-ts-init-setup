@@ -3,22 +3,19 @@ import { sendErrorResponse, sendResponse } from "../../utils/response/sendRespon
 import { catchAsync } from "../../utils/catchAsync";
 import { enrolledCourseServices } from "./enrolledCourse.service";
 import { Status } from "./enrolledCourse.constant";
+import httpStatus from "http-status";
 
 const createEnrolledCourse: RequestHandler = catchAsync(async (req, res, _next) => {
     const { enrolledCourse } = req.body;
 
-    const result = await enrolledCourseServices.createEnrolledCourseIntoDB(enrolledCourse)
+    const result = await enrolledCourseServices.createEnrolledCourseIntoDB(enrolledCourse, req.user)
 
-    if (!result) {
-        return sendErrorResponse(res, { data: result })
-    }
     return sendResponse(res, {
         success: true,
-        statusCode: 200,
-        message: "Offerd Courses Created",
+        statusCode: httpStatus.CREATED,
+        message: "Enrolled Course created successfully",
         data: result,
-    })
-
+    });
 })
 const getAllInActiveEnrolledCourse: RequestHandler = catchAsync(async (req, res, _next) => {
     const query = req.query
