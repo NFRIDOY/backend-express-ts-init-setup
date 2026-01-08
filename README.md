@@ -30,14 +30,9 @@ OR
 npm init -y 
 ```
 ```bash
-npm install express
-npm install -D typescript
-npm i -D nodemon
-npm i dotenv
-npm i ts-node-dev
-npm install zod
-npm i bcrypt
-npm i jsonwebtoken 
+npm install express dotenv zod bcrypt jsonwebtoken 
+
+npm install -D typescript nodemon ts-node-dev
 ```
 ### 64 Bytes toString genaration using node
 ```bash
